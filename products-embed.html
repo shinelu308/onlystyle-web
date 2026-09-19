@@ -2253,8 +2253,12 @@ function dsSetTags(id, badges, cls) {
   }).join('');
 }
 var DS_BASE = (function () {
-  var i = location.pathname.lastIndexOf('/onlystyle-web/products-embed.html');
-  return i > 0 ? location.pathname.slice(0, i) : '';
+  // ⚠️ 探测串不带前导斜杠：ghpages-build 会把 '/onlystyle-web/products-embed.html' 改写成
+  //    子路径版，导致 pathname 里的命中位置变成 0（i > 0 判定失效）。
+  var i = location.pathname.lastIndexOf('products-embed.html');
+  if (i < 2) return '';
+  var b = location.pathname.slice(0, i);
+  return b.charAt(b.length - 1) === '/' ? b.slice(0, -1) : b;
 })();
 function dsUrl(u) {
   // 子路径部署自适配：embed 加载于 /onlystyle-web/products-embed.html 时
