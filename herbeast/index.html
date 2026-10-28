@@ -65,6 +65,13 @@
   .rail button:hover .t,.rail button:focus-visible .t{opacity:1;transform:none}
   .rail button.on .d{background:var(--red);border-color:var(--red);transform:scale(1.5)}
   .rail button.on .t{opacity:1;transform:none;color:var(--red)}
+  /* 片头是深色视频底，深灰轨道点压上去很扎眼 —— 换成白色系并整体压暗，指过去才亮 */
+  body.on-intro .rail{opacity:.5;transition:opacity .3s}
+  body.on-intro .rail:hover{opacity:1}
+  body.on-intro .rail button{color:rgba(255,255,255,.72)}
+  body.on-intro .rail .d{border-color:rgba(255,255,255,.5)}
+  body.on-intro .rail button.on .d{background:#fff;border-color:#fff}
+  body.on-intro .rail button.on .t{color:#fff}
 
   /* ── 舞台 ── */
   .deck{
