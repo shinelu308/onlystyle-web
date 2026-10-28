@@ -3,10 +3,10 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="robots" content="noindex,nofollow,noarchive">
-<meta name="referrer" content="no-referrer">
 <link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%27%20viewBox%3D%270%200%2064%2064%27%3E%3Crect%20width%3D%2764%27%20height%3D%2764%27%20rx%3D%2714%27%20fill%3D%27%23F6F2E9%27%2F%3E%3Ccircle%20cx%3D%2732%27%20cy%3D%2732%27%20r%3D%2719%27%20fill%3D%27none%27%20stroke%3D%27%2322433A%27%20stroke-width%3D%275%27%2F%3E%3Ccircle%20cx%3D%2732%27%20cy%3D%2732%27%20r%3D%275.5%27%20fill%3D%27%23A93527%27%2F%3E%3C%2Fsvg%3E">
 <link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%27%20viewBox%3D%270%200%2064%2064%27%3E%3Crect%20width%3D%2764%27%20height%3D%2764%27%20rx%3D%2714%27%20fill%3D%27%23F6F2E9%27%2F%3E%3Ccircle%20cx%3D%2732%27%20cy%3D%2732%27%20r%3D%2719%27%20fill%3D%27none%27%20stroke%3D%27%2322433A%27%20stroke-width%3D%275%27%2F%3E%3Ccircle%20cx%3D%2732%27%20cy%3D%2732%27%20r%3D%275.5%27%20fill%3D%27%23A93527%27%2F%3E%3C%2Fsvg%3E">
+<meta name="robots" content="noindex,nofollow,noarchive">
+<meta name="referrer" content="no-referrer">
 <title>东边野兽 × 唯风 · 一镜到底演示台</title>
 <style>
   :root{
@@ -119,7 +119,7 @@
   .screen.in .rv:nth-child(6){transition-delay:.34s}
   @media (prefers-reduced-motion:reduce){.rv{transition:none;opacity:1;transform:none}}
 
-  /* ── 片头（品牌片 0–13.5s） ── */
+  /* ── 片头（品牌片完整版 3'47"） ── */
   .intro{
     background:#0A0E12;padding:0;overflow:hidden;position:relative;
     align-items:center;justify-content:center;
@@ -129,6 +129,10 @@
     object-fit:cover;opacity:0;transition:opacity .9s ease;
   }
   .intro.playing video{opacity:1}
+  /* 16:9 片子在任何非 16:9 的屏上都可能把字幕两端裁掉 —— 竖屏和超宽屏一律留黑边 */
+  @media (max-aspect-ratio:4/3), (min-aspect-ratio:2/1){
+    .intro video{object-fit:contain}
+  }
   .intro .veil{
     position:absolute;inset:0;pointer-events:none;
     background:
@@ -176,6 +180,56 @@
     font-family:var(--serif);font-size:clamp(26px,3.4vw,48px);color:var(--ink);line-height:1.35;
   }
   .intro.no-video .fallback .sm{font-size:12px;color:var(--ink-3);margin-top:14px;letter-spacing:.1em}
+
+  /* 片头：时间码 + 声音开关 + 可拖进度 */
+  .intro .iaudio{
+    position:absolute;right:clamp(24px,3.4vw,48px);bottom:calc(clamp(24px,3.4vw,44px) + 32px);z-index:6;
+    display:flex;align-items:center;gap:clamp(10px,1.4vw,18px);
+    transition:opacity .4s ease;
+  }
+  .intro.done .iaudio{opacity:0;pointer-events:none}
+  .intro.no-video .iaudio{display:none}
+  .intro .vtime{
+    font-family:var(--mono);font-size:10.5px;letter-spacing:.08em;
+    color:rgba(255,255,255,.42);font-variant-numeric:tabular-nums;
+  }
+  .intro .on-audio .vtime{color:rgba(255,255,255,.58)}
+  .intro .snd{display:flex;align-items:center;gap:9px;color:rgba(255,255,255,.55)}
+  .intro .sndBtn{
+    display:flex;align-items:center;gap:7px;background:none;border:0;cursor:pointer;
+    font:inherit;font-size:10.5px;letter-spacing:.16em;color:inherit;padding:6px 0;
+    transition:color .22s;
+  }
+  .intro .sndBtn:hover{color:#fff}
+  .intro .sndBtn svg{width:15px;height:15px;display:block;flex:0 0 auto}
+  .intro .sndBtn .wave{opacity:0;transition:opacity .2s}
+  .intro.on-audio .sndBtn .wave{opacity:1}
+  .intro .sndBtn .slash{opacity:1;transition:opacity .2s}
+  .intro.on-audio .sndBtn .slash{opacity:0}
+  .intro .sndVol{
+    -webkit-appearance:none;appearance:none;height:2px;width:0;opacity:0;
+    background:rgba(255,255,255,.34);border-radius:2px;cursor:pointer;
+    transition:width .32s ease,opacity .32s ease;
+  }
+  .intro.on-audio .sndVol{width:66px;opacity:1}
+  .intro .sndVol::-webkit-slider-thumb{
+    -webkit-appearance:none;width:9px;height:9px;border-radius:50%;background:#fff;cursor:pointer;
+  }
+  .intro .sndVol::-moz-range-thumb{width:9px;height:9px;border:0;border-radius:50%;background:#fff}
+  .intro .vbar{
+    position:absolute;left:0;right:0;bottom:0;height:3px;z-index:6;cursor:pointer;
+    background:rgba(255,255,255,.12);transition:opacity .4s ease;
+  }
+  /* 热区加高到 20px，否则 3px 的细线根本点不中 */
+  .intro .vbar::after{content:"";position:absolute;left:0;right:0;bottom:0;height:22px}
+  .intro .vbar i{display:block;height:100%;width:0;background:rgba(255,255,255,.7)}
+  .intro.done .vbar{opacity:0;pointer-events:none}
+  .intro.no-video .vbar{display:none}
+  @media (max-width:760px){
+    .intro .iaudio{left:auto;right:clamp(20px,5vw,32px);bottom:calc(clamp(20px,5vw,32px) + 46px);justify-content:flex-end}
+    .intro.on-audio .sndVol{width:46px}
+    .intro .skip{font-size:10.5px;letter-spacing:.12em}
+  }
 
   /* ── 封面 ── */
   .cover .kicker{
@@ -443,9 +497,9 @@
 
 <main class="deck" id="deck">
 
-  <!-- ══════ 片头（品牌片前 13.5 秒） ══════ -->
-  <section class="screen intro" id="introScreen" data-title="片头" data-note="片头 13.5 秒自动播完就停。这段时间<strong>不要说话</strong>，让屏幕自报家门。播完后屏幕泛白，顺势滚下去。音乐默认静音 —— 现场不方便就保持静音，不影响。开头被客户打断的话，直接按 ↓ 跳过。">
-    <video id="introVid" src="brand-intro.mp4" muted playsinline preload="auto" poster=""></video>
+  <!-- ══════ 片头（品牌片完整版） ══════ -->
+  <section class="screen intro" id="introScreen" data-title="片头" data-note="品牌片<strong>完整 3 分 47 秒</strong>，默认静音自动播（浏览器规定：不静音不许自动播）。按 <strong>M</strong> 或点右下「声音」开声，旁边那条可拖音量。<strong>空格</strong>=暂停/继续，<strong>底部进度条点哪跳哪</strong>。想整片放完就让它放完，放完自动泛白提示往下；想穿插着讲，前 40 秒后按空格停住接话，讲到方法论再拖到 1:42。随时 ↓ 跳过。">
+    <video id="introVid" src="brand-intro.mp4" muted playsinline preload="auto"></video>
     <div class="veil"></div>
     <div class="fadeout"></div>
     <div class="cont">往下继续 <span>&darr;</span></div>
@@ -456,6 +510,22 @@
     <div class="meta">
       <b>2026.10.30</b><br>东边野兽 × 唯风
     </div>
+    <div class="iaudio">
+      <span class="vtime" id="vtime">0:00 / 0:00</span>
+      <div class="snd">
+        <input class="sndVol" id="sndVol" type="range" min="0" max="100" value="85" aria-label="音量">
+        <button class="sndBtn" id="sndBtn" type="button" aria-pressed="false" aria-label="声音开关">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M4 9.5h3.2L12 5.4v13.2L7.2 14.5H4z"/>
+            <path class="wave" d="M15.6 9.2a4 4 0 010 5.6"/>
+            <path class="wave" d="M18.2 6.6a7.6 7.6 0 010 10.8"/>
+            <path class="slash" d="M16 9l5 6M21 9l-5 6"/>
+          </svg>
+          <span id="sndTxt">无声</span>
+        </button>
+      </div>
+    </div>
+    <div class="vbar" id="vbar"><i id="vbarFill"></i></div>
     <button class="skip" type="button" id="skipIntro">跳过片头</button>
   </section>
 
@@ -858,7 +928,19 @@
   /* 键盘 */
   window.addEventListener('keydown', function(e){
     var k = e.key;
-    if (k === 'ArrowDown' || k === 'ArrowRight' || k === 'PageDown' || k === ' ') {
+    if (k === ' ') {
+      e.preventDefault();
+      if (cur === 0 && iv && !introDead) {
+        if (iv.paused) { var pp = iv.play(); if (pp && pp.catch) pp.catch(function(){}); }
+        else iv.pause();
+      } else { go(cur + 1); }
+      return;
+    }
+    if (k === 'm' || k === 'M') {
+      if (cur === 0 && iv && !introDead) { e.preventDefault(); setAudio(iv.muted); }
+      return;
+    }
+    if (k === 'ArrowDown' || k === 'ArrowRight' || k === 'PageDown') {
       e.preventDefault(); go(cur + 1);
     } else if (k === 'ArrowUp' || k === 'ArrowLeft' || k === 'PageUp') {
       e.preventDefault(); go(cur - 1);
@@ -880,13 +962,19 @@
   /* 点击左右半边翻页已移除：演示时鼠标指向卡片容易误触，翻页只靠滚轮 / 键盘 / 右侧轨道 */
 
   /* ── 片头播放控制 ──
-     🔴 品牌片只播前 13.5 秒，然后停住泛白。
-        不整条播：3 分 47 秒会把一镜到底的节奏打断，客户还没看到证据就先看完了广告。
+     🔴 品牌片完整播（3 分 47 秒），不裁不剪。
+        浏览器规定「不静音不许自动播」，所以默认 muted；要出声按 M 或点右下「声音」。
+        播放权完全交给人：空格暂停/继续、底部进度条点哪跳哪、跳过片头直接走。
         文件没跟着拷贝过来时降级成纸底大字，绝不出现黑色空屏。 */
   var iv = document.getElementById('introVid');
   var iScr = document.getElementById('introScreen');
   var skipBtn = document.getElementById('skipIntro');
-  var INTRO_END = 13.4;
+  var sndBtn = document.getElementById('sndBtn');
+  var sndVol = document.getElementById('sndVol');
+  var sndTxt = document.getElementById('sndTxt');
+  var vtime = document.getElementById('vtime');
+  var vbar = document.getElementById('vbar');
+  var vfill = document.getElementById('vbarFill');
   var introDead = false;
 
   function introPlay(){
@@ -900,16 +988,64 @@
     if (!iv) return;
     try { iv.pause(); } catch (e) {}
   }
+  function mmss(t){
+    t = Math.max(0, Math.floor(t || 0));
+    var m = Math.floor(t / 60), sec = t % 60;
+    return m + ':' + (sec < 10 ? '0' : '') + sec;
+  }
+  function paintTime(){
+    if (!iv) return;
+    var d = isFinite(iv.duration) ? iv.duration : 0;
+    var c = iv.currentTime || 0;
+    if (vtime) vtime.textContent = mmss(c) + ' / ' + mmss(d);
+    if (vfill) vfill.style.width = (d > 0 ? Math.min(100, c / d * 100) : 0) + '%';
+  }
+  function setAudio(on){
+    if (!iv) return;
+    iv.muted = !on;
+    if (sndBtn) sndBtn.setAttribute('aria-pressed', on ? 'true' : 'false');
+    if (sndTxt) sndTxt.textContent = on ? '声音' : '无声';
+    iScr.classList.toggle('on-audio', on);
+    if (on) {
+      try { iv.volume = (sndVol ? Number(sndVol.value) : 85) / 100; } catch (e) {}
+      if (iv.paused) { var p = iv.play(); if (p && p.catch) p.catch(function(){}); }
+    }
+  }
 
   if (iv) {
     iv.addEventListener('canplay', function(){ iScr.classList.add('playing'); }, { once: true });
-    iv.addEventListener('timeupdate', function(){
-      if (iv.currentTime >= INTRO_END) { introStop(); iScr.classList.add('done'); }
-    });
-    iv.addEventListener('ended', function(){ iScr.classList.add('done'); });
+    iv.addEventListener('loadedmetadata', paintTime);
+    iv.addEventListener('timeupdate', paintTime);
+    iv.addEventListener('ended', function(){ paintTime(); iScr.classList.add('done'); });
     iv.addEventListener('error', function(){
       introDead = true;
       iScr.classList.add('no-video');
+    });
+  }
+  if (sndBtn) {
+    sndBtn.addEventListener('click', function(e){
+      e.stopPropagation();
+      if (!iv || introDead) return;
+      setAudio(iv.muted);
+    });
+  }
+  if (sndVol) {
+    sndVol.addEventListener('input', function(){
+      if (!iv) return;
+      var v = Number(sndVol.value) / 100;
+      if (iv.muted && v > 0) setAudio(true);
+      try { iv.volume = v; } catch (e) {}
+    });
+    sndVol.addEventListener('click', function(e){ e.stopPropagation(); });
+  }
+  if (vbar) {
+    vbar.addEventListener('click', function(e){
+      e.stopPropagation();
+      if (!iv || !isFinite(iv.duration) || !iv.duration) return;
+      var r = vbar.getBoundingClientRect();
+      var ratio = Math.min(1, Math.max(0, (e.clientX - r.left) / r.width));
+      try { iv.currentTime = ratio * iv.duration; } catch (err) {}
+      paintTime();
     });
   }
   if (skipBtn) {
