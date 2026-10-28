@@ -1,0 +1,927 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow,noarchive">
+<meta name="referrer" content="no-referrer">
+<title>东边野兽 × 唯风 · 一镜到底演示台</title>
+<style>
+  :root{
+    --paper:#F6F2E9;
+    --paper-2:#EFE9DC;
+    --ink:#151A16;
+    --ink-2:#3D453E;
+    --ink-3:#7B8178;
+    --green:#22433A;
+    --green-2:#3C6155;
+    --red:#A93527;
+    --gold:#A8874A;
+    --line:rgba(21,26,22,.16);
+    --line-2:rgba(21,26,22,.09);
+    --serif:"Songti SC","Source Han Serif SC","Noto Serif SC",STSong,SimSun,serif;
+    --sans:"PingFang SC","Microsoft YaHei","Helvetica Neue",Arial,sans-serif;
+    --mono:"Spline Sans Mono",ui-monospace,"SF Mono",Consolas,monospace;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0;height:100%}
+  body{
+    background:var(--paper);color:var(--ink);
+    font-family:var(--sans);
+    -webkit-font-smoothing:antialiased;
+    overflow:hidden;
+  }
+  /* 纸纹 */
+  body::before{
+    content:"";position:fixed;inset:0;pointer-events:none;z-index:0;opacity:.5;
+    background-image:url("data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)' opacity='.055'/%3E%3C/svg%3E");
+  }
+
+  /* ── 顶部进度 ── */
+  .prog{position:fixed;top:0;left:0;right:0;height:2px;background:var(--line-2);z-index:40}
+  .prog i{display:block;height:100%;width:0;background:var(--red);transition:width .45s cubic-bezier(.4,0,.2,1)}
+
+  /* ── 右侧轨道 ── */
+  .rail{
+    position:fixed;right:26px;top:50%;transform:translateY(-50%);
+    z-index:40;display:flex;flex-direction:column;gap:14px;
+  }
+  .rail button{
+    display:flex;align-items:center;gap:0;justify-content:flex-end;
+    border:0;background:none;padding:0;cursor:pointer;
+    font:inherit;color:var(--ink-3);
+  }
+  .rail .t{
+    font-size:11px;letter-spacing:.06em;white-space:nowrap;
+    opacity:0;transform:translateX(6px);transition:.25s;margin-right:9px;
+  }
+  .rail .d{
+    width:7px;height:7px;border-radius:50%;
+    border:1px solid var(--ink-3);background:transparent;
+    transition:.25s;flex:0 0 auto;
+  }
+  .rail button:hover .t,.rail button:focus-visible .t{opacity:1;transform:none}
+  .rail button.on .d{background:var(--red);border-color:var(--red);transform:scale(1.5)}
+  .rail button.on .t{opacity:1;transform:none;color:var(--red)}
+
+  /* ── 舞台 ── */
+  .deck{
+    position:relative;z-index:1;height:100vh;overflow-y:auto;overflow-x:hidden;
+    scroll-snap-type:y mandatory;
+    scroll-behavior:smooth;
+    scrollbar-width:none;
+  }
+  .deck::-webkit-scrollbar{display:none}
+
+  .screen{
+    min-height:100vh;scroll-snap-align:start;scroll-snap-stop:always;
+    display:flex;align-items:center;
+    padding:clamp(40px,5vh,72px) 0;
+    position:relative;
+  }
+  .wrap{width:100%;max-width:min(1440px,82vw);margin:0 auto;padding:0 clamp(28px,4.4vw,64px)}
+
+  /* 每屏左上角章节标记 */
+  .mark{
+    display:flex;align-items:center;gap:12px;
+    font-size:11px;letter-spacing:.22em;color:var(--ink-3);
+    text-transform:uppercase;margin-bottom:clamp(18px,3vh,34px);
+  }
+  .mark::before{content:"";width:26px;height:1px;background:var(--gold)}
+  .mark b{font-weight:600;color:var(--green);letter-spacing:.1em}
+
+  h1{
+    font-family:var(--serif);font-weight:600;
+    font-size:clamp(38px,5.4vw,84px);line-height:1.14;
+    letter-spacing:-.01em;margin:0 0 26px;
+  }
+  h2{
+    font-family:var(--serif);font-weight:600;
+    font-size:clamp(26px,3.4vw,52px);line-height:1.28;
+    letter-spacing:-.005em;margin:0 0 14px;
+  }
+  .lead{
+    font-size:clamp(15px,1.4vw,19px);line-height:1.85;color:var(--ink-2);
+    max-width:44em;margin:0;
+  }
+  .lead.sm{font-size:clamp(13px,1.15vw,16px);color:var(--ink-3)}
+
+  /* 入场 */
+  .rv{opacity:0;transform:translateY(16px);transition:opacity .62s ease,transform .62s cubic-bezier(.2,.7,.3,1)}
+  .screen.in .rv{opacity:1;transform:none}
+  .screen.in .rv:nth-child(1){transition-delay:.04s}
+  .screen.in .rv:nth-child(2){transition-delay:.1s}
+  .screen.in .rv:nth-child(3){transition-delay:.16s}
+  .screen.in .rv:nth-child(4){transition-delay:.22s}
+  .screen.in .rv:nth-child(5){transition-delay:.28s}
+  .screen.in .rv:nth-child(6){transition-delay:.34s}
+  @media (prefers-reduced-motion:reduce){.rv{transition:none;opacity:1;transform:none}}
+
+  /* ── 片头（品牌片 0–13.5s） ── */
+  .intro{
+    background:#0A0E12;padding:0;overflow:hidden;position:relative;
+    align-items:center;justify-content:center;
+  }
+  .intro video{
+    position:absolute;inset:0;width:100%;height:100%;
+    object-fit:cover;opacity:0;transition:opacity .9s ease;
+  }
+  .intro.playing video{opacity:1}
+  .intro .veil{
+    position:absolute;inset:0;pointer-events:none;
+    background:
+      radial-gradient(120% 90% at 50% 45%, transparent 40%, rgba(6,9,12,.55) 100%),
+      linear-gradient(to bottom, rgba(6,9,12,.35), transparent 22%, transparent 72%, rgba(6,9,12,.6));
+  }
+  .intro .fadeout{
+    position:absolute;inset:0;background:var(--paper);opacity:0;
+    transition:opacity 1.1s ease;pointer-events:none;
+  }
+  .intro.done .fadeout{opacity:1}
+  .intro.done .meta{color:rgba(21,26,22,.4)}
+  .intro.done .meta b{color:rgba(21,26,22,.68)}
+  .intro.done .skip{opacity:0;pointer-events:none}
+  .intro .cont{
+    position:absolute;left:0;right:0;bottom:19%;z-index:4;text-align:center;
+    font-size:12px;letter-spacing:.12em;color:var(--ink-3);
+    opacity:0;transform:translateY(8px);transition:opacity .7s ease .5s,transform .7s ease .5s;
+    pointer-events:none;
+  }
+  .intro.done .cont{opacity:1;transform:none}
+  .intro .cont span{display:inline-block;margin-left:8px;animation:bob 1.9s ease-in-out infinite}
+  .intro .skip{
+    position:absolute;right:clamp(24px,3.4vw,48px);bottom:clamp(24px,3.4vw,44px);z-index:4;
+    display:flex;align-items:center;gap:10px;
+    background:none;border:0;cursor:pointer;font:inherit;
+    font-size:11px;letter-spacing:.16em;color:rgba(255,255,255,.55);
+    padding:8px 2px;transition:color .25s;
+  }
+  .intro .skip:hover{color:#fff}
+  .intro .skip::after{content:"↓";font-size:13px;animation:bob 1.9s ease-in-out infinite}
+  .intro .meta{
+    position:absolute;left:clamp(24px,3.4vw,48px);bottom:clamp(24px,3.4vw,44px);z-index:4;
+    font-size:10.5px;letter-spacing:.2em;color:rgba(255,255,255,.4);line-height:1.9;
+  }
+  .intro .meta b{color:rgba(255,255,255,.75);font-weight:500;letter-spacing:.14em}
+  .intro .fallback{
+    position:relative;z-index:2;display:none;text-align:center;padding:0 32px;
+  }
+  .intro.no-video{background:var(--paper)}
+  .intro.no-video .fallback{display:block}
+  .intro.no-video .skip,.intro.no-video .meta,.intro.no-video .veil{display:none}
+  .intro.no-video .cont{opacity:1;transform:none}
+  .intro.no-video .fallback .big{
+    font-family:var(--serif);font-size:clamp(26px,3.4vw,48px);color:var(--ink);line-height:1.35;
+  }
+  .intro.no-video .fallback .sm{font-size:12px;color:var(--ink-3);margin-top:14px;letter-spacing:.1em}
+
+  /* ── 封面 ── */
+  .cover .kicker{
+    display:flex;align-items:baseline;gap:14px;flex-wrap:wrap;
+    font-size:clamp(12px,1.1vw,14px);letter-spacing:.16em;color:var(--ink-3);margin-bottom:clamp(24px,4vh,44px);
+  }
+  .cover .kicker b{color:var(--ink);font-weight:600;letter-spacing:.08em}
+  .cover h1 .hl{color:var(--red)}
+  .cover .sub{
+    font-family:var(--serif);font-size:clamp(16px,1.6vw,22px);line-height:1.9;
+    color:var(--ink-2);max-width:36em;margin:0 0 clamp(30px,5vh,54px);
+  }
+  .cover .foot{
+    display:flex;align-items:center;gap:16px;
+    font-size:12px;letter-spacing:.14em;color:var(--ink-3);
+  }
+  .cover .foot span.line{width:52px;height:1px;background:var(--line)}
+  .arrow{display:inline-block;animation:bob 1.9s ease-in-out infinite}
+  @keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(5px)}}
+
+  /* ── 引言四卡 ── */
+  .qgrid{display:grid;grid-template-columns:1fr 1fr;grid-auto-rows:1fr;gap:clamp(12px,1.6vw,20px);margin-top:clamp(20px,3.4vh,34px)}
+  .qcard{
+    background:rgba(255,255,255,.5);
+    border:1px solid var(--line);border-top:2px solid var(--ink);
+    padding:clamp(14px,1.5vw,20px) clamp(15px,1.6vw,22px);
+    display:flex;flex-direction:column;gap:11px;
+  }
+  .qcard .qq{
+    font-size:clamp(11px,1vw,12.5px);color:var(--ink-3);letter-spacing:.04em;
+    display:flex;gap:8px;align-items:baseline;
+  }
+  .qcard .qq i{font-style:normal;font-family:var(--mono);color:var(--gold);font-size:11px}
+  .qcard .qq span{color:var(--ink);font-size:clamp(12px,1.1vw,13.5px)}
+  .qcard .aa{
+    font-family:var(--serif);font-size:clamp(14px,1.35vw,17px);line-height:1.72;color:var(--ink);
+  }
+  .qcard .aa em{font-style:normal;background:rgba(169,53,39,.075);box-shadow:inset 0 -1px 0 rgba(169,53,39,.34);padding:0 1px}
+  .qcard .fix{
+    font-size:clamp(11.5px,1.06vw,13px);line-height:1.62;color:var(--red);
+    border-top:1px dashed rgba(169,53,39,.3);padding-top:9px;
+  }
+  .qcard .fix::before{content:"批注 · ";color:var(--ink-3);letter-spacing:.02em}
+
+  .stamp{
+    display:inline-flex;align-items:center;gap:8px;
+    font-size:11.5px;letter-spacing:.08em;color:var(--ink-3);
+    border:1px solid var(--line);padding:5px 11px;background:rgba(255,255,255,.42);
+  }
+  .stamp b{color:var(--green);font-weight:600;letter-spacing:.04em}
+
+  /* ── 阶梯 ── */
+  .steps{display:flex;flex-direction:column;gap:clamp(10px,1.5vh,16px);margin-top:clamp(20px,3.4vh,32px)}
+  .step{
+    display:grid;grid-template-columns:150px 1fr;gap:clamp(14px,2vw,26px);align-items:center;
+    border:1px solid var(--line);background:rgba(255,255,255,.46);
+    padding:clamp(13px,1.5vw,18px) clamp(14px,1.6vw,22px);
+    position:relative;
+  }
+  .step::before{content:"";position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--ink-3)}
+  .step.ok::before{background:var(--green-2)}
+  .step.bad::before{background:var(--red)}
+  .step .lh{font-size:clamp(12px,1.06vw,13.5px);line-height:1.55}
+  .step .lh b{display:block;font-size:clamp(13.5px,1.25vw,15.5px);margin-bottom:5px;font-weight:600}
+  .step .lh code{
+    font-family:var(--mono);font-size:11.5px;color:var(--ink-2);
+    background:var(--paper-2);padding:2px 6px;letter-spacing:.01em;
+  }
+  .step .rh{display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+  .chip{
+    font-size:clamp(10.5px,1vw,13px);padding:4px 9px;
+    background:var(--paper-2);color:var(--ink-2);border:1px solid transparent;
+    white-space:nowrap;max-width:210px;overflow:hidden;text-overflow:ellipsis;
+  }
+  .chip.hit{background:rgba(34,67,58,.1);color:var(--green);border-color:rgba(34,67,58,.28)}
+  .chip.miss{background:rgba(169,53,39,.07);color:var(--red);border-color:rgba(169,53,39,.22)}
+  .step .verdict{
+    grid-column:1/-1;justify-self:end;
+    font-size:10.5px;letter-spacing:.08em;padding:0;margin-top:1px;
+  }
+  .step.ok .verdict{color:var(--green)}
+  .step.bad .verdict{color:var(--red)}
+
+  /* ── 对照表 ── */
+  table.cmp{width:100%;border-collapse:collapse;margin-top:clamp(16px,2.6vh,26px);font-size:clamp(12.5px,1.15vw,16px)}
+  table.cmp th,table.cmp td{
+    text-align:left;padding:clamp(10px,1.35vh,15px) clamp(10px,1.2vw,16px);
+    border-bottom:1px solid var(--line-2);vertical-align:top;line-height:1.6;
+  }
+  table.cmp thead th{
+    font-size:11px;letter-spacing:.12em;color:var(--ink-3);font-weight:500;
+    border-bottom:1px solid var(--line);padding-bottom:9px;white-space:nowrap;
+  }
+  table.cmp thead th.us{color:var(--red)}
+  table.cmp td.dim{width:16%;color:var(--ink);font-weight:600;font-size:clamp(12px,1.08vw,14px);white-space:nowrap}
+  table.cmp td.them{width:30%;color:var(--ink-3)}
+  table.cmp td.us{width:32%;color:var(--ink);background:rgba(169,53,39,.045)}
+  table.cmp td.why{width:22%;color:var(--green-2);font-size:clamp(11.5px,1.04vw,13px)}
+  table.cmp tbody tr:last-child td{border-bottom:none}
+
+  /* ── 两卡 ── */
+  .two{display:grid;grid-template-columns:1fr 1fr;gap:clamp(14px,2vw,26px);margin-top:clamp(18px,3vh,30px)}
+  .panel{border:1px solid var(--line);background:rgba(255,255,255,.5);padding:clamp(16px,1.8vw,24px);display:flex;flex-direction:column}
+  .panel .tag{font-size:10.5px;letter-spacing:.16em;color:var(--gold);margin-bottom:10px}
+  .panel h3{
+    font-family:var(--serif);font-size:clamp(16px,1.6vw,21px);font-weight:600;
+    margin:0 0 14px;line-height:1.5;
+  }
+  .panel .body{font-size:clamp(12.5px,1.14vw,14.5px);line-height:1.75;color:var(--ink-2);display:flex;flex-direction:column;flex:1}
+  .panel .body .tail{margin-top:10px}
+
+  .track{margin:14px 0 6px}
+  .track .lbl{display:flex;justify-content:space-between;font-size:11.5px;color:var(--ink-3);margin-bottom:6px}
+  .track .lbl b{font-family:var(--mono);font-size:13px;color:var(--ink)}
+  .bar{height:9px;background:var(--paper-2);position:relative;overflow:hidden}
+  .bar i{position:absolute;left:0;top:0;bottom:0;background:var(--green-2);width:0;transition:width .9s cubic-bezier(.2,.7,.3,1) .25s}
+  .bar.bad i{background:var(--red)}
+  .screen.in .bar i{width:var(--w)}
+  .strike{display:flex;gap:8px;align-items:baseline;margin:15px 0 4px;font-size:clamp(13.5px,1.28vw,16.5px);line-height:1.6;color:var(--ink-2)}
+  .strike b{color:var(--red);font-weight:400;font-size:clamp(13px,1.2vw,15px);flex:0 0 auto}
+  .warn{margin:0 0 8px;padding-left:clamp(21px,1.9vw,24px);font-size:clamp(11.5px,1.04vw,13px);color:var(--red);line-height:1.55}
+
+  /* 三态 */
+  .states{display:flex;gap:8px;margin-top:12px}
+  .states div{flex:1;text-align:center;border:1px solid var(--line);padding:10px 4px;background:rgba(255,255,255,.4)}
+  .states b{display:block;font-family:var(--mono);font-size:clamp(17px,1.9vw,24px);line-height:1.2}
+  .states span{font-size:10.5px;color:var(--ink-3);letter-spacing:.04em}
+  .states .s1 b{color:var(--ink-3)}
+  .states .s2 b{color:var(--gold)}
+  .states .s3 b{color:var(--green)}
+
+  /* 口吻对照 */
+  .voice{display:grid;grid-template-columns:1fr 1fr;gap:clamp(14px,2vw,24px);margin-top:clamp(16px,2.6vh,26px)}
+  .voice .col{border:1px solid var(--line);background:rgba(255,255,255,.5);padding:clamp(15px,1.7vw,22px);display:flex;flex-direction:column}
+  .voice .col.bad{border-color:rgba(169,53,39,.22);border-left:3px solid rgba(169,53,39,.5)}
+  .voice .col.ok{border-color:rgba(34,67,58,.26);border-left:3px solid rgba(34,67,58,.55)}
+  .voice .why{margin-top:auto}
+  .voice .hd{
+    display:flex;justify-content:space-between;align-items:baseline;gap:10px;
+    font-size:11px;letter-spacing:.1em;color:var(--ink-3);margin-bottom:12px;
+    padding-bottom:9px;border-bottom:1px solid var(--line-2);
+  }
+  .voice .hd b{font-size:11.5px;letter-spacing:.06em;color:var(--ink);font-weight:600}
+  .voice .col.bad .hd b{color:var(--red)}
+  .voice .col.ok .hd b{color:var(--green)}
+  .voice p{
+    font-family:var(--serif);font-size:clamp(13.5px,1.3vw,16.5px);line-height:1.85;
+    margin:0 0 12px;color:var(--ink);
+  }
+  .voice p:last-child{margin-bottom:0}
+  .voice .why{font-size:clamp(11.5px,1.06vw,13px);line-height:1.6;color:var(--ink-2);border-top:1px dashed var(--line);padding-top:9px;margin-top:auto}
+
+  /* 发射台 */
+  .flow{display:grid;grid-template-columns:repeat(4,1fr);margin-top:clamp(18px,3vh,30px)}
+  .node{position:relative;border-top:2px solid var(--ink);padding:clamp(16px,2vh,22px) clamp(16px,2vw,28px) 0 0}
+  .node::before{
+    content:"";position:absolute;left:0;top:-5px;width:8px;height:8px;border-radius:50%;
+    background:var(--ink);
+  }
+  .node .n{font-family:var(--serif);font-size:clamp(28px,3.6vw,54px);line-height:1;color:var(--ink);margin-bottom:9px}
+  .node .t{font-size:clamp(12px,1.1vw,14px);color:var(--ink);letter-spacing:.04em;font-weight:600}
+  .node .d{font-size:11.5px;color:var(--ink-3);margin-top:6px;line-height:1.5}
+  .node.alert{border-top-color:var(--red)}
+  .node.alert::before{background:var(--red)}
+  .node.alert .n{color:var(--red)}
+  .flow-note{
+    display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;
+    border-top:1px solid var(--line-2);margin-top:6px;padding-top:10px;
+    font-size:clamp(11.5px,1.05vw,13px);color:var(--ink-3);line-height:1.6;
+  }
+  .flow-note b{color:var(--red);font-weight:600}
+
+  .chan{width:100%;border-collapse:collapse;margin-top:clamp(12px,2vh,18px);font-size:clamp(11.5px,1.04vw,13px)}
+  .chan td{padding:7px clamp(8px,1vw,12px);border-bottom:1px solid var(--line-2)}
+  .chan tr:last-child td{border-bottom:none}
+  .chan td.p{font-weight:600;width:19%}
+  .chan td.g{width:15%;white-space:nowrap}
+  .chan td.r{color:var(--ink-3);line-height:1.45;font-size:clamp(11.5px,1.02vw,13px)}
+  .dot{display:inline-block;width:6px;height:6px;border-radius:50%;margin-right:6px;vertical-align:1px}
+  .dot.a{background:var(--green-2)}
+  .dot.b{background:var(--gold)}
+  .dot.c{background:var(--ink-3)}
+  .dot.d{background:var(--red)}
+
+  /* 收口 */
+  .close h1{font-size:clamp(32px,4.6vw,64px);margin-bottom:clamp(20px,3vh,32px)}
+  .acts{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(12px,1.6vw,20px);margin:clamp(20px,3.4vh,32px) 0}
+  .act{border-top:2px solid var(--ink);padding-top:14px}
+  .act .num{font-family:var(--mono);font-size:11px;color:var(--gold);letter-spacing:.1em}
+  .act h4{font-size:clamp(13.5px,1.3vw,16px);margin:7px 0 6px;font-weight:600}
+  .act p{font-size:clamp(11.5px,1.06vw,13px);line-height:1.65;color:var(--ink-3);margin:0}
+  .final{
+    border-top:1px solid var(--line);padding-top:clamp(16px,2.4vh,24px);
+    display:flex;justify-content:space-between;align-items:flex-end;gap:24px;flex-wrap:wrap;
+  }
+  .final .q{
+    font-family:var(--serif);font-size:clamp(17px,1.9vw,24px);line-height:1.7;max-width:30em;
+  }
+  .final .q b{color:var(--red);font-weight:600}
+  .final .sig{font-size:11.5px;color:var(--ink-3);line-height:1.9;text-align:right}
+
+  /* ── 讲稿抽屉 ── */
+  .notes{
+    position:fixed;left:0;right:0;bottom:0;z-index:45;
+    background:rgba(21,26,22,.96);color:#EFE9DC;
+    transform:translateY(101%);transition:transform .3s cubic-bezier(.3,.8,.2,1);
+    padding:16px clamp(24px,4vw,56px) 18px;
+    max-height:38vh;overflow-y:auto;
+  }
+  .notes.on{transform:none}
+  .notes .nh{
+    display:flex;justify-content:space-between;align-items:center;gap:16px;
+    font-size:10.5px;letter-spacing:.18em;color:rgba(239,233,220,.5);margin-bottom:8px;
+  }
+  .notes .nh b{color:var(--gold);letter-spacing:.1em;font-weight:600}
+  .notes .nt{font-size:clamp(12.5px,1.2vw,15px);line-height:1.85;color:#EFE9DC}
+  .notes .nt strong{color:#fff;font-weight:600}
+  .keys{
+    position:fixed;left:clamp(24px,4vw,56px);bottom:16px;z-index:30;
+    display:flex;gap:16px;font-size:11px;letter-spacing:.1em;color:var(--ink-3);
+  }
+  .keys kbd{
+    font-family:var(--mono);font-size:10px;border:1px solid var(--line);
+    padding:1px 5px;margin-right:4px;background:rgba(255,255,255,.5);color:var(--ink-2);
+  }
+  .notes.on ~ .keys,body.on-intro .keys{display:none}
+
+  @media (max-height:820px){
+    .mark{margin-bottom:14px}
+    h1{margin-bottom:18px}
+    .qgrid{margin-top:14px;gap:10px}
+    .qcard{gap:8px;padding:12px 14px}
+    .qcard .aa{font-size:13px;line-height:1.6}
+  }
+  @media (max-width:900px){
+    .qgrid,.two,.voice{grid-template-columns:1fr}
+    .flow{grid-template-columns:1fr;gap:0}
+    .node{border-top:0;border-left:2px solid var(--ink);padding:12px 0 16px 18px}
+    .node::before{left:-5px;top:14px}
+    .node.alert{border-left-color:var(--red)}
+    .node .n{font-size:26px;margin-bottom:4px}
+    .acts{grid-template-columns:1fr}
+    .step{grid-template-columns:1fr;gap:8px}
+    .step .verdict{position:static;transform:none;justify-self:start;background:none;padding:0}
+    table.cmp{font-size:11.5px}
+    table.cmp td.dim,table.cmp td.them,table.cmp td.us,table.cmp td.why{width:auto}
+    .rail{display:none}
+    .screen{align-items:flex-start;padding-top:56px}
+  }
+  @media print{
+    body{overflow:visible}
+    .deck{height:auto;overflow:visible}
+    .screen{page-break-after:always;min-height:auto}
+    .rail,.keys,.notes,.prog{display:none}
+    .rv{opacity:1;transform:none}
+    .bar i{width:var(--w)}
+  }
+</style>
+</head>
+<body>
+
+<div class="prog"><i id="prog"></i></div>
+
+<nav class="rail" id="rail" aria-label="章节导航"></nav>
+
+<main class="deck" id="deck">
+
+  <!-- ══════ 片头（品牌片前 13.5 秒） ══════ -->
+  <section class="screen intro" id="introScreen" data-title="片头" data-note="片头 13.5 秒自动播完就停。这段时间<strong>不要说话</strong>，让屏幕自报家门。播完后屏幕泛白，顺势滚下去。音乐默认静音 —— 现场不方便就保持静音，不影响。开头被客户打断的话，直接按 ↓ 跳过。">
+    <video id="introVid" src="brand-intro.mp4" muted playsinline preload="auto" poster=""></video>
+    <div class="veil"></div>
+    <div class="fadeout"></div>
+    <div class="cont">往下继续 <span>&darr;</span></div>
+    <div class="fallback">
+      <div class="big">给东边野兽的<br>一次现场取证</div>
+      <div class="sm">ONLYSTYLE · 唯风 · 2026.10.30</div>
+    </div>
+    <div class="meta">
+      <b>2026.10.30</b><br>东边野兽 × 唯风
+    </div>
+    <button class="skip" type="button" id="skipIntro">跳过片头</button>
+  </section>
+
+  <!-- ══════ 0 封面 ══════ -->
+  <section class="screen cover" data-title="开场" data-note="先别讲产品。开场只问一句：<strong>「你们最近有没有在 AI 里搜过自己？」</strong>停三秒，等回答。多数人没有。然后说：我们搜了，而且用的是用户真会问的那几句话。今天不讲功能，只看结果。">
+    <div class="wrap">
+      <div class="kicker rv"><b>东边野兽 × 唯风</b><span>一镜到底 · 现场取证</span></div>
+      <h1 class="rv">它认识你，<br>但它<span class="hl">说错了</span>。</h1>
+      <p class="sub rv">我们拿「东边野兽」这个名字，去问了 AI 四个真实用户会问的问题。<br>答案都在，错也在。下面每一句都是原话，逐条可核。</p>
+      <div class="foot rv">
+        <span class="line"></span>
+        <span>2026 年 10 月 30 日 · 现场演示</span>
+        <span style="margin-left:auto">往下 <span class="arrow">↓</span> 开始</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════ 1 AI 原话 ══════ -->
+  <section class="screen" data-title="AI 原话" data-note="这一屏<strong>不要解释</strong>，让他们自己读完四条。客户读到「菌菇水」那条一定会出声，那时候才开口：<strong>「这条我本来想删掉的，觉得太扎人。后来还是留着 —— 因为它就是 AI 现在对外的说法。」</strong>">
+    <div class="wrap">
+      <div class="mark rv"><b>一</b><span>我们问了四句</span></div>
+      <h2 class="rv">它答得出，但答得不对</h2>
+      <p class="lead sm rv" style="margin-bottom:0">前两段是「说错了」，后两段是「根本没提你」。四段均为真机原话节选，未做改写。</p>
+
+      <div class="qgrid">
+        <div class="qcard rv">
+          <div class="qq"><i>01</i>东边野兽是什么牌子？</div>
+          <div class="aa">「东边野兽（<em>East Beast</em>）是一个中国本土的护肤品牌，成立于<em>2021 年</em>……以灵芝、松茸、青蒿等为核心成分。」</div>
+          <div class="fix">英文名是 Herbeast；成立 2020 年；核心是 30% 全灵芝细胞油。三处细节全错，且没有一处提到你的原料故事。</div>
+        </div>
+
+        <div class="qcard rv">
+          <div class="qq"><i>02</i>东边野兽和林清轩哪个好？</div>
+          <div class="aa">「其明星产品『灵芝精华油』主打以油养肤；<em>『菌菇水』</em>主打舒缓镇静。」</div>
+          <div class="fix">菌菇水是悦木之源的产品。AI 把别家的明星产品，算到了你头上。</div>
+        </div>
+
+        <div class="qcard rv">
+          <div class="qq"><i>03</i>灵芝精华油哪个牌子好？</div>
+          <div class="aa">「悦碧施、雪花秀、Oshadhi、Florihana……」四个品牌，<em>没有东边野兽</em>。</div>
+          <div class="fix">这一问是你的主场。AI 把品类交给了国际品牌。</div>
+        </div>
+
+        <div class="qcard rv">
+          <div class="qq"><i>04</i>敏感肌修护精华油推荐</div>
+          <div class="aa">「HABA 角鲨烷、The Ordinary、BIOEFFECT、至本、雅顿金胶……」</div>
+          <div class="fix">这是你产品的核心场景。它依然没有提到你。</div>
+        </div>
+      </div>
+
+      <div style="margin-top:clamp(14px,2.2vh,22px)" class="rv">
+        <span class="stamp"><b>实测</b> 2026-10-29 00:40 · deepseek-flash · 原样提问，未加任何提示词</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════ 2 三段滑坡 ══════ -->
+  <section class="screen" data-title="名字失效点" data-note="这一屏是全场最有说服力的一屏，因为<strong>客户可以当场搜</strong>。讲的时候把手机递过去：「你现在搜第二条试试。」<br>结论一句话：<strong>你不缺内容，你缺的是「品牌名 + 品类词」同时出现的那句话。</strong>">
+    <div class="wrap">
+      <div class="mark rv"><b>二</b><span>你的名字在哪一步失效</span></div>
+      <h2 class="rv">同一个品牌，三种问法，三种命运</h2>
+      <p class="lead sm rv" style="margin-bottom:0">2026-10-29 00:45 现场抓取，中文搜索前 8 条实际结果。</p>
+
+      <div class="steps">
+        <div class="step ok rv">
+          <div class="lh"><b>品牌词</b><code>东边野兽 官网</code></div>
+          <div class="rh">
+            <span class="chip hit">herbeast.cn（第 1 位）</span>
+            <span class="chip hit">京东旗舰店</span>
+            <span class="chip hit">百度百科</span>
+            <span class="chip hit">品牌星球</span>
+            <span class="chip hit">ELLE</span>
+            <span class="chip hit">知乎专栏</span>
+            <span class="chip hit">数英网</span>
+          </div>
+          <span class="verdict">这一步你赢了 · 8 条里 7 条相关</span>
+        </div>
+
+        <div class="step bad rv">
+          <div class="lh"><b>品牌 + 产品</b><code>东边野兽 灵芝精华油</code></div>
+          <div class="rh">
+            <span class="chip miss">东边（汉语词语）· 百科</span>
+            <span class="chip miss">哪边是东边？左还是右</span>
+            <span class="chip miss">东边 - 搜索词典</span>
+            <span class="chip miss">东边的读音</span>
+            <span class="chip miss">东边是哪个方向</span>
+          </div>
+          <span class="verdict">名字被拆成两个汉语词 · 0 条相关</span>
+        </div>
+
+        <div class="step bad rv">
+          <div class="lh"><b>品类词</b><code>灵芝精华油哪个牌子好</code></div>
+          <div class="rh">
+            <span class="chip miss">灵芝（中药）· 百科</span>
+            <span class="chip miss">灵芝的功效与作用</span>
+            <span class="chip miss">灵芝是仙草还是智商税</span>
+            <span class="chip miss">灵芝孢子粉详解</span>
+          </div>
+          <span class="verdict">全是药材百科 · 0 个品牌</span>
+        </div>
+      </div>
+
+      <p class="lead rv" style="margin-top:clamp(18px,2.8vh,26px);max-width:none">
+        缺口不在第一段 —— <b style="color:var(--green)">第一段你已经赢了</b>。
+        缺口在第二段和第三段：<b style="color:var(--red)">你的品牌名和你的品类词，从来没有在同一句话里出现过。</b>
+      </p>
+    </div>
+  </section>
+
+  <!-- ══════ 3 对照表 ══════ -->
+  <section class="screen" data-title="六条差别" data-note="这一屏<strong>不要逐行念</strong>。手指按在中间那列，说：<strong>「这六行里，前五行是能力，最后一行是良心。你可以拿最后一行去问任何一家供应商。」</strong><br>如果客户只记一句话，让他们记最后一行：能全自动发的只有一条信道。">
+    <div class="wrap">
+      <div class="mark rv"><b>三</b><span>差别在哪</span></div>
+      <h2 class="rv">别人卖「发了多少」，我们卖「说了什么」</h2>
+
+      <table class="cmp">
+        <thead>
+          <tr><th></th><th>多数服务商的做法</th><th class="us">唯风的做法</th><th>对你意味着</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="dim">怎么测</td>
+            <td class="them">抽几个问题问一遍，给一个「AI 可见度 78%」</td>
+            <td class="us">12 组问题 × 两条轨道（网页排名 + AI 作答），<b>不合成单一百分比</b></td>
+            <td class="why">知道是哪一类问题丢了，而不是「整体还行」</td>
+          </tr>
+          <tr>
+            <td class="dim">怎么判</td>
+            <td class="them">回答里出现品牌名，就算命中</td>
+            <td class="us">三态：答得出实质 / 只知名字 / 完全没提</td>
+            <td class="why">「我不了解它」不会被算成已提及，结论不会反</td>
+          </tr>
+          <tr>
+            <td class="dim">测哪个名</td>
+            <td class="them">只测中文名，或只测英文名</td>
+            <td class="us">中文名与拉丁名分开测、分开下结论</td>
+            <td class="why">中文能查到、英文一片空白 —— 两笔账要分开算</td>
+          </tr>
+          <tr>
+            <td class="dim">写什么</td>
+            <td class="them">通用大模型套模板，出来一股 AI 味</td>
+            <td class="us">品牌方行业包：口吻、母题白名单、图文笔记结构、合规判据都预置</td>
+            <td class="why">稿子不用返工改口吻</td>
+          </tr>
+          <tr>
+            <td class="dim">合规</td>
+            <td class="them">一刀切，什么都拦，编辑最后全点「忽略」</td>
+            <td class="us">三级：可自动改 / 必须改 / 只标记不拦（INCI、浓度、pH 属标记）</td>
+            <td class="why">告警值得看，不是噪音</td>
+          </tr>
+          <tr>
+            <td class="dim">发到哪</td>
+            <td class="them">承诺「全平台一键发」</td>
+            <td class="us">8 条信道逐条标明真实档位，能全自动的只有 1 条</td>
+            <td class="why">报表上的数，能对上后台的真东西</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- ══════ 4 两个不做 ══════ -->
+  <section class="screen" data-title="两个不做" data-note="这一屏讲<strong>方法论</strong>，也是全场唯一讲「我们怎么想」的地方。<br>核心句：<strong>「给你一个让你安心的数字，是这行最省事的做法。我们不这么干，因为你会照着那个数字做错决定。」</strong>">
+    <div class="wrap">
+      <div class="mark rv"><b>四</b><span>我们有两件事不做</span></div>
+      <h2 class="rv">不合成，不合并</h2>
+
+      <div class="two">
+        <div class="panel rv">
+          <div class="tag">不做 一</div>
+          <h3>不把网页和 AI 合成一个百分比</h3>
+          <div class="body">
+            <div class="track">
+              <div class="lbl"><span>网页轨 · 品牌词前 8 条相关</span><b>7 / 8</b></div>
+              <div class="bar" style="--w:87%"><i></i></div>
+            </div>
+            <div class="track">
+              <div class="lbl"><span>AI 轨 · 12 问答得出实质</span><b>0 / 12</b></div>
+              <div class="bar bad" style="--w:2%"><i></i></div>
+            </div>
+            <div class="strike"><b>✕</b><span>合成成一个百分比 → 「AI 可见度 78%」</span></div>
+            <p class="warn">这条结论会让你把预算全投错地方</p>
+            <p class="tail" style="margin:0">你的官网 SEO 做得不错，AI 那边却是零。两个数分开看，才知道钱该花在哪。</p>
+          </div>
+        </div>
+
+        <div class="panel rv">
+          <div class="tag">不做 二</div>
+          <h3>不把两个名字的结论合并</h3>
+          <div class="body">
+            <div class="track">
+              <div class="lbl"><span>中文名「东边野兽」· 答得出</span><b>4 / 4</b></div>
+              <div class="bar" style="--w:100%"><i></i></div>
+            </div>
+            <div class="track">
+              <div class="lbl"><span>其中事实错误</span><b>3 处</b></div>
+              <div class="bar bad" style="--w:75%"><i></i></div>
+            </div>
+            <div class="track">
+              <div class="lbl"><span>拉丁名 herbeast · 答得出</span><b>0 / 12</b></div>
+              <div class="bar bad" style="--w:2%"><i></i></div>
+            </div>
+            <div class="states">
+              <div class="s3"><b>0</b><span>答得出实质</span></div>
+              <div class="s2"><b>11</b><span>只知名字</span></div>
+              <div class="s1"><b>1</b><span>完全没提</span></div>
+            </div>
+            <div class="strike"><b>✕</b><span>合并成一句「一半一半」</span></div>
+            <p class="warn">两个名字的结论合在一起，等于什么都没说</p>
+          </div>
+        </div>
+      </div>
+
+      <p class="lead rv" style="margin-top:clamp(16px,2.4vh,24px);max-width:none">
+        一个让你安心的数字，是这行最省事的做法。我们不这么做，<b style="color:var(--red)">因为你会照着那个数字做错决定</b>。
+      </p>
+    </div>
+  </section>
+
+  <!-- ══════ 5 行业包 ══════ -->
+  <section class="screen" data-title="口径" data-note="这一屏解决客户心里那句话：<strong>「AI 写的东西一看就是 AI 写的，我不能发。」</strong><br>左右一读，差别立刻出来。补一句：<strong>「这不是模型更聪明，是包不一样。包是按行业写的，不是按提示词写的。」</strong>">
+    <div class="wrap">
+      <div class="mark rv"><b>五</b><span>同一个选题，两种口吻</span></div>
+      <h2 class="rv">不是模型更聪明，是「包」不一样</h2>
+      <p class="lead sm rv">选题：灵芝精华油为什么适合屏障受损的敏感肌</p>
+
+      <div class="voice">
+        <div class="col bad rv">
+          <div class="hd"><b>通用模型</b><span>原料 / 科普口吻</span></div>
+          <p>灵芝（Ganoderma lucidum）中的三萜类化合物具有抗氧化与免疫调节活性，相关研究表明其可影响皮肤屏障相关因子的表达。建议结合个人肤质，在专业人士指导下选择合适的产品。</p>
+          <div class="why">没有主语、没有场景、没有用法。既不像人话，也不敢让法务过。</div>
+        </div>
+        <div class="col ok rv">
+          <div class="hd"><b>品牌方包</b><span>东边野兽口吻</span></div>
+          <p>屏障被熬夜、换季、过度清洁磨薄之后，脸会持续泛红、刺痛。这支油解决的不是「干」，是这件事。</p>
+          <p>掌心搓开，按压上脸，两到三滴。吸收后是软而不油的手感。</p>
+          <div class="why">主语是皮肤，不是成分表。可发、可读、不需要返工改口吻。</div>
+        </div>
+      </div>
+
+      <p class="lead rv" style="margin-top:clamp(14px,2.2vh,22px);max-width:none">
+        包里预置的不只是语气：母题白名单（哪些话能说）、结构化格式（小红书出图文笔记，不是 60 字短文案）、
+        合规三级（绝对化用语自动改，功效宣称拦下来，INCI / 浓度 / pH 只标记不拦）。
+      </p>
+    </div>
+  </section>
+
+  <!-- ══════ 6 发射台 ══════ -->
+  <section class="screen" data-title="信道真相" data-note="这是<strong>建立信任</strong>的一屏，不是炫技。主动说：<strong>「抖音发不了，小红书也发不了。能全自动的只有公众号一条。」</strong><br>客户会松一口气 —— 因为之前有人跟他承诺过全平台。这一屏之后，前面所有数字他都会更愿意信。">
+    <div class="wrap">
+      <div class="mark rv"><b>六</b><span>稿子最后落在哪</span></div>
+      <h2 class="rv">8 条信道，能全自动的只有 1 条</h2>
+
+      <div class="flow">
+        <div class="node rv"><div class="n">12</div><div class="t">草稿</div><div class="d">选题 → 成稿</div></div>
+        <div class="node rv"><div class="n">11</div><div class="t">过闸</div><div class="d">减合规拦截</div></div>
+        <div class="node rv"><div class="n">9</div><div class="t">投递</div><div class="d">一稿可投多平台</div></div>
+        <div class="node alert rv"><div class="n">6</div><div class="t">落地</div><div class="d">真发布 · 有回链</div></div>
+      </div>
+      <div class="flow-note rv">
+        <span>半个批次没走到最后 —— 1 篇合规拦截、2 篇待审、3 篇还在队列。<b>「过闸」不等于「已发布」</b>。</span>
+        <span>演示环境数据，真实交付时用你的账号跑</span>
+      </div>
+
+      <table class="chan">
+        <thead>
+          <tr><td class="p" style="font-size:10.5px;letter-spacing:.12em;color:var(--ink-3);font-weight:500">平台</td><td class="g" style="font-size:10.5px;letter-spacing:.12em;color:var(--ink-3);font-weight:500">真实档位</td><td class="r" style="font-size:10.5px;letter-spacing:.12em;color:var(--ink-3)">为什么是这样</td></tr>
+        </thead>
+        <tbody>
+          <tr class="rv"><td class="p">微信公众号</td><td class="g"><span class="dot a"></span>全自动</td><td class="r">草稿箱与发表接口已开通，群发额度需人工确认（服务号默认 4 次/月）</td></tr>
+          <tr class="rv"><td class="p">B 站</td><td class="g"><span class="dot b"></span>需申请</td><td class="r">仅企业法人可申请；获批后只能唤起客户端预填，发布仍需人工点</td></tr>
+          <tr class="rv"><td class="p">微博</td><td class="g"><span class="dot b"></span>试通中</td><td class="r">接口权限已收紧，先试可行性，不作承诺</td></tr>
+          <tr class="rv"><td class="p">抖音</td><td class="g"><span class="dot c"></span>复制粘贴</td><td class="r">官方明确不向企业宣传 / 营销类内容开放，申请必被驳回</td></tr>
+          <tr class="rv"><td class="p">小红书</td><td class="g"><span class="dot c"></span>复制粘贴</td><td class="r">官方无发布接口；产出图文笔记（不是短文案），一键复制</td></tr>
+          <tr class="rv"><td class="p">知乎</td><td class="g"><span class="dot c"></span>复制粘贴</td><td class="r">官方无发布接口</td></tr>
+          <tr class="rv"><td class="p">微信视频号</td><td class="g"><span class="dot c"></span>复制粘贴</td><td class="r">官方无内容发布接口；产出分镜脚本</td></tr>
+          <tr class="rv"><td class="p">官网</td><td class="g"><span class="dot c"></span>导出上版</td><td class="r">自有阵地，无接口无限流；导出可直接上版的页面结构</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- ══════ 7 收口 ══════ -->
+  <section class="screen" data-title="30 天" data-note="收口<strong>不谈价格、不谈年框</strong>。只提一件事：先用你自己的问题跑一遍基线。<br>最后一句慢慢说：<strong>「30 天后同一组问题再跑一次。数字不涨，你不付。」</strong><br>这句话比任何报价都有用，因为它把风险从他们那边挪到了我们这边。">
+    <div class="wrap">
+      <div class="mark rv"><b>七</b><span>怎么开始</span></div>
+      <h1 class="rv">先不谈年框，<br>跑 30 天。</h1>
+
+      <div class="acts">
+        <div class="act rv">
+          <div class="num">01</div>
+          <h4>你自己点一遍</h4>
+          <p>演示账号现在就能登。先看情报台那 12 问的原始回答 —— 包括上一页那四条。</p>
+        </div>
+        <div class="act rv">
+          <div class="num">02</div>
+          <h4>换你的问题</h4>
+          <p>把你真正关心的 12 个问题给我（客服记录、搜索词、私信里都行），重跑一次基线。</p>
+        </div>
+        <div class="act rv">
+          <div class="num">03</div>
+          <h4>30 天后同一组再跑</h4>
+          <p>同一组问题、同一套判据。涨了多少，你亲眼看得见，不用听我说。</p>
+        </div>
+      </div>
+
+      <div class="final rv">
+        <div class="q">我们卖的不是稿子数量，<br>是 AI 回答里<b>那句关于你的话</b>。</div>
+        <div class="sig">
+          唯风 · 品牌内容中台<br>
+          本页数据：2026-10-29 凌晨真机实测<br>
+          第 6 页节点为演示环境数据
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<div class="notes" id="notes">
+  <div class="nh"><b>讲稿</b><span>按 G 收起</span></div>
+  <div class="nt" id="nt"></div>
+</div>
+
+<div class="keys">
+  <span><kbd>↑</kbd><kbd>↓</kbd>翻页</span>
+  <span><kbd>G</kbd>讲稿</span>
+  <span><kbd>F</kbd>全屏</span>
+</div>
+
+<script>
+(function(){
+  var deck = document.getElementById('deck');
+  var screens = Array.prototype.slice.call(deck.querySelectorAll('.screen'));
+  var rail = document.getElementById('rail');
+  var prog = document.getElementById('prog');
+  var notes = document.getElementById('notes');
+  var nt = document.getElementById('nt');
+  var cur = 0;
+
+  /* 轨道 */
+  screens.forEach(function(s, i){
+    var b = document.createElement('button');
+    b.type = 'button';
+    b.innerHTML = '<span class="t">' + (s.dataset.title || '') + '</span><span class="d"></span>';
+    b.setAttribute('aria-label', s.dataset.title || ('第 ' + (i+1) + ' 屏'));
+    b.addEventListener('click', function(){ go(i); });
+    rail.appendChild(b);
+  });
+  var dots = Array.prototype.slice.call(rail.children);
+
+  function go(i){
+    i = Math.max(0, Math.min(screens.length - 1, i));
+    screens[i].scrollIntoView({ behavior:'smooth', block:'start' });
+  }
+
+  function setActive(i){
+    if (i === cur && dots[i].classList.contains('on')) return;
+    cur = i;
+    dots.forEach(function(d, k){ d.classList.toggle('on', k === i); });
+    nt.innerHTML = screens[i].dataset.note || '';
+    prog.style.width = ((i + 1) / screens.length * 100) + '%';
+    document.body.classList.toggle('on-intro', i === 0);
+    if (i === 0) {
+      if (!introDead) { iScr.classList.remove('done'); introPlay(); }
+    } else {
+      introStop();
+    }
+  }
+
+  /* 入场 + 当前屏 */
+  var io = new IntersectionObserver(function(es){
+    es.forEach(function(e){
+      if (e.target.classList.contains('screen')) {
+        var idx = screens.indexOf(e.target);
+        if (e.isIntersecting) {
+          e.target.classList.add('in');
+          if (e.intersectionRatio > 0.45) setActive(idx);
+        }
+      }
+    });
+  }, { root: deck, threshold: [0, 0.45, 0.8] });
+
+  screens.forEach(function(s){ io.observe(s); });
+
+  /* 滚动兜底：取最接近视口顶部的一屏 */
+  var tick;
+  deck.addEventListener('scroll', function(){
+    clearTimeout(tick);
+    tick = setTimeout(function(){
+      var best = 0, min = Infinity;
+      screens.forEach(function(s, i){
+        var d = Math.abs(s.offsetTop - deck.scrollTop);
+        if (d < min) { min = d; best = i; }
+      });
+      setActive(best);
+    }, 90);
+  }, { passive:true });
+
+  /* 键盘 */
+  window.addEventListener('keydown', function(e){
+    var k = e.key;
+    if (k === 'ArrowDown' || k === 'ArrowRight' || k === 'PageDown' || k === ' ') {
+      e.preventDefault(); go(cur + 1);
+    } else if (k === 'ArrowUp' || k === 'ArrowLeft' || k === 'PageUp') {
+      e.preventDefault(); go(cur - 1);
+    } else if (k === 'Home') {
+      e.preventDefault(); go(0);
+    } else if (k === 'End') {
+      e.preventDefault(); go(screens.length - 1);
+    } else if (k === 'g' || k === 'G') {
+      notes.classList.toggle('on');
+    } else if (k === 'f' || k === 'F') {
+      if (!document.fullscreenElement) {
+        if (document.documentElement.requestFullscreen) document.documentElement.requestFullscreen();
+      } else if (document.exitFullscreen) {
+        document.exitFullscreen();
+      }
+    }
+  });
+
+  /* 点击左右半边翻页已移除：演示时鼠标指向卡片容易误触，翻页只靠滚轮 / 键盘 / 右侧轨道 */
+
+  /* ── 片头播放控制 ──
+     🔴 品牌片只播前 13.5 秒，然后停住泛白。
+        不整条播：3 分 47 秒会把一镜到底的节奏打断，客户还没看到证据就先看完了广告。
+        文件没跟着拷贝过来时降级成纸底大字，绝不出现黑色空屏。 */
+  var iv = document.getElementById('introVid');
+  var iScr = document.getElementById('introScreen');
+  var skipBtn = document.getElementById('skipIntro');
+  var INTRO_END = 13.4;
+  var introDead = false;
+
+  function introPlay(){
+    if (!iv || introDead) return;
+    try { iv.currentTime = 0; } catch (e) {}
+    var p = iv.play();
+    if (p && p.catch) p.catch(function(){});
+    iScr.classList.add('playing');
+  }
+  function introStop(){
+    if (!iv) return;
+    try { iv.pause(); } catch (e) {}
+  }
+
+  if (iv) {
+    iv.addEventListener('canplay', function(){ iScr.classList.add('playing'); }, { once: true });
+    iv.addEventListener('timeupdate', function(){
+      if (iv.currentTime >= INTRO_END) { introStop(); iScr.classList.add('done'); }
+    });
+    iv.addEventListener('ended', function(){ iScr.classList.add('done'); });
+    iv.addEventListener('error', function(){
+      introDead = true;
+      iScr.classList.add('no-video');
+    });
+  }
+  if (skipBtn) {
+    skipBtn.addEventListener('click', function(e){
+      e.stopPropagation();
+      introStop();
+      iScr.classList.add('done');
+      setTimeout(function(){ go(1); }, 240);
+    });
+  }
+
+  setActive(0);
+  screens[0].classList.add('in');
+})();
+</script>
+</body>
+</html>
