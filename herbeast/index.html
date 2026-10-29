@@ -89,6 +89,7 @@
     position:relative;
   }
   .wrap{width:100%;max-width:min(1440px,82vw);margin:0 auto;padding:0 clamp(28px,4.4vw,64px)}
+  .wrap.wide{max-width:min(1560px,93vw)}
 
   /* 每屏左上角章节标记 */
   .mark{
@@ -301,6 +302,120 @@
   .vline .s b{color:var(--ink-2);font-weight:500}
 
 
+  /* 一句人话：专业词后面紧跟的翻译。整页只靠这一条把门槛降下来 */
+  .plain{
+    font-size:clamp(11.5px,1.02vw,13px);line-height:1.7;color:var(--ink-3);
+    border-left:2px solid var(--gold);padding-left:11px;margin:9px 0 0;
+  }
+  .plain b{color:var(--ink-2);font-weight:600}
+
+  /* 封面这一趟要看三件事 */
+  .agenda{
+    display:flex;gap:clamp(18px,3vw,44px);flex-wrap:wrap;
+    margin:clamp(22px,3.6vh,36px) 0 clamp(16px,2.4vh,24px);
+    padding-top:clamp(14px,2.2vh,20px);
+    border-top:1px solid var(--line-2);
+  }
+  .agenda div{display:flex;align-items:baseline;gap:9px;font-size:clamp(11.5px,1.05vw,13.5px);color:var(--ink-2);line-height:1.6}
+  .agenda i{font-style:normal;font-family:var(--mono);font-size:11px;color:var(--gold)}
+  .agenda b{color:var(--ink);font-weight:600}
+
+  /* ── 真机：截图 + 编号热点 ── */
+  .split{
+    display:grid;grid-template-columns:minmax(238px,24%) 1fr;
+    gap:clamp(14px,1.9vw,26px);align-items:start;
+    margin-top:clamp(12px,2vh,20px);
+  }
+  /* 🔴 grid 子项默认 min-width:auto，图片的固有宽度会把整列撑出去，必须归零 */
+  .split > *{min-width:0}
+  .split .side{display:flex;flex-direction:column;gap:11px}
+  .split .side h2{font-size:clamp(21px,2.3vw,33px);margin-bottom:2px}
+  .side .pt{display:flex;gap:9px;font-size:clamp(11.5px,1.02vw,13px);line-height:1.72;color:var(--ink-2);margin:0}
+  .side .pt i{
+    flex:0 0 auto;display:grid;place-items:center;width:17px;height:17px;border-radius:50%;
+    background:var(--ink);color:var(--paper);font:600 9.5px/1 var(--mono);font-style:normal;margin-top:3px;
+  }
+  .side .pt b{color:var(--ink);font-weight:600}
+  .side .pt .r{color:var(--red)}
+
+  .shot{position:relative;border:1px solid var(--line);background:#fff;box-shadow:0 20px 46px -24px rgba(21,26,22,.4)}
+  .shot .bar{
+    display:flex;align-items:center;gap:7px;padding:7px 11px;
+    border-bottom:1px solid var(--line-2);background:var(--paper-2);
+    font-size:10.5px;color:var(--ink-3);letter-spacing:.05em;
+  }
+  .shot .bar b{color:var(--ink-2);font-weight:600}
+  .shot .bar .live{
+    margin-left:auto;display:inline-flex;align-items:center;gap:5px;
+    font-family:var(--mono);font-size:9px;letter-spacing:.1em;color:var(--green-2);
+  }
+  .shot .bar .live::before{content:"";width:5px;height:5px;border-radius:50%;background:var(--green-2)}
+  .shot .cap{padding:8px 12px;border-top:1px solid var(--line-2);font-size:11px;color:var(--ink-3);line-height:1.6}
+  .shot .cap b{color:var(--ink-2);font-weight:600}
+  .shot .frame{position:relative;line-height:0}
+
+  .hot{
+    position:absolute;width:25px;height:25px;border-radius:50%;
+    transform:translate(-50%,-50%);
+    background:var(--red);color:#fff;border:2px solid rgba(255,255,255,.92);
+    font:600 11.5px/1 var(--mono);cursor:pointer;padding:0;
+    display:grid;place-items:center;z-index:3;
+    box-shadow:0 3px 12px rgba(21,26,22,.4);
+    transition:transform .18s,background .18s;
+  }
+  .hot:hover{transform:translate(-50%,-50%) scale(1.16)}
+  .hot::before{
+    content:"";position:absolute;inset:-7px;border-radius:50%;
+    border:1px solid rgba(169,53,39,.55);animation:ring 2.6s ease-out infinite;
+  }
+  @keyframes ring{0%{transform:scale(.78);opacity:.85}72%{transform:scale(1.4);opacity:0}100%{opacity:0}}
+  .hot.on{background:#fff;color:var(--red);border-color:var(--red);transform:translate(-50%,-50%) scale(1.1)}
+  .hot.on::before{display:none}
+  @media (prefers-reduced-motion:reduce){.hot::before{animation:none}}
+
+  .tip{
+    position:absolute;z-index:6;width:min(272px,72%);
+    background:rgba(21,26,22,.97);color:#EFE9DC;
+    padding:11px 13px;font-size:11.8px;line-height:1.7;
+    border-left:2px solid var(--red);
+    box-shadow:0 14px 34px rgba(10,14,12,.4);
+    opacity:0;transform:translateY(4px);pointer-events:none;
+    transition:opacity .2s,transform .2s;
+  }
+  .tip.on{opacity:1;transform:none}
+  .tip b{color:#fff;font-weight:600}
+  .tip .tn{font-family:var(--mono);font-size:9px;letter-spacing:.14em;color:var(--gold);display:block;margin-bottom:5px}
+
+  @media (max-width:1000px){
+    .split{grid-template-columns:1fr}
+  }
+
+  /* 点图放大：截图里的字在投影上太小，看不清就点开看原图 */
+  .lb{
+    position:fixed;inset:0;z-index:60;background:rgba(10,14,12,.95);
+    display:none;align-items:center;justify-content:center;padding:2.5vh 2vw;cursor:zoom-out;
+  }
+  .lb.on{display:flex}
+  .lb img{max-width:100%;max-height:95vh;box-shadow:0 30px 90px rgba(0,0,0,.7)}
+  .lb .hint{
+    position:absolute;bottom:12px;left:0;right:0;text-align:center;
+    font-size:11px;letter-spacing:.14em;color:rgba(255,255,255,.45);
+  }
+  .shot .frame img{display:block;width:100%;height:auto;cursor:zoom-in}
+
+  /* 两个客户 */
+  .duo{display:grid;grid-template-columns:1fr 1fr;gap:clamp(14px,2vw,26px);margin-top:clamp(16px,2.6vh,26px)}
+  .duo .who{border:1px solid var(--line);background:rgba(255,255,255,.5);padding:clamp(15px,1.7vw,23px);display:flex;flex-direction:column}
+  .duo .who.now{border-color:rgba(169,53,39,.3);border-top:2px solid var(--red)}
+  .duo .who .nm{font-family:var(--serif);font-size:clamp(18px,1.9vw,25px);line-height:1.3}
+  .duo .who .ty{font-size:11px;letter-spacing:.12em;color:var(--ink-3);margin-top:6px}
+  .duo .who dl{display:grid;grid-template-columns:auto 1fr;gap:8px 14px;margin:clamp(14px,2vh,20px) 0 0;padding-top:clamp(12px,1.8vh,16px);border-top:1px solid var(--line-2)}
+  .duo .who dt{font-size:11px;color:var(--ink-3);white-space:nowrap}
+  .duo .who dd{margin:0;font-size:clamp(12px,1.1vw,13.5px);color:var(--ink);line-height:1.5}
+  .duo .who dd b{font-family:var(--mono);font-size:clamp(13px,1.2vw,15px);font-weight:600}
+  .duo .who dd.pending{color:var(--ink-3);font-style:italic}
+  @media (max-width:900px){.duo{grid-template-columns:1fr}}
+
   .stamp{
     display:inline-flex;align-items:center;gap:8px;
     font-size:11.5px;letter-spacing:.08em;color:var(--ink-3);
@@ -484,6 +599,20 @@
   }
   .notes.on ~ .keys,body.on-intro .keys{display:none}
 
+  /* 真机入口（只在本地跑时出现） */
+  .livebtn{
+    position:fixed;right:26px;bottom:14px;z-index:32;display:none;
+    align-items:center;gap:6px;
+    font-size:11px;letter-spacing:.1em;color:var(--ink-2);text-decoration:none;
+    border:1px solid var(--line);background:rgba(255,255,255,.72);
+    padding:6px 11px;backdrop-filter:blur(4px);
+    transition:color .2s,border-color .2s;
+  }
+  .livebtn:hover{color:var(--red);border-color:rgba(169,53,39,.42)}
+  .livebtn span{font-size:12px;line-height:1}
+  body.on-intro .livebtn{display:none!important}
+  .notes.on ~ .livebtn{display:none!important}
+
   @media (max-height:820px){
     .mark{margin-bottom:14px}
     h1{margin-bottom:18px}
@@ -564,7 +693,14 @@
     <div class="wrap">
       <div class="kicker rv"><b>东边野兽 × 唯风</b><span>一镜到底 · 现场取证</span></div>
       <h1 class="rv">它认识你，<br>但每次说的<span class="hl">不一样</span>。</h1>
-      <p class="sub rv">同一句话，同一分钟，我们连问了四遍。<br>四个答案，三个英文名，两个成立年份。下面全是原话，一字未改。</p>
+      <p class="sub rv">同一句话，同一分钟，我们连问了四遍。<br>四个答案，三个英文名，两个成立年份。下面全是原话，一个字没改。</p>
+
+      <div class="agenda rv">
+        <div><i>01</i><span><b>它现在怎么说你</b> · 有据可查</span></div>
+        <div><i>02</i><span><b>我们哪里不一样</b> · 六件事</span></div>
+        <div><i>03</i><span><b>30 天怎么验</b> · 你自己看数</span></div>
+      </div>
+
       <div class="foot rv">
         <span class="line"></span>
         <span>2026 年 10 月 30 日 · 现场演示</span>
@@ -578,7 +714,7 @@
     <div class="wrap">
       <div class="mark rv"><b>一</b><span>同一句话，问了四遍</span></div>
       <h2 class="rv">它给了四个答案</h2>
-      <p class="lead sm rv" style="margin-bottom:0">今早 08:42 到 08:44，同一个模型、同一句「东边野兽是什么牌子？」，连问四次。下面是四段原文，只把不一致的地方划出来。</p>
+      <p class="lead sm rv" style="margin-bottom:0">今天早上 8 点 42 分到 44 分，我们把「东边野兽是什么牌子？」这句话原封不动问了四遍。下面四段全是它的原话，只把互相打架的地方标了出来。</p>
 
       <div class="vgrid">
         <div class="vcard rv">
@@ -623,10 +759,10 @@
       </div>
 
       <div class="vline rv">
-        <div class="k">三个英文名写法、两个成立年份、三份成分表。<br><b>它对你的了解不是一份档案，是每次现编的。</b></div>
+        <div class="k">三个英文名、两个成立年份、三份配料表。<br><b>它不是记错了 —— 它压根没记住，每次都是当场现编。</b></div>
         <div class="s">
-          你现在拿手机再问一遍，大概率是<b>第五个版本</b>。<br>
-          同一组问题里唯一稳定的是：问「敏感肌修护精华油推荐」两次，<b>两次都没提你</b> —— 那是你产品最核心的场景。
+          你现在拿手机再问一遍，大概率出<b>第五个版本</b>。<br>
+          同一批问题里唯一没变的，是这一句：问「敏感肌修护精华油推荐」，问了两次，<b>两次都没提你</b> —— 而那正好是你最能卖的场景。
         </div>
       </div>
 
@@ -637,15 +773,15 @@
   </section>
 
   <!-- ══════ 2 三段滑坡 ══════ -->
-  <section class="screen" data-title="名字失效点" data-note="这一屏<strong>客户可以当场搜，而且一定搜得到同样的结果</strong> —— 稳定性仅次于上一屏的「四个答案」。讲的时候把手机递过去：「你现在搜第二条试试。」<br>结论一句话：<strong>你不缺内容，你缺的是「品牌名 + 品类词」同时出现的那句话。</strong>">
+  <section class="screen" data-title="名字失效点" data-note="这一屏<strong>客户可以当场搜，而且一定搜得到同样的结果</strong> —— 稳定性仅次于上一屏的「四个答案」。讲的时候把手机递过去：「你现在搜第二条试试。」<br>结论一句话：<strong>你不缺内容，你缺的是那句把「牌子名 + 产品类别」写在一起的话。</strong>">
     <div class="wrap">
       <div class="mark rv"><b>二</b><span>你的名字在哪一步失效</span></div>
-      <h2 class="rv">同一个品牌，三种问法，三种命运</h2>
-      <p class="lead sm rv" style="margin-bottom:0">2026-10-29 00:45 现场抓取，中文搜索前 8 条实际结果。</p>
+      <h2 class="rv">客户想买的时候，搜不到你</h2>
+      <p class="lead sm rv" style="margin-bottom:0">2026-10-29 凌晨，我们用三个真问题各搜了一遍。下面是中国区搜索结果前 8 条的实际样子。</p>
 
       <div class="steps">
         <div class="step ok rv">
-          <div class="lh"><b>品牌词</b><code>东边野兽 官网</code></div>
+          <div class="lh"><b>第一问 · 直接搜你的名字</b><code>东边野兽 官网</code></div>
           <div class="rh">
             <span class="chip hit">herbeast.cn（第 1 位）</span>
             <span class="chip hit">京东旗舰店</span>
@@ -655,11 +791,11 @@
             <span class="chip hit">知乎专栏</span>
             <span class="chip hit">数英网</span>
           </div>
-          <span class="verdict">这一步你赢了 · 8 条里 7 条相关</span>
+          <span class="verdict">8 条里 7 条是你 · 这一问赢了</span>
         </div>
 
         <div class="step bad rv">
-          <div class="lh"><b>品牌 + 产品</b><code>东边野兽 灵芝精华油</code></div>
+          <div class="lh"><b>第二问 · 加了产品名</b><code>东边野兽 灵芝精华油</code></div>
           <div class="rh">
             <span class="chip miss">东边（汉语词语）· 百科</span>
             <span class="chip miss">哪边是东边？左还是右</span>
@@ -667,24 +803,28 @@
             <span class="chip miss">东边的读音</span>
             <span class="chip miss">东边是哪个方向</span>
           </div>
-          <span class="verdict">名字被拆成两个汉语词 · 0 条相关</span>
+          <span class="verdict">名字被拆成两个普通词 · 8 条里 0 条是你</span>
         </div>
 
         <div class="step bad rv">
-          <div class="lh"><b>品类词</b><code>灵芝精华油哪个牌子好</code></div>
+          <div class="lh"><b>第三问 · 客户真要买时会搜的话</b><code>灵芝精华油哪个牌子好</code></div>
           <div class="rh">
             <span class="chip miss">灵芝（中药）· 百科</span>
             <span class="chip miss">灵芝的功效与作用</span>
             <span class="chip miss">灵芝是仙草还是智商税</span>
             <span class="chip miss">灵芝孢子粉详解</span>
           </div>
-          <span class="verdict">全是药材百科 · 0 个品牌</span>
+          <span class="verdict">全是药材科普 · 8 条里 0 个品牌</span>
         </div>
       </div>
 
       <p class="lead rv" style="margin-top:clamp(18px,2.8vh,26px);max-width:none">
-        缺口不在第一段 —— <b style="color:var(--green)">第一段你已经赢了</b>。
-        缺口在第二段和第三段：<b style="color:var(--red)">你的品牌名和你的品类词，从来没有在同一句话里出现过。</b>
+        第一问你是赢的 —— 已经在找你的人，找得到。
+        输在第二问和第三问：<b style="color:var(--red)">你的牌子名和你的产品类别，从来没有出现在同一句话里。</b>
+      </p>
+      <p class="plain rv">
+        说白了：客户从<b>「知道你」</b>到<b>「买你」</b>，中间断了一截。这一截不补，前面的名气带不来订单 ——
+        因为客户真正搜的是「XX 哪个牌子好」，这句话里没有你。
       </p>
     </div>
   </section>
@@ -694,50 +834,56 @@
     <div class="wrap">
       <div class="mark rv"><b>三</b><span>差别在哪</span></div>
       <h2 class="rv">别人卖「发了多少」，我们卖「说了什么」</h2>
+      <p class="lead sm rv" style="margin-bottom:0">同样是做 AI 内容，两家公司做的事，差在这六件上。每一件都可以当场问。</p>
 
       <table class="cmp">
         <thead>
-          <tr><th></th><th>多数服务商的做法</th><th class="us">唯风的做法</th><th>对你意味着</th></tr>
+          <tr><th></th><th>多数服务商怎么做</th><th class="us">我们怎么做</th><th>这对你意味着什么</th></tr>
         </thead>
         <tbody>
           <tr>
-            <td class="dim">怎么测</td>
-            <td class="them">抽几个问题问一遍，给一个「AI 可见度 78%」</td>
-            <td class="us">12 组问题 × 两条轨道（网页排名 + AI 作答），<b>不合成单一百分比</b></td>
-            <td class="why">知道是哪一类问题丢了，而不是「整体还行」</td>
+            <td class="dim">成绩怎么算</td>
+            <td class="them">抽几个问题问一遍，报一个「AI 可见度 78%」</td>
+            <td class="us">12 个真问题，百度排名和 AI 回答分开查，<b>最后不算总分</b></td>
+            <td class="why">你知道是哪一类问题丢了，不是只知道「整体还行」</td>
           </tr>
           <tr>
-            <td class="dim">怎么判</td>
-            <td class="them">回答里出现品牌名，就算命中</td>
-            <td class="us">三态：答得出实质 / 只知名字 / 完全没提</td>
-            <td class="why">「我不了解它」不会被算成已提及，结论不会反</td>
+            <td class="dim">算不算提到</td>
+            <td class="them">回答里出现你的名字，就记一分</td>
+            <td class="us">分三档：认真介绍了 / 只提了个名字 / 完全没提</td>
+            <td class="why">它说「我不了解」，不会被算成「提到过」</td>
           </tr>
           <tr>
-            <td class="dim">测哪个名</td>
-            <td class="them">只测中文名，或只测英文名</td>
-            <td class="us">中文名与拉丁名分开测、分开下结论</td>
-            <td class="why">中文能查到、英文一片空白 —— 两笔账要分开算</td>
+            <td class="dim">用哪个名字</td>
+            <td class="them">只试中文名，或者只试英文名</td>
+            <td class="us">中文名、英文名分开试，分开下结论</td>
+            <td class="why">中文查得到、英文一片空白 —— 这是两件事</td>
           </tr>
           <tr>
-            <td class="dim">写什么</td>
-            <td class="them">通用大模型套模板，出来一股 AI 味</td>
-            <td class="us">品牌方行业包：口吻、母题白名单、图文笔记结构、合规判据都预置</td>
-            <td class="why">稿子不用返工改口吻</td>
+            <td class="dim">稿子怎么写</td>
+            <td class="them">通用 AI 套模板，一看就是 AI 写的</td>
+            <td class="us">先给它一本你们家的「说话手册」</td>
+            <td class="why">稿子不用拿回来重写口吻</td>
           </tr>
           <tr>
-            <td class="dim">合规</td>
-            <td class="them">一刀切，什么都拦，编辑最后全点「忽略」</td>
-            <td class="us">三级：可自动改 / 必须改 / 只标记不拦（INCI、浓度、pH 属标记）</td>
-            <td class="why">告警值得看，不是噪音</td>
+            <td class="dim">违规检查</td>
+            <td class="them">什么都拦，编辑最后全点「忽略」</td>
+            <td class="us">分三种：能自动改 / 必须找人改 / 只是提醒你别慌</td>
+            <td class="why">提醒值得看，不是噪音</td>
           </tr>
           <tr>
-            <td class="dim">发到哪</td>
+            <td class="dim">能发到哪</td>
             <td class="them">承诺「全平台一键发」</td>
-            <td class="us">8 条信道逐条标明真实档位，能全自动的只有 1 条</td>
-            <td class="why">报表上的数，能对上后台的真东西</td>
+            <td class="us">8 个平台逐条写明真实能力，能全自动的只有 1 个</td>
+            <td class="why">报表上的数，对得上后台的真东西</td>
           </tr>
         </tbody>
       </table>
+
+      <p class="plain rv">
+        说白了：左边是<b>「给你一个好看的数」</b>，右边是<b>「给你一个能查的答案」</b>。
+        前五条是本事，最后一条是良心 —— 你可以拿最后一条去问任何一家供应商。
+      </p>
     </div>
   </section>
 
@@ -745,46 +891,47 @@
   <section class="screen" data-title="两个不做" data-note="这一屏讲<strong>方法论</strong>，也是全场唯一讲「我们怎么想」的地方。<br>右栏那句「认成女装店」是真实的，说出来他们会笑，笑完就不笑了。<br>核心句：<strong>「给你一个让你安心的数字，是这行最省事的做法。我们不这么干，因为你会照着那个数字做错决定。」</strong>">
     <div class="wrap">
       <div class="mark rv"><b>四</b><span>我们有两件事不做</span></div>
-      <h2 class="rv">不合成，不合并</h2>
+      <h2 class="rv">我们不给你一个总分</h2>
+      <p class="lead sm rv" style="margin-bottom:0">听着像缺点。听完你就知道为什么。</p>
 
       <div class="two">
         <div class="panel rv">
           <div class="tag">不做 一</div>
-          <h3>不把网页和 AI 合成一个百分比</h3>
+          <h3>不把「百度排第几」和「AI 怎么答」算成一个总分</h3>
           <div class="body">
             <div class="track">
-              <div class="lbl"><span>网页轨 · 品牌词前 8 条相关</span><b>7 / 8</b></div>
+              <div class="lbl"><span>百度那边 · 前 8 条里有几条是你</span><b>7 / 8</b></div>
               <div class="bar" style="--w:87%"><i></i></div>
             </div>
             <div class="track">
-              <div class="lbl"><span>AI 轨 · 同一问题问 4 次，说法一致</span><b>0 / 4</b></div>
+              <div class="lbl"><span>AI 那边 · 同一问题问 4 次，说法一致几次</span><b>0 / 4</b></div>
               <div class="bar bad" style="--w:2%"><i></i></div>
             </div>
-            <div class="strike"><b>✕</b><span>合成成一个百分比 → 「AI 可见度 78%」</span></div>
-            <p class="warn">这条结论会让你把预算全投错地方</p>
-            <p class="tail" style="margin:0">你的官网在网页那头很稳，AI 这头连自己上次说过什么都不重复。两个数分开看，才知道钱该花在哪。</p>
+            <div class="strike"><b>✕</b><span>合成一个「AI 可见度 78%」</span></div>
+            <p class="warn">这个数字会让你把钱投错地方</p>
+            <p class="tail" style="margin:0">百度那头你很稳；AI 那头它连自己上次说过什么都会变。两个数分开看，才知道钱该花在哪。</p>
           </div>
         </div>
 
         <div class="panel rv">
           <div class="tag">不做 二</div>
-          <h3>不把两个名字的结论合并</h3>
+          <h3>不把「中文名」和「英文名」的结果混成一个数</h3>
           <div class="body">
             <div class="track">
-              <div class="lbl"><span>中文名「东边野兽」· 答得出</span><b>4 / 4</b></div>
+              <div class="lbl"><span>中文名「东边野兽」· 答得出你</span><b>4 / 4</b></div>
               <div class="bar" style="--w:100%"><i></i></div>
             </div>
             <div class="track">
-              <div class="lbl"><span>四次说法一致</span><b>0 / 4</b></div>
+              <div class="lbl"><span>但是 · 4 次说法一致</span><b>0 / 4</b></div>
               <div class="bar bad" style="--w:2%"><i></i></div>
             </div>
             <div class="track">
-              <div class="lbl"><span>拉丁名「herbeast」· 被认成别家</span><b>3 / 3</b></div>
+              <div class="lbl"><span>英文名「herbeast」· 被认成别家</span><b>3 / 3</b></div>
               <div class="bar bad" style="--w:100%"><i></i></div>
             </div>
             <div class="strike"><b>✕</b><span>合并成一句「一半一半」</span></div>
-            <p class="warn">两个名字的结论合在一起，等于什么都没说</p>
-            <p class="tail" style="margin:0">用拉丁名问，它三次都把你认成一家女装快时尚店。中文名那头，它答得出，但每次答得不一样。这是两笔账。</p>
+            <p class="warn">两个名字混在一起算，等于什么都没说</p>
+            <p class="tail" style="margin:0">用英文名问，它三次都把你认成一家女装快时尚店。中文名它答得出，但每次不一样。这是两笔账。</p>
           </div>
         </div>
       </div>
@@ -796,29 +943,183 @@
   </section>
 
   <!-- ══════ 5 行业包 ══════ -->
-  <section class="screen" data-title="口径" data-note="这一屏解决客户心里那句话：<strong>「AI 写的东西一看就是 AI 写的，我不能发。」</strong><br>左右一读，差别立刻出来。补一句：<strong>「这不是模型更聪明，是包不一样。包是按行业写的，不是按提示词写的。」</strong>">
+  <section class="screen" data-title="口径" data-note="这一屏解决客户心里那句话：<strong>「AI 写的东西一看就是 AI 写的，我不能发。」</strong><br>左右一读，差别立刻出来。补一句：<strong>「不是 AI 更聪明，是我们事先教过它怎么说。这本手册按行业写一次，以后每篇都用它。」</strong>">
     <div class="wrap">
       <div class="mark rv"><b>五</b><span>同一个选题，两种口吻</span></div>
-      <h2 class="rv">不是模型更聪明，是「包」不一样</h2>
-      <p class="lead sm rv">选题：灵芝精华油为什么适合屏障受损的敏感肌</p>
+      <h2 class="rv">不是 AI 更聪明，是有没有人教过它</h2>
+      <p class="lead sm rv">同一个题目，交给两个 AI 写：一个没人教过，一个先读过你们家的「说话手册」。</p>
 
       <div class="voice">
         <div class="col bad rv">
-          <div class="hd"><b>通用模型</b><span>原料 / 科普口吻</span></div>
+          <div class="hd"><b>没教过的 AI</b><span>通用模型，直接问</span></div>
           <p>灵芝（Ganoderma lucidum）中的三萜类化合物具有抗氧化与免疫调节活性，相关研究表明其可影响皮肤屏障相关因子的表达。建议结合个人肤质，在专业人士指导下选择合适的产品。</p>
-          <div class="why">没有主语、没有场景、没有用法。既不像人话，也不敢让法务过。</div>
+          <div class="why">没有主语、没有场景、没有用法。不像人话，也不敢给法务看。</div>
         </div>
         <div class="col ok rv">
-          <div class="hd"><b>品牌方包</b><span>东边野兽口吻</span></div>
+          <div class="hd"><b>教过的 AI</b><span>读过东边野兽的说话手册</span></div>
           <p>屏障被熬夜、换季、过度清洁磨薄之后，脸会持续泛红、刺痛。这支油解决的不是「干」，是这件事。</p>
           <p>掌心搓开，按压上脸，两到三滴。吸收后是软而不油的手感。</p>
-          <div class="why">主语是皮肤，不是成分表。可发、可读、不需要返工改口吻。</div>
+          <div class="why">主语是皮肤，不是成分表。可以直接发，不必拿回来重写口吻。</div>
         </div>
       </div>
 
-      <p class="lead rv" style="margin-top:clamp(14px,2.2vh,22px);max-width:none">
-        包里预置的不只是语气：母题白名单（哪些话能说）、结构化格式（小红书出图文笔记，不是 60 字短文案）、
-        合规三级（绝对化用语自动改，功效宣称拦下来，INCI / 浓度 / pH 只标记不拦）。
+      <p class="plain rv">
+        这本「说话手册」里写好的，不只是语气：<b>哪些话能说、哪些一说就违规</b>；
+        <b>小红书出的是图文笔记</b>，不是 60 字短文案；
+        <b>哪些词该自动改、哪些只是提醒你补一句成分表</b>。
+      </p>
+    </div>
+  </section>
+
+  <!-- ══════ 实机 1 · 内容工厂 ══════ -->
+  <section class="screen" data-title="实机·内容工厂" data-note="这一屏<strong>把鼠标交给客户</strong>。先指一下左上角「嘉法狮中国」：<strong>「这是另一个客户在用的账号，天天在用。」</strong><br>然后按 ①②③④ 挨个点。①那里故意没有综合分；③强调素材是自己库里的，不是网上扒的。<br>客户问「我没内容怎么办」，就指 ③：资产库里有几万条，不用你现写。">
+    <div class="wrap wide">
+      <div class="mark rv"><b>六</b><span>实机第一屏 · 稿子是怎么出来的</span></div>
+      <div class="split">
+        <div class="side rv">
+          <h2>先挑料，再挑平台，然后生成</h2>
+          <p class="pt"><i>1</i><span>左上角四个数<b>全是人话</b>：还能群发几次、今天生成了几次、几条等你确认、本周发出去几条。没有一个「综合评分」。</span></p>
+          <p class="pt"><i>2</i><span>四步走：<b>选料 → 选平台 → 生成 → 确认</b>。每一步都能停下来改，不是点一下就跑完。</span></p>
+          <p class="pt"><i>3</i><span>左边这些是<b>你自己的家底</b>：57 个原料、54 个药用辅料、99 个配方、245 份技术文档。系统只从这里取材，不会去网上编。</span></p>
+          <p class="pt"><i>4</i><span>每张资产卡下面挂着标签：活性物、眼部护理、身体护理、彩妆。<b>写稿时照着标签挑话</b>，不会把眼霜的用法写到面霜上。</span></p>
+        </div>
+        <div class="shot rv">
+          <div class="bar"><b>内容工厂</b> · 嘉法狮中国（真实账号）<span class="live">实际界面</span></div>
+          <div class="frame">
+            <img src="real/02-content.png" alt="内容工厂 · 选内容源与目标平台">
+            <button class="hot" type="button" style="left:30%;top:22.1%" data-n="1" data-tip="四个数都能对上账：本月群发还剩 <b>11 次</b>、今天生成 <b>3 次</b>、<b>1 条</b>等你点确认、本周已发 <b>9 条</b>。<br>没有合成分、没有百分比。">1</button>
+            <button class="hot" type="button" style="left:23%;top:31.5%" data-n="2" data-tip="四步：<b>选内容源 → 选目标平台 → 生成 → 确认发布</b>。<br>每一步都能停下来改稿，不是一口气跑完。">2</button>
+            <button class="hot" type="button" style="left:26%;top:39.6%" data-n="3" data-tip="这里是<b>你自己的资产库</b>：57 个个人护理原料、54 个药用辅料、99 个配方、245 份技术文档。<br>系统只从这里面取材。库里没有的，它不会替你编。">3</button>
+            <button class="hot" type="button" style="left:50%;top:50%" data-n="4" data-tip="每张卡底下都挂着标签：<b>活性物 / 眼部护理 / 身体护理 / 彩妆</b>。<br>这些标签决定这篇稿子能说什么、不能说什么 —— 不靠 AI 猜。">4</button>
+            <div class="tip"></div>
+          </div>
+          <div class="cap">截取于 2026-10-29 09:14 · <b>点红圈看标注，点图看原图</b></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════ 实机 2 · 合规闸门 ══════ -->
+  <section class="screen" data-title="实机·合规闸门" data-note="全场<strong>唯一能让客户动手试</strong>的一屏。说完就停：<strong>「你手机里有公众号文章，粘一段进去。」</strong><br>不要替他点。他自己粘、自己点开始预检，看到红色标记的那一刻，这单就成了一半。<br>顺手补一句③：<b>三级不是违规</b>，是提醒你别慌 —— 这是我们跟别家最大的差别。">
+    <div class="wrap wide">
+      <div class="mark rv"><b>六</b><span>实机第二屏 · 这一关可以当场试</span></div>
+      <div class="split">
+        <div class="side rv">
+          <h2>粘一段你的稿子，它当场告诉你哪句会出事</h2>
+          <p class="pt"><i>1</i><span>四道关按顺序过：<b>词表 → 引证 → 品牌术语 → 法规状态</b>。顺序固定，一次过完。</span></p>
+          <p class="pt"><i>2</i><span>词表分三级：<b>一级自动改</b>、<b>二级拦住不许发</b>、<b>三级只标个记</b>（INCI、浓度、pH 这类不是违规）。</span></p>
+          <p class="pt"><i>3</i><span class="r">这个框<b>现在就能试</b>。你把上一篇推文粘进去 —— 不用信我说的。</span></p>
+          <p class="pt"><i>4</i><span>过了关的稿子，发出去会自动带一句「本文含 AI 生成内容」。<b>这是法规要求</b>，很多工具直接跳过这一步。</span></p>
+        </div>
+        <div class="shot rv">
+          <div class="bar"><b>合规闸门</b> · 嘉法狮中国（真实账号）<span class="live">实际界面</span></div>
+          <div class="frame">
+            <img src="real/04-compliance.png" alt="合规闸门 · 四道校验与合规预检">
+            <button class="hot" type="button" style="left:25.5%;top:19.4%" data-n="1" data-tip="四道关：<b>词表 → 引证 → 品牌术语 → 法规状态</b>。<br>词表下面那行小字就是三级：一级自动改写、二级建议改、三级保护标记。">1</button>
+            <button class="hot" type="button" style="left:90%;top:19.4%" data-n="2" data-tip="四道<b>全部已启用</b>。这一列不是给我看的，是给你们法务看的 —— 关不掉，也没开关。">2</button>
+            <button class="hot" type="button" style="left:26%;top:75%" data-n="3" data-tip="这个绿按钮<b>可以当场试</b>。上面那个框粘一段你们自己的推文，点它，几十秒出结果。<br>我们不怕你试，就怕你不试。">3</button>
+            <button class="hot" type="button" style="left:22%;top:82.5%" data-n="4" data-tip="通过之后发出去的稿子，会自动带一句 <b>「本文含 AI 生成内容」</b>。<br>这是标识办法的要求，做内容的人躲不掉。">4</button>
+            <div class="tip"></div>
+          </div>
+          <div class="cap">截取于 2026-10-29 09:14 · 四道校验全部启用，关不掉</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════ 实机 3 · 发布中心 ══════ -->
+  <section class="screen" data-title="实机·发布中心" data-note="这一屏是<strong>全场最值钱的一张图</strong>，因为它有回执号。<br>手指按在 ② 上：<strong>「批次号、平台、回执号都在。你拿这个号去公众号后台，能查到这一篇。」</strong><br>①那四个掉下去的数别跳过 —— <strong>34 篇写出来，只有 26 篇真落地。那 8 篇我们不算成绩。</strong>">
+    <div class="wrap wide">
+      <div class="mark rv"><b>六</b><span>实机第三屏 · 发出去才算数</span></div>
+      <div class="split">
+        <div class="side rv">
+          <h2>批了不算，落地才算</h2>
+          <p class="pt"><i>1</i><span>四个数一路往下掉：<b>34 篇写出来 → 33 篇过合规 → 32 篇投出去 → 26 篇真落地</b>。掉的 8 篇就是没发成的。</span></p>
+          <p class="pt"><i>2</i><span>右边是<b>最近一次真实投递</b>：批次号、走的哪个平台、平台回执号。这个号能拿去后台核对。</span></p>
+          <p class="pt"><i>3</i><span>合规二级的稿子<b>单独拎出来</b>，不跟批次一起发 —— 一篇出事，不连坐其它 33 篇。</span></p>
+          <p class="pt"><i>4</i><span>这一类必须<b>人点一下</b>才能发。这个决定我们不替你做。</span></p>
+        </div>
+        <div class="shot rv">
+          <div class="bar"><b>发布中心</b> · 嘉法狮中国（真实账号）<span class="live">实际界面</span></div>
+          <div class="frame">
+            <img src="real/03-publish.png" alt="发布中心 · 内容链路与最近一次投递">
+            <button class="hot" type="button" style="left:39.8%;top:35%" data-n="1" data-tip="一路掉数：<b>34 → 33 → 32 → 26</b>。<br>最后那个 26 是「平台回了执」的，前面三个是「我们以为发出去了」的。<br>我们不把 34 当成绩。">1</button>
+            <button class="hot" type="button" style="left:86%;top:33%" data-n="2" data-tip="最近一次真实投递：批次 <b>B-261029-A455</b>、平台 <b>微信公众号</b>、回执号 <b>1080000013</b>。<br>这个号码在公众号后台查得到 —— 这是我唯一敢让你去核的东西。">2</button>
+            <button class="hot" type="button" style="left:33%;top:73%" data-n="3" data-tip="合规二级的 2 篇被<b>单独拉出来</b>审批，不跟着批次走。<br>所以一篇出问题，另外 33 篇照发。">3</button>
+            <button class="hot" type="button" style="left:25%;top:84%" data-n="4" data-tip="这里必须<b>人工点「打开处理」</b>才能发。<br>系统不替客户做发布决定 —— 出事担责的是你的品牌，不是我。">4</button>
+            <div class="tip"></div>
+          </div>
+          <div class="cap">截取于 2026-10-29 09:14 · 含真实批次号与平台回执号</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════ 实机 4 · 情报台 ══════ -->
+  <section class="screen" data-title="实机·情报台" data-note="这一屏<strong>自证你们手上那份手册</strong>。<br>开口就说：<strong>「你们今天拿到的那本手册，就是这台机器跑出来的。输入一个网址，6 到 9 分钟，三样东西一起出。」</strong><br>③那句一定要讲清楚：<b>AI 一路、网页一路，分开写，不合成</b> —— 这是跟「AI 可见度 78%」那类报告的根本区别。">
+    <div class="wrap wide">
+      <div class="mark rv"><b>六</b><span>实机第四屏 · 你们那份手册的来源</span></div>
+      <div class="split">
+        <div class="side rv">
+          <h2>给我一个网址，六分钟出三份东西</h2>
+          <p class="pt"><i>1</i><span>输入一个网址（这个例子是给 <b>Croda</b> 做的），选行业包，点开始。<b>6 个 Credit、6 到 9 分钟</b>。</span></p>
+          <p class="pt"><i>2</i><span>出来三样：<b>情报调研报告 / 销售作战手册 / AI 可见度基线</b>。你们手上这份手册，就是中间那一格。</span></p>
+          <p class="pt"><i>3</i><span>「AI 可见度」<b>两路查</b>：一路问 AI，一路搜网页，两边结论<b>分开写、不合成</b>。</span></p>
+          <p class="pt"><i>4</i><span>「我这方能力」这个框要是空着，报告里就通篇写<b>「待补充」</b>。<b>它不会替你编自己有什么本事。</b></span></p>
+        </div>
+        <div class="shot rv">
+          <div class="bar"><b>情报台</b> · 嘉法狮中国（真实账号）<span class="live">实际界面</span></div>
+          <div class="frame">
+            <img src="real/06-intel.png" alt="情报台 · 输入目标网址与三件套产出">
+            <button class="hot" type="button" style="left:51%;top:25.8%" data-n="1" data-tip="输入网址 → 选行业包 → 开始调研。<br>成本写在旁边：<b>6 个 Credit、6 到 9 分钟</b>，不藏着。">1</button>
+            <button class="hot" type="button" style="left:25.5%;top:54.8%" data-n="2" data-tip="三件套一起出：<b>情报调研报告、销售作战手册、AI 可见度基线</b>。<br>你们今天拿到的那本，就是中间这一格。">2</button>
+            <button class="hot" type="button" style="left:42%;top:36.5%" data-n="3" data-tip="这一格空着，报告里就会写「待补充」。<br><b>它不会替你编自己有什么本事</b> —— 所以第一次用要先填 3 分钟。">3</button>
+            <button class="hot" type="button" style="left:28%;top:85%" data-n="4" data-tip="两路分开查：<b>一路问 AI、一路搜网页</b>，结论各写各的。<br>「搜不搜得到」和「AI 推不推荐你」是两件事，合成一个数就废了。">4</button>
+            <div class="tip"></div>
+          </div>
+          <div class="cap">截取于 2026-10-29 09:20 · 东边野兽这份手册即由同一流程产出</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════ 实机 5 · 两个客户 ══════ -->
+  <section class="screen" data-title="实机·已有客户" data-note="这一屏回答客户心里那句话：<strong>「是不是拿我当小白鼠？」</strong><br>左栏是嘉法狮，真在跑；右栏是今天给他开的号。<br>核心句：<strong>「后台是同一套，代码是同一份。唯一的区别是绑了哪份行业包。」</strong>—— 这句话把「定制」从「给你一个人写死」变成「给你一份贴合的模板」，报价才站得住。">
+    <div class="wrap">
+      <div class="mark rv"><b>六</b><span>实机第五屏 · 你之前已经有人在用</span></div>
+      <h2 class="rv">不是给你一个人做的孤本</h2>
+      <p class="lead sm rv">同一个后台、同一份代码。唯一的区别是绑了哪份「说话手册」。</p>
+
+      <div class="duo">
+        <div class="who rv">
+          <div class="nm">嘉法狮中国</div>
+          <div class="ty">化妆品原料 · 药用辅料 · 真实在跑</div>
+          <dl>
+            <dt>在用资产</dt><dd><b>960</b> 条</dd>
+            <dt>内容源</dt><dd><b>57</b> 个原料 + <b>54</b> 个药用辅料</dd>
+            <dt>本月产出</dt><dd><b>58</b> 条</dd>
+            <dt>本周已发</dt><dd><b>9</b> 条 · 微信公众号</dd>
+            <dt>群发额度</dt><dd>本月还剩 <b>11</b> 次</dd>
+            <dt>说话手册</dt><dd>原料商版（面向配方师）</dd>
+          </dl>
+        </div>
+        <div class="who now rv">
+          <div class="nm">东边野兽</div>
+          <div class="ty">护肤品牌 · 今天开号 · 你</div>
+          <dl>
+            <dt>在用资产</dt><dd class="pending">0 条，从今天开始攒</dd>
+            <dt>内容源</dt><dd>灵芝系列 + 你的品牌素材</dd>
+            <dt>本月产出</dt><dd class="pending">等你的数据</dd>
+            <dt>本周已发</dt><dd class="pending">—</dd>
+            <dt>群发额度</dt><dd>服务号 <b>4</b> 次 / 月</dd>
+            <dt>说话手册</dt><dd>品牌方版（面向消费者）</dd>
+          </dl>
+        </div>
+      </div>
+
+      <p class="plain rv">
+        绑不同的手册，长出来的是两种东西：给原料商写的是<b>配方语言</b>（配伍、用量、INCI），
+        给品牌方写的是<b>消费者语言</b>（脸红、刺痛、第二天早上）。同一套系统，换一份手册就换一种人说话。
       </p>
     </div>
   </section>
@@ -826,33 +1127,33 @@
   <!-- ══════ 6 发射台 ══════ -->
   <section class="screen" data-title="信道真相" data-note="这是<strong>建立信任</strong>的一屏，不是炫技。主动说：<strong>「抖音发不了，小红书也发不了。能全自动的只有公众号一条。」</strong><br>客户会松一口气 —— 因为之前有人跟他承诺过全平台。这一屏之后，前面所有数字他都会更愿意信。">
     <div class="wrap">
-      <div class="mark rv"><b>六</b><span>稿子最后落在哪</span></div>
-      <h2 class="rv">8 条信道，能全自动的只有 1 条</h2>
+      <div class="mark rv"><b>七</b><span>稿子最后落在哪</span></div>
+      <h2 class="rv">8 个平台，只有 1 个能全自动发</h2>
 
       <div class="flow">
-        <div class="node rv"><div class="n">12</div><div class="t">草稿</div><div class="d">选题 → 成稿</div></div>
-        <div class="node rv"><div class="n">11</div><div class="t">过闸</div><div class="d">减合规拦截</div></div>
-        <div class="node rv"><div class="n">9</div><div class="t">投递</div><div class="d">一稿可投多平台</div></div>
-        <div class="node alert rv"><div class="n">6</div><div class="t">落地</div><div class="d">真发布 · 有回链</div></div>
+        <div class="node rv"><div class="n">12</div><div class="t">写稿</div><div class="d">选题 → 成稿</div></div>
+        <div class="node rv"><div class="n">11</div><div class="t">审过</div><div class="d">过了合规这一关</div></div>
+        <div class="node rv"><div class="n">9</div><div class="t">投出去</div><div class="d">一篇可投多个平台</div></div>
+        <div class="node alert rv"><div class="n">6</div><div class="t">真发出去</div><div class="d">有链接，点得开</div></div>
       </div>
       <div class="flow-note rv">
-        <span>半个批次没走到最后 —— 1 篇合规拦截、2 篇待审、3 篇还在队列。<b>「过闸」不等于「已发布」</b>。</span>
-        <span>演示环境数据，真实交付时用你的账号跑</span>
+        <span>一个批次跑下来：1 篇被合规拦下、2 篇等人审、3 篇还在排队。<b>「审过了」不等于「发出去了」</b>。</span>
+        <span>演示环境数据；真交付时用你的账号跑</span>
       </div>
 
       <table class="chan">
         <thead>
-          <tr><td class="p" style="font-size:10.5px;letter-spacing:.12em;color:var(--ink-3);font-weight:500">平台</td><td class="g" style="font-size:10.5px;letter-spacing:.12em;color:var(--ink-3);font-weight:500">真实档位</td><td class="r" style="font-size:10.5px;letter-spacing:.12em;color:var(--ink-3)">为什么是这样</td></tr>
+          <tr><td class="p" style="font-size:10.5px;letter-spacing:.12em;color:var(--ink-3);font-weight:500">平台</td><td class="g" style="font-size:10.5px;letter-spacing:.12em;color:var(--ink-3);font-weight:500">能做到什么</td><td class="r" style="font-size:10.5px;letter-spacing:.12em;color:var(--ink-3)">为什么是这样</td></tr>
         </thead>
         <tbody>
-          <tr class="rv"><td class="p">微信公众号</td><td class="g"><span class="dot a"></span>全自动</td><td class="r">草稿箱与发表接口已开通，群发额度需人工确认（服务号默认 4 次/月）</td></tr>
-          <tr class="rv"><td class="p">B 站</td><td class="g"><span class="dot b"></span>需申请</td><td class="r">仅企业法人可申请；获批后只能唤起客户端预填，发布仍需人工点</td></tr>
-          <tr class="rv"><td class="p">微博</td><td class="g"><span class="dot b"></span>试通中</td><td class="r">接口权限已收紧，先试可行性，不作承诺</td></tr>
-          <tr class="rv"><td class="p">抖音</td><td class="g"><span class="dot c"></span>复制粘贴</td><td class="r">官方明确不向企业宣传 / 营销类内容开放，申请必被驳回</td></tr>
-          <tr class="rv"><td class="p">小红书</td><td class="g"><span class="dot c"></span>复制粘贴</td><td class="r">官方无发布接口；产出图文笔记（不是短文案），一键复制</td></tr>
-          <tr class="rv"><td class="p">知乎</td><td class="g"><span class="dot c"></span>复制粘贴</td><td class="r">官方无发布接口</td></tr>
-          <tr class="rv"><td class="p">微信视频号</td><td class="g"><span class="dot c"></span>复制粘贴</td><td class="r">官方无内容发布接口；产出分镜脚本</td></tr>
-          <tr class="rv"><td class="p">官网</td><td class="g"><span class="dot c"></span>导出上版</td><td class="r">自有阵地，无接口无限流；导出可直接上版的页面结构</td></tr>
+          <tr class="rv"><td class="p">微信公众号</td><td class="g"><span class="dot a"></span>全自动</td><td class="r">接口已开，能全自动发。群发有次数上限，服务号默认 4 次/月，得人工确认</td></tr>
+          <tr class="rv"><td class="p">B 站</td><td class="g"><span class="dot b"></span>需申请</td><td class="r">只有企业执照能申请；批下来也只能把内容填进客户端，最后还得人手点一下</td></tr>
+          <tr class="rv"><td class="p">微博</td><td class="g"><span class="dot b"></span>试通中</td><td class="r">权限收紧了，先试通，不跟你保证</td></tr>
+          <tr class="rv"><td class="p">抖音</td><td class="g"><span class="dot c"></span>复制粘贴</td><td class="r">官方明确不给企业宣传 / 营销内容开接口，申请一定被驳回</td></tr>
+          <tr class="rv"><td class="p">小红书</td><td class="g"><span class="dot c"></span>复制粘贴</td><td class="r">没有发布接口。我们出的是图文笔记（不是短文案），你复制过去</td></tr>
+          <tr class="rv"><td class="p">知乎</td><td class="g"><span class="dot c"></span>复制粘贴</td><td class="r">没有发布接口</td></tr>
+          <tr class="rv"><td class="p">微信视频号</td><td class="g"><span class="dot c"></span>复制粘贴</td><td class="r">没有发布接口。我们出分镜脚本，你照着拍</td></tr>
+          <tr class="rv"><td class="p">官网</td><td class="g"><span class="dot c"></span>导出上版</td><td class="r">自己的地盘，没接口也没限流。导出的是能直接上版的网页</td></tr>
         </tbody>
       </table>
     </div>
@@ -861,24 +1162,24 @@
   <!-- ══════ 7 收口 ══════ -->
   <section class="screen" data-title="30 天" data-note="收口<strong>不谈价格、不谈年框</strong>。只提一件事：先用你自己的问题跑一遍基线。<br>最后一句慢慢说：<strong>「30 天后同一组问题再跑一次。数字不涨，你不付。」</strong><br>这句话比任何报价都有用，因为它把风险从他们那边挪到了我们这边。">
     <div class="wrap">
-      <div class="mark rv"><b>七</b><span>怎么开始</span></div>
+      <div class="mark rv"><b>八</b><span>怎么开始</span></div>
       <h1 class="rv">先不谈年框，<br>跑 30 天。</h1>
 
       <div class="acts">
         <div class="act rv">
           <div class="num">01</div>
-          <h4>你自己点一遍</h4>
-          <p>演示账号现在就能登。先看情报台那 12 问的原始回答 —— 包括上一页那四条。</p>
+          <h4>你先自己点一遍</h4>
+          <p>演示账号现在就能登。先看那 12 个问题的原始回答 —— 包括前面那四条。</p>
         </div>
         <div class="act rv">
           <div class="num">02</div>
-          <h4>换你的问题</h4>
-          <p>把你真正关心的 12 个问题给我（客服记录、搜索词、私信里都行），重跑一次基线。</p>
+          <h4>换成你的问题</h4>
+          <p>把你真正关心的 12 个问题给我：客服记录、搜索词、私信里都行。重跑一次。</p>
         </div>
         <div class="act rv">
           <div class="num">03</div>
-          <h4>30 天后同一组再跑</h4>
-          <p>同一组问题、同一套判据。涨了多少，你亲眼看得见，不用听我说。</p>
+          <h4>30 天后再跑同一组</h4>
+          <p>同一组问题、同一套判法。涨了多少你自己看，不用听我说。</p>
         </div>
       </div>
 
@@ -905,6 +1206,8 @@
   <span><kbd>G</kbd>讲稿</span>
   <span><kbd>F</kbd>全屏</span>
 </div>
+
+<a class="livebtn" id="liveBtn" href="http://127.0.0.1:4100/" target="_blank" rel="noopener">打开真机系统 <span>&nearr;</span></a>
 
 <script>
 (function(){
@@ -1105,6 +1408,62 @@
       iScr.classList.add('done');
       setTimeout(function(){ go(1); }, 240);
     });
+  }
+
+  /* ── 真机截图标注：点红圈看说明，点别处收起 ── */
+  document.querySelectorAll('.shot').forEach(function(shot){
+    var tip = shot.querySelector('.tip');
+    var hots = Array.prototype.slice.call(shot.querySelectorAll('.hot'));
+    function closeAll(){
+      hots.forEach(function(o){ o.classList.remove('on'); });
+      if (tip) tip.classList.remove('on');
+    }
+    hots.forEach(function(h){
+      h.addEventListener('click', function(e){
+        e.stopPropagation();
+        if (h.classList.contains('on')) { closeAll(); return; }
+        closeAll();
+        h.classList.add('on');
+        if (!tip) return;
+        tip.innerHTML = '<span class="tn">标注 ' + (h.dataset.n || '') + '</span>' + (h.dataset.tip || '');
+        var l = parseFloat(h.style.left) || 0;
+        var t = parseFloat(h.style.top) || 0;
+        /* 靠右的热点把气泡放左边，免得顶出画面 */
+        if (l > 52) {
+          tip.style.left = 'auto';
+          tip.style.right = 'calc(' + (100 - l) + '% + 18px)';
+        } else {
+          tip.style.right = 'auto';
+          tip.style.left = 'calc(' + l + '% + 18px)';
+        }
+        tip.style.top = Math.max(1, Math.min(74, t - 5)) + '%';
+        tip.classList.add('on');
+      });
+    });
+    shot.addEventListener('click', closeAll);
+  });
+
+  /* ── 点图放大（投影上字太小，看不清就点开） ── */
+  var lb = document.createElement('div');
+  lb.className = 'lb';
+  lb.innerHTML = '<img alt="放大查看"><span class="hint">点击任意处关闭 · ESC</span>';
+  document.body.appendChild(lb);
+  var lbImg = lb.querySelector('img');
+  Array.prototype.forEach.call(document.querySelectorAll('.shot .frame img'), function(img){
+    img.addEventListener('click', function(e){
+      e.stopPropagation();
+      lbImg.src = img.src;
+      lb.classList.add('on');
+    });
+  });
+  lb.addEventListener('click', function(){ lb.classList.remove('on'); });
+  window.addEventListener('keydown', function(e){ if (e.key === 'Escape') lb.classList.remove('on'); });
+
+  /* 真机入口：只在本地打开时出现。线上是 GitHub Pages，点 localhost 一定打不开，干脆不显示 */
+  var liveBtn = document.getElementById('liveBtn');
+  if (liveBtn) {
+    var isLocal = location.protocol === 'file:' || /^(127\.0\.0\.1|localhost)$/.test(location.hostname);
+    if (isLocal) liveBtn.style.display = 'inline-flex';
   }
 
   setActive(0);
