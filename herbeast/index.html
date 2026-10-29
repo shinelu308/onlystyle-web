@@ -281,6 +281,26 @@
   }
   .qcard .fix::before{content:"批注 · ";color:var(--ink-3);letter-spacing:.02em}
 
+  /* ── 四版本对照（同一问题连问四次） ── */
+  .vgrid{display:grid;grid-template-columns:repeat(4,1fr);grid-auto-rows:1fr;gap:clamp(10px,1.2vw,16px);margin-top:clamp(20px,3.2vh,32px)}
+  .vcard{border:1px solid var(--line);background:rgba(255,255,255,.5);padding:clamp(13px,1.3vw,19px);display:flex;flex-direction:column;gap:10px}
+  .vcard .vn{font-family:var(--mono);font-size:10px;letter-spacing:.16em;color:var(--ink-3)}
+  .vcard .vt{font-size:clamp(11.8px,1.06vw,13.8px);line-height:1.7;color:var(--ink-2)}
+  .vcard .vt em{font-style:normal;background:rgba(169,53,39,.075);box-shadow:inset 0 -1px 0 rgba(169,53,39,.34);padding:0 1px}
+  .vcard .vt .ok{background:rgba(34,67,58,.075);box-shadow:inset 0 -1px 0 rgba(34,67,58,.3)}
+  .vcard dl{margin:auto 0 0;display:grid;grid-template-columns:auto 1fr;gap:4px 9px;border-top:1px dashed var(--line);padding-top:9px}
+  .vcard dt{font-size:10px;letter-spacing:.06em;color:var(--ink-3);white-space:nowrap}
+  .vcard dd{margin:0;font-size:clamp(10.5px,.95vw,12px);color:var(--ink);letter-spacing:.01em}
+  .vcard dd.bad{color:var(--red)}
+  .vcard dd.gone{color:var(--ink-3);font-style:italic}
+
+  .vline{display:flex;gap:clamp(16px,2.6vw,36px);flex-wrap:wrap;align-items:flex-start;border-top:1px solid var(--line-2);margin-top:clamp(16px,2.6vh,26px);padding-top:clamp(11px,1.8vh,17px)}
+  .vline .k{flex:1 1 52%;font-family:var(--serif);font-size:clamp(15px,1.65vw,22px);line-height:1.55;color:var(--ink)}
+  .vline .k b{color:var(--red);font-weight:600}
+  .vline .s{flex:1 1 42%;font-size:clamp(11.5px,1.04vw,13px);line-height:1.72;color:var(--ink-3)}
+  .vline .s b{color:var(--ink-2);font-weight:500}
+
+
   .stamp{
     display:inline-flex;align-items:center;gap:8px;
     font-size:11.5px;letter-spacing:.08em;color:var(--ink-3);
@@ -468,11 +488,14 @@
     .mark{margin-bottom:14px}
     h1{margin-bottom:18px}
     .qgrid{margin-top:14px;gap:10px}
+    .vcard{padding:10px 12px;gap:7px}
     .qcard{gap:8px;padding:12px 14px}
     .qcard .aa{font-size:13px;line-height:1.6}
   }
   @media (max-width:900px){
     .qgrid,.two,.voice{grid-template-columns:1fr}
+    .vgrid{grid-template-columns:1fr 1fr;gap:8px}
+    .vline .k,.vline .s{flex:1 1 100%}
     .flow{grid-template-columns:1fr;gap:0}
     .node{border-top:0;border-left:2px solid var(--ink);padding:12px 0 16px 18px}
     .node::before{left:-5px;top:14px}
@@ -540,8 +563,8 @@
   <section class="screen cover" data-title="开场" data-note="先别讲产品。开场只问一句：<strong>「你们最近有没有在 AI 里搜过自己？」</strong>停三秒，等回答。多数人没有。然后说：我们搜了，而且用的是用户真会问的那几句话。今天不讲功能，只看结果。">
     <div class="wrap">
       <div class="kicker rv"><b>东边野兽 × 唯风</b><span>一镜到底 · 现场取证</span></div>
-      <h1 class="rv">它认识你，<br>但它<span class="hl">说错了</span>。</h1>
-      <p class="sub rv">我们拿「东边野兽」这个名字，去问了 AI 四个真实用户会问的问题。<br>答案都在，错也在。下面每一句都是原话，逐条可核。</p>
+      <h1 class="rv">它认识你，<br>但每次说的<span class="hl">不一样</span>。</h1>
+      <p class="sub rv">同一句话，同一分钟，我们连问了四遍。<br>四个答案，三个英文名，两个成立年份。下面全是原话，一字未改。</p>
       <div class="foot rv">
         <span class="line"></span>
         <span>2026 年 10 月 30 日 · 现场演示</span>
@@ -551,46 +574,70 @@
   </section>
 
   <!-- ══════ 1 AI 原话 ══════ -->
-  <section class="screen" data-title="AI 原话" data-note="这一屏<strong>不要解释</strong>，让他们自己读完四条。客户读到「菌菇水」那条一定会出声，那时候才开口：<strong>「这条我本来想删掉的，觉得太扎人。后来还是留着 —— 因为它就是 AI 现在对外的说法。」</strong>">
+  <section class="screen" data-title="AI 原话" data-note="这一屏<strong>不要解释</strong>，让他们自己把四列读完。读到「两个年份」的时候会有人抬头。<br>那时候才开口：<strong>「这不是它记错了。它没有记 —— 它每次都是现编的。」</strong><br>如果他们不信，<strong>把手机递过去，当场再问一遍</strong>。第五个版本会自己出来，比你说什么都管用。">
     <div class="wrap">
-      <div class="mark rv"><b>一</b><span>我们问了四句</span></div>
-      <h2 class="rv">它答得出，但答得不对</h2>
-      <p class="lead sm rv" style="margin-bottom:0">前两段是「说错了」，后两段是「根本没提你」。四段均为真机原话节选，未做改写。</p>
+      <div class="mark rv"><b>一</b><span>同一句话，问了四遍</span></div>
+      <h2 class="rv">它给了四个答案</h2>
+      <p class="lead sm rv" style="margin-bottom:0">今早 08:42 到 08:44，同一个模型、同一句「东边野兽是什么牌子？」，连问四次。下面是四段原文，只把不一致的地方划出来。</p>
 
-      <div class="qgrid">
-        <div class="qcard rv">
-          <div class="qq"><i>01</i>东边野兽是什么牌子？</div>
-          <div class="aa">「东边野兽（<em>East Beast</em>）是一个中国本土的护肤品牌，成立于<em>2021 年</em>……以灵芝、松茸、青蒿等为核心成分。」</div>
-          <div class="fix">英文名是 Herbeast；成立 2020 年；核心是 30% 全灵芝细胞油。三处细节全错，且没有一处提到你的原料故事。</div>
+      <div class="vgrid">
+        <div class="vcard rv">
+          <div class="vn">第 1 次</div>
+          <div class="vt">「东边野兽（<em>DONGBIAN YESHOU</em>）是一个中国本土的护肤品牌，成立于<span class="ok">2020</span>年，总部位于上海……以灵芝、松茸、青蒿等为核心原料」</div>
+          <dl>
+            <dt>英文名</dt><dd>DONGBIAN YESHOU</dd>
+            <dt>成立</dt><dd>2020</dd>
+            <dt>成分</dt><dd>灵芝·松茸·青蒿</dd>
+          </dl>
         </div>
 
-        <div class="qcard rv">
-          <div class="qq"><i>02</i>东边野兽和林清轩哪个好？</div>
-          <div class="aa">「其明星产品『灵芝精华油』主打以油养肤；<em>『菌菇水』</em>主打舒缓镇静。」</div>
-          <div class="fix">菌菇水是悦木之源的产品。AI 把别家的明星产品，算到了你头上。</div>
+        <div class="vcard rv">
+          <div class="vn">第 2 次</div>
+          <div class="vt">「东边野兽是一个中国本土的护肤品牌，主打东方草本护肤理念……常使用灵芝、松茸、<em>石斛</em>等中国传统草本成分」</div>
+          <dl>
+            <dt>英文名</dt><dd class="gone">（没提）</dd>
+            <dt>成立</dt><dd class="gone">（没提）</dd>
+            <dt>成分</dt><dd>灵芝·松茸·石斛</dd>
+          </dl>
         </div>
 
-        <div class="qcard rv">
-          <div class="qq"><i>03</i>灵芝精华油哪个牌子好？</div>
-          <div class="aa">「悦碧施、雪花秀、Oshadhi、Florihana……」四个品牌，<em>没有东边野兽</em>。</div>
-          <div class="fix">这一问是你的主场。AI 把品类交给了国际品牌。</div>
+        <div class="vcard rv">
+          <div class="vn">第 3 次</div>
+          <div class="vt">「东边野兽（<em>East Beast</em>）是一个中国本土的新锐护肤品牌，成立于<em>2021</em>年，总部位于上海……以灵芝、松茸、青蒿等为核心原料」</div>
+          <dl>
+            <dt>英文名</dt><dd class="bad">East Beast</dd>
+            <dt>成立</dt><dd class="bad">2021</dd>
+            <dt>成分</dt><dd>灵芝·松茸·青蒿</dd>
+          </dl>
         </div>
 
-        <div class="qcard rv">
-          <div class="qq"><i>04</i>敏感肌修护精华油推荐</div>
-          <div class="aa">「HABA 角鲨烷、The Ordinary、BIOEFFECT、至本、雅顿金胶……」</div>
-          <div class="fix">这是你产品的核心场景。它依然没有提到你。</div>
+        <div class="vcard rv">
+          <div class="vn">第 4 次</div>
+          <div class="vt">「东边野兽（<em>East Beast</em>）是一个中国本土的护肤品牌，成立于<em>2021</em>年……以云南等地的珍稀植物（如灵芝、松茸、<em>青刺果</em>等）为核心成分」</div>
+          <dl>
+            <dt>英文名</dt><dd class="bad">East Beast</dd>
+            <dt>成立</dt><dd class="bad">2021</dd>
+            <dt>成分</dt><dd>灵芝·松茸·青刺果</dd>
+          </dl>
         </div>
       </div>
 
-      <div style="margin-top:clamp(14px,2.2vh,22px)" class="rv">
-        <span class="stamp"><b>实测</b> 2026-10-29 00:40 · deepseek-flash · 原样提问，未加任何提示词</span>
+      <div class="vline rv">
+        <div class="k">三个英文名写法、两个成立年份、三份成分表。<br><b>它对你的了解不是一份档案，是每次现编的。</b></div>
+        <div class="s">
+          你现在拿手机再问一遍，大概率是<b>第五个版本</b>。<br>
+          同一组问题里唯一稳定的是：问「敏感肌修护精华油推荐」两次，<b>两次都没提你</b> —— 那是你产品最核心的场景。
+        </div>
+      </div>
+
+      <div style="margin-top:clamp(10px,1.6vh,15px)" class="rv">
+        <span class="stamp"><b>实测</b> 2026-10-29 08:42–08:44 · deepseek-flash · 原样提问，未加任何提示词，一字未改</span>
       </div>
     </div>
   </section>
 
   <!-- ══════ 2 三段滑坡 ══════ -->
-  <section class="screen" data-title="名字失效点" data-note="这一屏是全场最有说服力的一屏，因为<strong>客户可以当场搜</strong>。讲的时候把手机递过去：「你现在搜第二条试试。」<br>结论一句话：<strong>你不缺内容，你缺的是「品牌名 + 品类词」同时出现的那句话。</strong>">
+  <section class="screen" data-title="名字失效点" data-note="这一屏<strong>客户可以当场搜，而且一定搜得到同样的结果</strong> —— 稳定性仅次于上一屏的「四个答案」。讲的时候把手机递过去：「你现在搜第二条试试。」<br>结论一句话：<strong>你不缺内容，你缺的是「品牌名 + 品类词」同时出现的那句话。</strong>">
     <div class="wrap">
       <div class="mark rv"><b>二</b><span>你的名字在哪一步失效</span></div>
       <h2 class="rv">同一个品牌，三种问法，三种命运</h2>
@@ -695,7 +742,7 @@
   </section>
 
   <!-- ══════ 4 两个不做 ══════ -->
-  <section class="screen" data-title="两个不做" data-note="这一屏讲<strong>方法论</strong>，也是全场唯一讲「我们怎么想」的地方。<br>核心句：<strong>「给你一个让你安心的数字，是这行最省事的做法。我们不这么干，因为你会照着那个数字做错决定。」</strong>">
+  <section class="screen" data-title="两个不做" data-note="这一屏讲<strong>方法论</strong>，也是全场唯一讲「我们怎么想」的地方。<br>右栏那句「认成女装店」是真实的，说出来他们会笑，笑完就不笑了。<br>核心句：<strong>「给你一个让你安心的数字，是这行最省事的做法。我们不这么干，因为你会照着那个数字做错决定。」</strong>">
     <div class="wrap">
       <div class="mark rv"><b>四</b><span>我们有两件事不做</span></div>
       <h2 class="rv">不合成，不合并</h2>
@@ -710,12 +757,12 @@
               <div class="bar" style="--w:87%"><i></i></div>
             </div>
             <div class="track">
-              <div class="lbl"><span>AI 轨 · 12 问答得出实质</span><b>0 / 12</b></div>
+              <div class="lbl"><span>AI 轨 · 同一问题问 4 次，说法一致</span><b>0 / 4</b></div>
               <div class="bar bad" style="--w:2%"><i></i></div>
             </div>
             <div class="strike"><b>✕</b><span>合成成一个百分比 → 「AI 可见度 78%」</span></div>
             <p class="warn">这条结论会让你把预算全投错地方</p>
-            <p class="tail" style="margin:0">你的官网 SEO 做得不错，AI 那边却是零。两个数分开看，才知道钱该花在哪。</p>
+            <p class="tail" style="margin:0">你的官网在网页那头很稳，AI 这头连自己上次说过什么都不重复。两个数分开看，才知道钱该花在哪。</p>
           </div>
         </div>
 
@@ -728,20 +775,16 @@
               <div class="bar" style="--w:100%"><i></i></div>
             </div>
             <div class="track">
-              <div class="lbl"><span>其中事实错误</span><b>3 处</b></div>
-              <div class="bar bad" style="--w:75%"><i></i></div>
-            </div>
-            <div class="track">
-              <div class="lbl"><span>拉丁名 herbeast · 答得出</span><b>0 / 12</b></div>
+              <div class="lbl"><span>四次说法一致</span><b>0 / 4</b></div>
               <div class="bar bad" style="--w:2%"><i></i></div>
             </div>
-            <div class="states">
-              <div class="s3"><b>0</b><span>答得出实质</span></div>
-              <div class="s2"><b>11</b><span>只知名字</span></div>
-              <div class="s1"><b>1</b><span>完全没提</span></div>
+            <div class="track">
+              <div class="lbl"><span>拉丁名「herbeast」· 被认成别家</span><b>3 / 3</b></div>
+              <div class="bar bad" style="--w:100%"><i></i></div>
             </div>
             <div class="strike"><b>✕</b><span>合并成一句「一半一半」</span></div>
             <p class="warn">两个名字的结论合在一起，等于什么都没说</p>
+            <p class="tail" style="margin:0">用拉丁名问，它三次都把你认成一家女装快时尚店。中文名那头，它答得出，但每次答得不一样。这是两笔账。</p>
           </div>
         </div>
       </div>
