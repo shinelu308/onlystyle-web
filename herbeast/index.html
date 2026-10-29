@@ -322,14 +322,14 @@
 
   /* ── 真机：截图 + 编号热点 ── */
   .split{
-    display:grid;grid-template-columns:minmax(238px,24%) 1fr;
+    display:grid;grid-template-columns:minmax(266px,27%) 1fr;
     gap:clamp(14px,1.9vw,26px);align-items:start;
     margin-top:clamp(12px,2vh,20px);
   }
   /* 🔴 grid 子项默认 min-width:auto，图片的固有宽度会把整列撑出去，必须归零 */
   .split > *{min-width:0}
   .split .side{display:flex;flex-direction:column;gap:11px}
-  .split .side h2{font-size:clamp(19px,2vw,30px);margin-bottom:2px;text-wrap:balance}
+  .split .side h2{font-size:clamp(18px,1.85vw,28px);margin-bottom:2px}
   .side .pt{display:flex;gap:9px;font-size:clamp(11.5px,1.02vw,13px);line-height:1.72;color:var(--ink-2);margin:0}
   .side .pt i{
     flex:0 0 auto;display:grid;place-items:center;width:17px;height:17px;border-radius:50%;
@@ -977,7 +977,7 @@
       <div class="mark rv"><b>六</b><span>实机第一屏 · 稿子是怎么出来的</span></div>
       <div class="split">
         <div class="side rv">
-          <h2>先挑料，再挑平台，然后生成</h2>
+          <h2>先挑料，再挑平台，<br>然后生成</h2>
           <p class="pt"><i>1</i><span>左上角四个数<b>全是人话</b>：还能群发几次、今天生成了几次、几条等你确认、本周发出去几条。没有一个「综合评分」。</span></p>
           <p class="pt"><i>2</i><span>四步走：<b>选料 → 选平台 → 生成 → 确认</b>。每一步都能停下来改，不是点一下就跑完。</span></p>
           <p class="pt"><i>3</i><span>左边这些是<b>你自己的家底</b>：57 个原料、54 个药用辅料、99 个配方、245 份技术文档。系统只从这里取材，不会去网上编。</span></p>
@@ -1005,7 +1005,7 @@
       <div class="mark rv"><b>六</b><span>实机第二屏 · 这一关可以当场试</span></div>
       <div class="split">
         <div class="side rv">
-          <h2>粘一段你的稿子，它当场告诉你哪句会出事</h2>
+          <h2>粘一段你的稿子，<br>当场告诉你哪句会出事</h2>
           <p class="pt"><i>1</i><span>四道关按顺序过：<b>词表 → 引证 → 品牌术语 → 法规状态</b>。顺序固定，一次过完。</span></p>
           <p class="pt"><i>2</i><span>词表分三级：<b>一级自动改</b>、<b>二级拦住不许发</b>、<b>三级只标个记</b>（INCI、浓度、pH 这类不是违规）。</span></p>
           <p class="pt"><i>3</i><span class="r">这个框<b>现在就能试</b>。你把上一篇推文粘进去 —— 不用信我说的。</span></p>
@@ -1061,7 +1061,7 @@
       <div class="mark rv"><b>六</b><span>实机第四屏 · 你们那份手册的来源</span></div>
       <div class="split">
         <div class="side rv">
-          <h2>给我一个网址，六分钟出三份东西</h2>
+          <h2>给我一个网址，<br>六分钟出三份东西</h2>
           <p class="pt"><i>1</i><span>输入一个网址（这个例子是给 <b>Croda</b> 做的），选行业包，点开始。<b>6 个 Credit、6 到 9 分钟</b>。</span></p>
           <p class="pt"><i>2</i><span>出来三样：<b>情报调研报告 / 销售作战手册 / AI 可见度基线</b>。你们手上这份手册，就是中间那一格。</span></p>
           <p class="pt"><i>3</i><span>「AI 可见度」<b>两路查</b>：一路问 AI，一路搜网页，两边结论<b>分开写、不合成</b>。</span></p>
