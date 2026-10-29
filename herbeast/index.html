@@ -559,6 +559,27 @@
   /* 收口 */
   .close h1{font-size:clamp(32px,4.6vw,64px);margin-bottom:clamp(20px,3vh,32px)}
   .acts{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(12px,1.6vw,20px);margin:clamp(20px,3.4vh,32px) 0}
+  /* ── 出海体检新增 ── */
+  table.tbl{width:100%;border-collapse:collapse;margin-top:clamp(14px,2.4vh,22px);font-size:clamp(11.8px,1.08vw,14.5px)}
+  table.tbl th,table.tbl td{border-bottom:1px solid var(--line-2);padding:clamp(8px,1.2vh,12px) 11px;text-align:left;vertical-align:top;line-height:1.6}
+  table.tbl thead th{font-size:10.5px;letter-spacing:.12em;color:var(--ink-3);font-weight:500;border-bottom:1px solid var(--line)}
+  table.tbl td.k{font-family:var(--mono);font-size:clamp(11px,1vw,13px);color:var(--ink);font-weight:600;white-space:nowrap}
+  table.tbl td.bad{color:var(--red)}
+  table.tbl td.ok{color:var(--green)}
+  table.tbl td.mut{color:var(--ink-3);font-size:clamp(11px,.98vw,13px)}
+  .trio{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(12px,1.6vw,20px);margin-top:clamp(16px,2.6vh,24px)}
+  .trio > .panel{margin:0}
+  .note-box{
+    border-left:3px solid var(--red);background:rgba(169,53,39,.05);
+    padding:clamp(10px,1.4vh,14px) clamp(12px,1.4vw,16px);
+    margin-top:clamp(13px,2vh,19px);
+    font-size:clamp(11.8px,1.04vw,14px);line-height:1.78;color:var(--ink-2);
+  }
+  @media (max-width:1000px){
+    table.tbl td.k{white-space:normal}
+    .trio{grid-template-columns:1fr}
+  }
+
   .act{border-top:2px solid var(--ink);padding-top:14px}
   .act .num{font-family:var(--mono);font-size:11px;color:var(--gold);letter-spacing:.1em}
   .act h4{font-size:clamp(13.5px,1.3vw,16px);margin:7px 0 6px;font-weight:600}
@@ -637,6 +658,7 @@
     table.cmp td.dim,table.cmp td.them,table.cmp td.us,table.cmp td.why{width:auto}
     .rail{display:none}
     .screen{align-items:flex-start;padding-top:56px}
+    .cover{align-items:center;padding-top:clamp(40px,6vh,72px)}
   }
   @media print{
     body{overflow:visible}
@@ -689,16 +711,16 @@
   </section>
 
   <!-- ══════ 0 封面 ══════ -->
-  <section class="screen cover" data-title="开场" data-note="先别讲产品。开场只问一句：<strong>「你们最近有没有在 AI 里搜过自己？」</strong>停三秒，等回答。多数人没有。然后说：我们搜了，而且用的是用户真会问的那几句话。今天不讲功能，只看结果。">
+  <section class="screen cover" data-title="开场" data-note="开场<strong>别讲产品，也别讲功能</strong>。先问一句：<strong>「你们出海这块，官网是哪个域名？」</strong>多数人会说 herbeast.cn，或者愣一下。<br>然后说：<strong>「我们替你查了。三个域名，两个打不开。」</strong>停住，等他们反应。<br>今天不谈功能、不谈试用、不报价 —— 只讲一件事：<b>AI 生态里，品牌站在第几层。</b>">
     <div class="wrap">
-      <div class="kicker rv"><b>东边野兽 × 唯风</b><span>一镜到底 · 现场取证</span></div>
-      <h1 class="rv">它认识你，<br>但每次说的<span class="hl">不一样</span>。</h1>
-      <p class="sub rv">同一句话，同一分钟，我们连问了四遍。<br>四个答案，三个英文名，两个成立年份。下面全是原话，一个字没改。</p>
+      <div class="kicker rv"><b>东边野兽 × 唯风</b><span>AI 生态 · 现场取证</span></div>
+      <h1 class="rv">出海，先过<br><span class="hl">AI</span> 这一关。</h1>
+      <p class="sub rv">海外买家现在先问 AI，再决定信不信你。<br>我们替你查了 AI 生态里的三个位置 —— 每一条你都能自己复核。</p>
 
       <div class="agenda rv">
-        <div><i>01</i><span><b>它现在怎么说你</b> · 有据可查</span></div>
-        <div><i>02</i><span><b>我们哪里不一样</b> · 六件事</span></div>
-        <div><i>03</i><span><b>30 天怎么验</b> · 你自己看数</span></div>
+        <div><i>01</i><span><b>AI 生态里你站在第几层</b> · 三层</span></div>
+        <div><i>02</i><span><b>三层各断在哪</b> · 源码可验</span></div>
+        <div><i>03</i><span><b>怎么拿去开会</b> · 内部能用</span></div>
       </div>
 
       <div class="foot rv">
@@ -709,19 +731,167 @@
     </div>
   </section>
 
-  <!-- ══════ 1 AI 原话 ══════ -->
-  <section class="screen" data-title="AI 原话" data-note="这一屏<strong>不要解释</strong>，让他们自己把四列读完。读到「两个年份」的时候会有人抬头。<br>那时候才开口：<strong>「这不是它记错了。它没有记 —— 它每次都是现编的。」</strong><br>如果他们不信，<strong>把手机递过去，当场再问一遍</strong>。第五个版本会自己出来，比你说什么都管用。">
+  <!-- ══════ 0.5 AI 生态三层（定义屏） ══════ -->
+  <section class="screen" data-title="AI 生态三层" data-note="这一屏是<strong>全场唯一讲定义的地方，也是最值钱的一屏</strong>。<br>开口先立规矩：<strong>「AI 生态里，品牌有三个位置。这三个位置买不到，也投不出来。」</strong>停一下，这句会让他们坐直。<br>然后一层一层说，每层只用一句话：第一层修门（机器抓得到）、第二层统一口径（说的是同一份事实）、第三层备料（有东西可被引用）。<br>最后一句一定要讲：<strong>「跳过任何一层，后面都白做。」</strong>—— 这句话把「我们为什么不能只卖你发稿」讲明白了。">
     <div class="wrap">
-      <div class="mark rv"><b>一</b><span>同一句话，问了四遍</span></div>
-      <h2 class="rv">它给了四个答案</h2>
-      <p class="lead sm rv" style="margin-bottom:0">今天早上 8 点 42 分到 44 分，我们把「东边野兽是什么牌子？」这句话原封不动问了四遍。下面四段全是它的原话，只把互相打架的地方标了出来。</p>
+      <div class="mark rv"><b>〇</b><span>先说清楚我们在做哪一层</span></div>
+      <h2 class="rv">AI 生态里，品牌只有三个位置</h2>
+      <p class="lead sm rv">这三个位置<b>买不到，也投不出来</b> —— 只能一层一层做上去。</p>
+
+      <div class="trio">
+        <div class="panel rv">
+          <div class="tag">第一层 · 被读到</div>
+          <h3>机器抓得到你</h3>
+          <div class="body">
+            <p style="margin:0 0 10px">Google 的 AI 概览、ChatGPT、Perplexity 去抓你的站，抓到的必须是机器读得懂的东西。</p>
+            <p style="margin:0"><b style="color:var(--red)">现状：入口三个，断了两个；活着的那个也读不懂。</b></p>
+          </div>
+        </div>
+
+        <div class="panel rv">
+          <div class="tag">第二层 · 被说准</div>
+          <h3>所有来源说的是同一份事实</h3>
+          <div class="body">
+            <p style="margin:0 0 10px">AI 不查档案，它每次都现编。你唯一能做的是让所有来源说同一套：英文名、成立时间、成分、功效。</p>
+            <p style="margin:0"><b style="color:var(--red)">现状：问了四遍，三个英文名，没有一个是你。</b></p>
+          </div>
+        </div>
+
+        <div class="panel rv">
+          <div class="tag">第三层 · 被引用</div>
+          <h3>有第一手内容可引</h3>
+          <div class="body">
+            <p style="margin:0 0 10px">AI 引用的是能被结构化拿出来用的东西：成分机理、检测数据、用法、对比。</p>
+            <p style="margin:0"><b style="color:var(--red)">现状：sitemap 里 47 个页面，零条结构化数据 —— 没有可被机器直接引用的一条。</b></p>
+          </div>
+        </div>
+      </div>
+
+      <p class="plain rv">
+        说白了：第一层是<b>修门</b>，第二层是<b>统一口径</b>，第三层是<b>备料</b>。
+        三层做完，AI 才可能把你放进名单 —— 跳过任何一层，后面都白做。
+      </p>
+    </div>
+  </section>
+
+  <!-- ══════ 1 事实一：三个域名 ══════ -->
+  <section class="screen" data-title="三个域名" data-note="这一屏<strong>先让他们自己看，不要念</strong>。念完第一行停一下：herbeast.cn 是搜出来排第一的那个，也是你们邮箱后缀。<br>第二行是关键：<strong>工商登记里写着 herbeast.co/zh 是企业官网，它打不开。</strong>做尽调、找供应商、看财报附注的人，看到的都是这一行。<br>第三行不要含糊：<strong>活着的是 herbeast.world，纯英文。</strong><br>如果对方说「我们国内能打开」，别争 —— 把手机递过去：<strong>「你 4G 打开试试。」</strong>">
+    <div class="wrap">
+      <div class="mark rv"><b>一</b><span>第一层 · 被读到</span></div>
+      <h2 class="rv">两个打不开，只有第三个活着</h2>
+      <p class="lead sm rv" style="margin-bottom:0">这三个地址，都在公开信息里被当成「东边野兽官网」。2026-10-29 上午，我们逐个测了一遍。</p>
+
+      <table class="tbl">
+        <thead>
+          <tr><th>域名</th><th>它出现在哪</th><th>实测结果</th><th>你自己怎么核</th></tr>
+        </thead>
+        <tbody>
+          <tr class="rv">
+            <td class="k">herbeast.cn</td>
+            <td>中文搜索结果第 1 位；<br>你们对外邮箱的后缀</td>
+            <td class="bad"><b>DNS 查不到，打不开</b></td>
+            <td class="mut">手机 4G 打开这个地址</td>
+          </tr>
+          <tr class="rv">
+            <td class="k">herbeast.co/zh</td>
+            <td>工商登记信息里写的<br>「企业官网」，带语言路径</td>
+            <td class="bad"><b>连接失败，打不开</b></td>
+            <td class="mut">浏览器直接打开</td>
+          </tr>
+          <tr class="rv">
+            <td class="k">www.herbeast.world</td>
+            <td>LinkedIn 公司页的<br>官方站点地址</td>
+            <td class="ok"><b>200，全英文站，活着</b></td>
+            <td class="mut">打开就知道</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="note-box rv">
+        还有一个细节：搜索引擎里仍然留着 <b>herbeast.cn/page1</b> 的页面内容，但域名已经解析不到。
+        <b>索引还在，门没了。</b>
+      </div>
+
+      <p class="plain rv">
+        说白了：中文消费者按「官网」找过去，落点是空的；你真正在运营的站在另一个域名上，而且是纯英文。
+        这不是做错了 —— 这是<b>出海企业的典型状态</b>：国内站、国际站各搭一套，各走各的，对外身份没有收敛成一个。
+      </p>
+
+      <div class="rv" style="margin-top:clamp(10px,1.6vh,14px)">
+        <span class="stamp"><b>实测</b> 2026-10-29 09:55 · 公共 DNS 查询（含 8.8.8.8）+ 浏览器直连 · 若为分地区解析，请用手机 4G 复核</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════ 2 事实二：机器读到的 ══════ -->
+  <section class="screen" data-title="机器读到什么" data-note="这一屏是<strong>全场技术含量最高、但最好讲</strong>的一屏。三块，一块一句就够。<br>第一块：<strong>「你们标签页上就写着 Herbeast 一个词。」</strong>让他们自己低头看浏览器标签。<br>第二块：<strong>「整站没有一条结构化数据。」</strong>补一句人话：人可以看图懂你，机器没有眼睛，它只能读这些。<br>第三块特别好笑也特别疼：<strong>「声明了要大图卡片，但没配图。」</strong>当场把 www.herbeast.world 发到微信里，卡片是空的 —— 这个动作一定要做。<br>最后一定要转到绿框：<strong>描述写得非常准，sitemap 也是健康的。不是做得差，是做了一半。</strong>">
+    <div class="wrap">
+      <div class="mark rv"><b>二</b><span>第一层 · 被读到</span></div>
+      <h2 class="rv">人看得懂，机器读不懂</h2>
+      <p class="lead sm rv" style="margin-bottom:0">我们把 www.herbeast.world 的首页源码逐项看了一遍。三样最要紧的东西，是空的。</p>
+
+      <div class="trio">
+        <div class="panel rv">
+          <div class="tag">一 · 标签页标题</div>
+          <h3>就一个词</h3>
+          <div class="body">
+            <p style="margin:0 0 8px"><code style="font-family:var(--mono);font-size:clamp(13px,1.2vw,17px);color:var(--red)">&lt;title&gt;Herbeast&lt;/title&gt;</code></p>
+            <p style="margin:0">没有「护肤」，没有「东方草本」，没有「上海」。<br>
+            搜索和 AI 判断你是谁，第一眼看的就是这一行。</p>
+          </div>
+        </div>
+
+        <div class="panel rv">
+          <div class="tag">二 · 结构化数据</div>
+          <h3>零条</h3>
+          <div class="body">
+            <p style="margin:0 0 8px;font-family:var(--mono);font-size:clamp(13px,1.2vw,17px);color:var(--red)">ld+json = 0</p>
+            <p style="margin:0">机器没法结构化地知道：你是品牌、卖什么、成分是什么、多少钱。<br>
+            AI 想引用你，没有可引用的骨头。</p>
+          </div>
+        </div>
+
+        <div class="panel rv">
+          <div class="tag">三 · 分享卡片</div>
+          <h3>声明了大图，没配图</h3>
+          <div class="body">
+            <p style="margin:0 0 8px;font-family:var(--mono);font-size:clamp(13px,1.2vw,17px);color:var(--red)">og:image = 缺</p>
+            <p style="margin:0">代码里写着「要大图卡片」，但没给图。<br>
+            链接发到微信、发到 X，出来是一张<b>空卡</b>。</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="note-box rv" style="border-left-color:var(--green);background:rgba(34,67,58,.05)">
+        <b style="color:var(--green)">做得对的地方也要说：</b>
+        描述写得非常准 —— “Modern Chinese skincare and wellness rooted in Traditional Chinese Medicine, aromatherapy, reishi, and Eastern botanical rituals.”
+        另外 sitemap 47 条、robots 已声明 Sitemap、canonical 已设，<b>这块是健康的</b>。
+      </div>
+
+      <p class="plain rv">
+        说白了：不是做得差，是<b>只做了「给人看」的那一半</b>。
+        人靠图和感觉就懂你；Google 和 AI 没有眼睛，它们只读标题、结构化数据、描述这三样。
+      </p>
+
+      <div class="rv" style="margin-top:clamp(10px,1.6vh,14px)">
+        <span class="stamp"><b>实测</b> 2026-10-29 10:02 · 直读 www.herbeast.world 首页源码 · 在源码里 Ctrl+F 搜 ld+json，得 0 条</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════ 3 事实三：AI 说的名字 ══════ -->
+  <section class="screen" data-title="AI 说的名字" data-note="这一屏<strong>不要解释</strong>，让他们自己把四列读完。读到第三个英文名的时候会有人抬头。<br>那时候才开口，只问一句：<strong>「这三个英文名里，有一个是你们的吗？」</strong><br>没有。三个都不是 Herbeast。<br>再补一句：<strong>「这不是它记错了，它压根没记住 —— 每次都是当场现编一个像你的东西。」</strong><br>他们不信就递手机，当场再问一遍，第五个版本会自己出来。">
+    <div class="wrap">
+      <div class="mark rv"><b>三</b><span>第二层 · 被说准</span></div>
+      <h2 class="rv">它给了三个英文名，没有一个是 Herbeast</h2>
+      <p class="lead sm rv" style="margin-bottom:0">今天早上 8 点 42 分到 44 分，我们把「东边野兽是什么牌子？」原封不动问了四遍。下面四段全是原话，只把互相打架的地方标了出来。</p>
 
       <div class="vgrid">
         <div class="vcard rv">
           <div class="vn">第 1 次</div>
           <div class="vt">「东边野兽（<em>DONGBIAN YESHOU</em>）是一个中国本土的护肤品牌，成立于<span class="ok">2020</span>年，总部位于上海……以灵芝、松茸、青蒿等为核心原料」</div>
           <dl>
-            <dt>英文名</dt><dd>DONGBIAN YESHOU</dd>
+            <dt>英文名</dt><dd class="bad">DONGBIAN YESHOU</dd>
             <dt>成立</dt><dd>2020</dd>
             <dt>成分</dt><dd>灵芝·松茸·青蒿</dd>
           </dl>
@@ -759,10 +929,11 @@
       </div>
 
       <div class="vline rv">
-        <div class="k">三个英文名、两个成立年份、三份配料表。<br><b>它不是记错了 —— 它压根没记住，每次都是当场现编。</b></div>
+        <div class="k">三个英文名：DONGBIAN YESHOU、East Beast、East Beast。<br><b>没有一个是 Herbeast。</b></div>
         <div class="s">
-          你现在拿手机再问一遍，大概率出<b>第五个版本</b>。<br>
-          同一批问题里唯一没变的，是这一句：问「敏感肌修护精华油推荐」，问了两次，<b>两次都没提你</b> —— 而那正好是你最能卖的场景。
+          两个成立年份、三份配料表。<br>
+          它不是记错了 —— 它压根没记住，<b>每次都是当场现编一个像你的东西</b>。<br>
+          而海外买家问的，就是这些被现编出来的答案。
         </div>
       </div>
 
@@ -772,228 +943,125 @@
     </div>
   </section>
 
-  <!-- ══════ 2 三段滑坡 ══════ -->
-  <section class="screen" data-title="名字失效点" data-note="这一屏<strong>客户可以当场搜，而且一定搜得到同样的结果</strong> —— 稳定性仅次于上一屏的「四个答案」。讲的时候把手机递过去：「你现在搜第二条试试。」<br>结论一句话：<strong>你不缺内容，你缺的是那句把「牌子名 + 产品类别」写在一起的话。</strong>">
+  <!-- ══════ 4 合起来：进不进名单 ══════ -->
+  <section class="screen" data-title="进不进名单" data-note="这一屏<strong>把三层焊在一起</strong>，是全场的转折点。<br>指着流程说：买家问 AI 一句话，AI 就去读你站上那三样东西，然后给出答案。链条很清楚，客户会自己接上。<br>核心句，慢一点：<strong>「你不是排在后面，你是没进名单。」</strong><br>然后主动把短板说了 —— <strong>这一步我们不在国内替你测</strong>，出口 IP 决定的结果不作数。<b>这句话必须说，说了后面所有数字他才信。</b>说完马上把三个动作给他，让他自己验。">
     <div class="wrap">
-      <div class="mark rv"><b>二</b><span>你的名字在哪一步失效</span></div>
-      <h2 class="rv">客户想买的时候，搜不到你</h2>
-      <p class="lead sm rv" style="margin-bottom:0">2026-10-29 凌晨，我们用三个真问题各搜了一遍。下面是中国区搜索结果前 8 条的实际样子。</p>
+      <div class="mark rv"><b>四</b><span>三层合起来看</span></div>
+      <h2 class="rv">海外买家问 AI，AI 拿你站上那三样东西回答</h2>
 
-      <div class="steps">
-        <div class="step ok rv">
-          <div class="lh"><b>第一问 · 直接搜你的名字</b><code>东边野兽 官网</code></div>
-          <div class="rh">
-            <span class="chip hit">herbeast.cn（第 1 位）</span>
-            <span class="chip hit">京东旗舰店</span>
-            <span class="chip hit">百度百科</span>
-            <span class="chip hit">品牌星球</span>
-            <span class="chip hit">ELLE</span>
-            <span class="chip hit">知乎专栏</span>
-            <span class="chip hit">数英网</span>
-          </div>
-          <span class="verdict">8 条里 7 条是你 · 这一问赢了</span>
-        </div>
-
-        <div class="step bad rv">
-          <div class="lh"><b>第二问 · 加了产品名</b><code>东边野兽 灵芝精华油</code></div>
-          <div class="rh">
-            <span class="chip miss">东边（汉语词语）· 百科</span>
-            <span class="chip miss">哪边是东边？左还是右</span>
-            <span class="chip miss">东边 - 搜索词典</span>
-            <span class="chip miss">东边的读音</span>
-            <span class="chip miss">东边是哪个方向</span>
-          </div>
-          <span class="verdict">名字被拆成两个普通词 · 8 条里 0 条是你</span>
-        </div>
-
-        <div class="step bad rv">
-          <div class="lh"><b>第三问 · 客户真要买时会搜的话</b><code>灵芝精华油哪个牌子好</code></div>
-          <div class="rh">
-            <span class="chip miss">灵芝（中药）· 百科</span>
-            <span class="chip miss">灵芝的功效与作用</span>
-            <span class="chip miss">灵芝是仙草还是智商税</span>
-            <span class="chip miss">灵芝孢子粉详解</span>
-          </div>
-          <span class="verdict">全是药材科普 · 8 条里 0 个品牌</span>
-        </div>
+      <div class="flow">
+        <div class="node rv"><div class="n">01</div><div class="t">买家开口</div><div class="d">"best Chinese herbal<br>skincare brand"</div></div>
+        <div class="node rv"><div class="n">02</div><div class="t">AI 去读</div><div class="d">title · 结构化数据<br>· 描述</div></div>
+        <div class="node rv"><div class="n">03</div><div class="t">它读到</div><div class="d">Herbeast 一个词<br>+ 0 条结构化数据</div></div>
+        <div class="node alert rv"><div class="n">04</div><div class="t">它回答</div><div class="d">East Beast<br>DONGBIAN YESHOU</div></div>
       </div>
 
-      <p class="lead rv" style="margin-top:clamp(18px,2.8vh,26px);max-width:none">
-        第一问你是赢的 —— 已经在找你的人，找得到。
-        输在第二问和第三问：<b style="color:var(--red)">你的牌子名和你的产品类别，从来没有出现在同一句话里。</b>
+      <p class="lead rv" style="margin-top:clamp(14px,2.2vh,20px);max-width:none">
+        你看这条链子，断在第三步 —— <b style="color:var(--red)">它没有东西可读，只好自己编。</b><br>
+        所以你不是排在后面，<b style="color:var(--red)">你是没进名单。</b>
       </p>
-      <p class="plain rv">
-        说白了：客户从<b>「知道你」</b>到<b>「买你」</b>，中间断了一截。这一截不补，前面的名气带不来订单 ——
-        因为客户真正搜的是「XX 哪个牌子好」，这句话里没有你。
-      </p>
+
+      <div class="note-box rv" style="border-left-color:var(--gold);background:rgba(168,135,74,.07)">
+        <b>这一步我们不在国内替你测。</b>
+        出口 IP 在国内，英文检索会被强制跳回中国区，测出来的东西不作数 —— 拿那个当证据，你一验就崩。
+        所以这一屏不给数字，给你三个动作，<b>三分钟你自己验完</b>。
+      </div>
+
+      <div class="acts">
+        <div class="act rv">
+          <div class="num">01</div>
+          <h4>手机 4G 打开 herbeast.cn</h4>
+          <p>看它是不是空的。别用公司 WiFi，用你自己的流量。</p>
+        </div>
+        <div class="act rv">
+          <div class="num">02</div>
+          <h4>看 herbeast.world 的标签页</h4>
+          <p>标题是不是只有 Herbeast 一个词。右键「查看源代码」，Ctrl+F 搜 ld+json。</p>
+        </div>
+        <div class="act rv">
+          <div class="num">03</div>
+          <h4>问一次 ChatGPT 或 Perplexity</h4>
+          <p>问 best Chinese herbal skincare brands。看名单里有没有你，或者有没有 East Beast。</p>
+        </div>
+      </div>
     </div>
   </section>
 
-  <!-- ══════ 3 对照表 ══════ -->
-  <section class="screen" data-title="六条差别" data-note="这一屏<strong>不要逐行念</strong>。手指按在中间那列，说：<strong>「这六行里，前五行是能力，最后一行是良心。你可以拿最后一行去问任何一家供应商。」</strong><br>如果客户只记一句话，让他们记最后一行：能全自动发的只有一条信道。">
+  <!-- ══════ 5 内部怎么用 ══════ -->
+  <section class="screen" data-title="内部怎么用" data-note="这一屏是<strong>专门给你们内部开会准备的</strong>，也是这次谈话真正的落点。<br>先说一句：<strong>「你们现在要说服的不是消费者，是预算会。」</strong>这句话一出，对方表情会变 —— 因为他天天在干这件事。<br>表里的「谁来做」那列很重要：<b>不是所有活都要我们干</b>，IT 能干的写明给 IT。这会让方案显得可信，不是来抢预算的。<br>最后一句：<strong>「每一项都能写进汇报，每一项都能被复查 —— 这是它跟『投了多少钱、涨了多少曝光』最大的区别。」</strong>">
     <div class="wrap">
-      <div class="mark rv"><b>三</b><span>差别在哪</span></div>
-      <h2 class="rv">别人卖「发了多少」，我们卖「说了什么」</h2>
-      <p class="lead sm rv" style="margin-bottom:0">同样是做 AI 内容，两家公司做的事，差在这六件上。每一件都可以当场问。</p>
+      <div class="mark rv"><b>五</b><span>这张表，是给你拿去开会的</span></div>
+      <h2 class="rv">缺口 → 补什么 → 谁来做 → 怎么验</h2>
+      <p class="lead sm rv" style="margin-bottom:0">你们现在要说服的不是消费者，是预算会。所以每一项都拆成四格，谁问都能答上。<b>左边那个圈，是它属于第几层。</b></p>
 
-      <table class="cmp">
+      <table class="tbl">
         <thead>
-          <tr><th></th><th>多数服务商怎么做</th><th class="us">我们怎么做</th><th>这对你意味着什么</th></tr>
+          <tr><th>缺口</th><th>补什么</th><th>谁来做</th><th>补完怎么验</th></tr>
         </thead>
         <tbody>
-          <tr>
-            <td class="dim">成绩怎么算</td>
-            <td class="them">抽几个问题问一遍，报一个「AI 可见度 78%」</td>
-            <td class="us">12 个真问题，百度排名和 AI 回答分开查，<b>最后不算总分</b></td>
-            <td class="why">你知道是哪一类问题丢了，不是只知道「整体还行」</td>
+          <tr class="rv">
+            <td class="k">① 三个域名</td>
+            <td>收敛到一个主域，其余做 301 跳转</td>
+            <td class="mut">你们 IT +<br>我们出方案</td>
+            <td class="mut">三个旧地址都跳到同一个站</td>
           </tr>
-          <tr>
-            <td class="dim">算不算提到</td>
-            <td class="them">回答里出现你的名字，就记一分</td>
-            <td class="us">分三档：认真介绍了 / 只提了个名字 / 完全没提</td>
-            <td class="why">它说「我不了解」，不会被算成「提到过」</td>
+          <tr class="rv">
+            <td class="k">① 标题一个词</td>
+            <td>改成能读出业务的一句话（东方草本护肤 · 上海）</td>
+            <td class="mut">我们出稿<br>你们上线</td>
+            <td class="mut">标签页一眼看出你做什么</td>
           </tr>
-          <tr>
-            <td class="dim">用哪个名字</td>
-            <td class="them">只试中文名，或者只试英文名</td>
-            <td class="us">中文名、英文名分开试，分开下结论</td>
-            <td class="why">中文查得到、英文一片空白 —— 这是两件事</td>
+          <tr class="rv">
+            <td class="k">①③ 零结构化数据</td>
+            <td>补品牌（Organization）+ 产品（Product）结构化数据</td>
+            <td class="mut">我们出代码<br>你们上线</td>
+            <td class="mut">源码搜 ld+json 有结果</td>
           </tr>
-          <tr>
-            <td class="dim">稿子怎么写</td>
-            <td class="them">通用 AI 套模板，一看就是 AI 写的</td>
-            <td class="us">先给它一本你们家的「说话手册」</td>
-            <td class="why">稿子不用拿回来重写口吻</td>
+          <tr class="rv">
+            <td class="k">① 分享无主图</td>
+            <td>补社交分享图</td>
+            <td class="mut">同一批</td>
+            <td class="mut">链接发微信有卡片图</td>
           </tr>
-          <tr>
-            <td class="dim">违规检查</td>
-            <td class="them">什么都拦，编辑最后全点「忽略」</td>
-            <td class="us">分三种：能自动改 / 必须找人改 / 只是提醒你别慌</td>
-            <td class="why">提醒值得看，不是噪音</td>
-          </tr>
-          <tr>
-            <td class="dim">能发到哪</td>
-            <td class="them">承诺「全平台一键发」</td>
-            <td class="us">8 个平台逐条写明真实能力，能全自动的只有 1 个</td>
-            <td class="why">报表上的数，对得上后台的真东西</td>
+          <tr class="rv">
+            <td class="k">② AI 说错英文名</td>
+            <td>英文名统一成 Herbeast，多来源交叉发布同一套说法</td>
+            <td class="mut">我们持续做</td>
+            <td class="mut">一个月后再问，名字对得上</td>
           </tr>
         </tbody>
       </table>
 
       <p class="plain rv">
-        说白了：左边是<b>「给你一个好看的数」</b>，右边是<b>「给你一个能查的答案」</b>。
-        前五条是本事，最后一条是良心 —— 你可以拿最后一条去问任何一家供应商。
+        说白了：这不是一笔营销预算，是一次<b>体检 + 修补</b>。
+        每一项都能写进汇报、每一项都能被复查 —— 这是它和「投了多少钱、涨了多少曝光」最大的区别。
       </p>
     </div>
   </section>
 
-  <!-- ══════ 4 两个不做 ══════ -->
-  <section class="screen" data-title="两个不做" data-note="这一屏讲<strong>方法论</strong>，也是全场唯一讲「我们怎么想」的地方。<br>右栏那句「认成女装店」是真实的，说出来他们会笑，笑完就不笑了。<br>核心句：<strong>「给你一个让你安心的数字，是这行最省事的做法。我们不这么干，因为你会照着那个数字做错决定。」</strong>">
-    <div class="wrap">
-      <div class="mark rv"><b>四</b><span>我们有两件事不做</span></div>
-      <h2 class="rv">我们不给你一个总分</h2>
-      <p class="lead sm rv" style="margin-bottom:0">听着像缺点。听完你就知道为什么。</p>
-
-      <div class="two">
-        <div class="panel rv">
-          <div class="tag">不做 一</div>
-          <h3>不把「百度排第几」和「AI 怎么答」算成一个总分</h3>
-          <div class="body">
-            <div class="track">
-              <div class="lbl"><span>百度那边 · 前 8 条里有几条是你</span><b>7 / 8</b></div>
-              <div class="bar" style="--w:87%"><i></i></div>
-            </div>
-            <div class="track">
-              <div class="lbl"><span>AI 那边 · 同一问题问 4 次，说法一致几次</span><b>0 / 4</b></div>
-              <div class="bar bad" style="--w:2%"><i></i></div>
-            </div>
-            <div class="strike"><b>✕</b><span>合成一个「AI 可见度 78%」</span></div>
-            <p class="warn">这个数字会让你把钱投错地方</p>
-            <p class="tail" style="margin:0">百度那头你很稳；AI 那头它连自己上次说过什么都会变。两个数分开看，才知道钱该花在哪。</p>
-          </div>
-        </div>
-
-        <div class="panel rv">
-          <div class="tag">不做 二</div>
-          <h3>不把「中文名」和「英文名」的结果混成一个数</h3>
-          <div class="body">
-            <div class="track">
-              <div class="lbl"><span>中文名「东边野兽」· 答得出你</span><b>4 / 4</b></div>
-              <div class="bar" style="--w:100%"><i></i></div>
-            </div>
-            <div class="track">
-              <div class="lbl"><span>但是 · 4 次说法一致</span><b>0 / 4</b></div>
-              <div class="bar bad" style="--w:2%"><i></i></div>
-            </div>
-            <div class="track">
-              <div class="lbl"><span>英文名「herbeast」· 被认成别家</span><b>3 / 3</b></div>
-              <div class="bar bad" style="--w:100%"><i></i></div>
-            </div>
-            <div class="strike"><b>✕</b><span>合并成一句「一半一半」</span></div>
-            <p class="warn">两个名字混在一起算，等于什么都没说</p>
-            <p class="tail" style="margin:0">用英文名问，它三次都把你认成一家女装快时尚店。中文名它答得出，但每次不一样。这是两笔账。</p>
-          </div>
-        </div>
-      </div>
-
-      <p class="lead rv" style="margin-top:clamp(16px,2.4vh,24px);max-width:none">
-        一个让你安心的数字，是这行最省事的做法。我们不这么做，<b style="color:var(--red)">因为你会照着那个数字做错决定</b>。
-      </p>
-    </div>
-  </section>
-
-  <!-- ══════ 5 行业包 ══════ -->
-  <section class="screen" data-title="口径" data-note="这一屏解决客户心里那句话：<strong>「AI 写的东西一看就是 AI 写的，我不能发。」</strong><br>左右一读，差别立刻出来。补一句：<strong>「不是 AI 更聪明，是我们事先教过它怎么说。这本手册按行业写一次，以后每篇都用它。」</strong>">
-    <div class="wrap">
-      <div class="mark rv"><b>五</b><span>同一个选题，两种口吻</span></div>
-      <h2 class="rv">不是 AI 更聪明，是有没有人教过它</h2>
-      <p class="lead sm rv">同一个题目，交给两个 AI 写：一个没人教过，一个先读过你们家的「说话手册」。</p>
-
-      <div class="voice">
-        <div class="col bad rv">
-          <div class="hd"><b>没教过的 AI</b><span>通用模型，直接问</span></div>
-          <p>灵芝（Ganoderma lucidum）中的三萜类化合物具有抗氧化与免疫调节活性，相关研究表明其可影响皮肤屏障相关因子的表达。建议结合个人肤质，在专业人士指导下选择合适的产品。</p>
-          <div class="why">没有主语、没有场景、没有用法。不像人话，也不敢给法务看。</div>
-        </div>
-        <div class="col ok rv">
-          <div class="hd"><b>教过的 AI</b><span>读过东边野兽的说话手册</span></div>
-          <p>屏障被熬夜、换季、过度清洁磨薄之后，脸会持续泛红、刺痛。这支油解决的不是「干」，是这件事。</p>
-          <p>掌心搓开，按压上脸，两到三滴。吸收后是软而不油的手感。</p>
-          <div class="why">主语是皮肤，不是成分表。可以直接发，不必拿回来重写口吻。</div>
-        </div>
-      </div>
-
-      <p class="plain rv">
-        这本「说话手册」里写好的，不只是语气：<b>哪些话能说、哪些一说就违规</b>；
-        <b>小红书出的是图文笔记</b>，不是 60 字短文案；
-        <b>哪些词该自动改、哪些只是提醒你补一句成分表</b>。
-      </p>
-    </div>
-  </section>
-
-  <!-- ══════ 实机 1 · 内容工厂 ══════ -->
-  <section class="screen" data-title="实机·内容工厂" data-note="这一屏<strong>把鼠标交给客户</strong>。先指一下左上角「嘉法狮中国」：<strong>「这是另一个客户在用的账号，天天在用。」</strong><br>然后按 ①②③④ 挨个点。①那里故意没有综合分；③强调素材是自己库里的，不是网上扒的。<br>客户问「我没内容怎么办」，就指 ③：资产库里有几万条，不用你现写。">
+  <!-- ══════ 实机 1 · 情报台 ══════ -->
+  <section class="screen" data-title="实机·情报台" data-note="这一屏<strong>把前面那份体检落到机器上</strong> —— 让他们相信那些数不是我手工点出来的。<br>开口就说：<strong>「刚才那三条域名、源码里数出来的 0 条，不是我一个个点出来的，是这台机器跑的。」</strong><br>③ 讲清两路分开：<b>AI 一路、网页一路，分开写、不合成</b> —— 这是跟「AI 可见度 78%」那类报告的根本区别。<br>④ 这句很多人会记：<b>「它不会替你编自己有什么本事。」</b>">
     <div class="wrap wide">
-      <div class="mark rv"><b>六</b><span>实机第一屏 · 稿子是怎么出来的</span></div>
+      <div class="mark rv"><b>六</b><span>实机一 · 这台机器就是上面那张表的出处</span></div>
       <div class="split">
         <div class="side rv">
-          <h2>先挑料，再挑平台，<br>然后生成</h2>
-          <p class="pt"><i>1</i><span>左上角四个数<b>全是人话</b>：还能群发几次、今天生成了几次、几条等你确认、本周发出去几条。没有一个「综合评分」。</span></p>
-          <p class="pt"><i>2</i><span>四步走：<b>选料 → 选平台 → 生成 → 确认</b>。每一步都能停下来改，不是点一下就跑完。</span></p>
-          <p class="pt"><i>3</i><span>左边这些是<b>你自己的家底</b>：57 个原料、54 个药用辅料、99 个配方、245 份技术文档。系统只从这里取材，不会去网上编。</span></p>
-          <p class="pt"><i>4</i><span>每张资产卡下面挂着标签：活性物、眼部护理、身体护理、彩妆。<b>写稿时照着标签挑话</b>，不会把眼霜的用法写到面霜上。</span></p>
+          <h2>给我一个网址，<br>六分钟出三份东西</h2>
+          <p class="pt"><i>1</i><span>输入一个网址（这个例子是给 <b>Croda</b> 做的），选行业包，点开始。<b>6 个 Credit、6 到 9 分钟</b>。</span></p>
+          <p class="pt"><i>2</i><span>出来三样：<b>情报调研报告 / 销售作战手册 / AI 可见度基线</b>。<b>刚才那份体检，就是第三样里的第一段。</b></span></p>
+          <p class="pt"><i>3</i><span>「AI 可见度」<b>两路查</b>：一路问 AI，一路搜网页，两边结论<b>分开写、不合成</b>。</span></p>
+          <p class="pt"><i>4</i><span>「我这方能力」这个框要是空着，报告里就通篇写<b>「待补充」</b>。<b>它不会替你编自己有什么本事。</b></span></p>
         </div>
         <div class="shot rv">
-          <div class="bar"><b>内容工厂</b> · 嘉法狮中国（真实账号）<span class="live">实际界面</span></div>
+          <div class="bar"><b>情报台</b> · 嘉法狮中国（真实账号）<span class="live">实际界面</span></div>
           <div class="frame">
-            <img src="real/02-content.png" alt="内容工厂 · 选内容源与目标平台">
-            <button class="hot" type="button" style="left:30%;top:22.1%" data-n="1" data-tip="四个数都能对上账：本月群发还剩 <b>11 次</b>、今天生成 <b>3 次</b>、<b>1 条</b>等你点确认、本周已发 <b>9 条</b>。<br>没有合成分、没有百分比。">1</button>
-            <button class="hot" type="button" style="left:23%;top:31.5%" data-n="2" data-tip="四步：<b>选内容源 → 选目标平台 → 生成 → 确认发布</b>。<br>每一步都能停下来改稿，不是一口气跑完。">2</button>
-            <button class="hot" type="button" style="left:26%;top:39.6%" data-n="3" data-tip="这里是<b>你自己的资产库</b>：57 个个人护理原料、54 个药用辅料、99 个配方、245 份技术文档。<br>系统只从这里面取材。库里没有的，它不会替你编。">3</button>
-            <button class="hot" type="button" style="left:50%;top:50%" data-n="4" data-tip="每张卡底下都挂着标签：<b>活性物 / 眼部护理 / 身体护理 / 彩妆</b>。<br>这些标签决定这篇稿子能说什么、不能说什么 —— 不靠 AI 猜。">4</button>
+            <img src="real/06-intel.png" alt="情报台 · 输入目标网址与三件套产出">
+            <button class="hot" type="button" style="left:51%;top:25.8%" data-n="1" data-tip="输入网址 → 选行业包 → 开始调研。<br>成本写在旁边：<b>6 个 Credit、6 到 9 分钟</b>，不藏着。">1</button>
+            <button class="hot" type="button" style="left:25.5%;top:54.8%" data-n="2" data-tip="三件套一起出：<b>情报调研报告、销售作战手册、AI 可见度基线</b>。<br>你们今天拿到的那本，就是中间这一格。">2</button>
+            <button class="hot" type="button" style="left:42%;top:36.5%" data-n="3" data-tip="这一格空着，报告里就会写「待补充」。<br><b>它不会替你编自己有什么本事</b> —— 所以第一次用要先填 3 分钟。">3</button>
+            <button class="hot" type="button" style="left:28%;top:85%" data-n="4" data-tip="两路分开查：<b>一路问 AI、一路搜网页</b>，结论各写各的。<br>「搜不搜得到」和「AI 推不推荐你」是两件事，合成一个数就废了。">4</button>
             <div class="tip"></div>
           </div>
-          <div class="cap">截取于 2026-10-29 09:14 · <b>点红圈看标注，点图看原图</b></div>
+          <div class="cap">截取于 2026-10-29 09:20 · 嘉法狮中国真实账号 · 上面那份体检走的是同一套采集代码</div>
         </div>
       </div>
     </div>
@@ -1002,7 +1070,7 @@
   <!-- ══════ 实机 2 · 合规闸门 ══════ -->
   <section class="screen" data-title="实机·合规闸门" data-note="全场<strong>唯一能让客户动手试</strong>的一屏。说完就停：<strong>「你手机里有公众号文章，粘一段进去。」</strong><br>不要替他点。他自己粘、自己点开始预检，看到红色标记的那一刻，这单就成了一半。<br>顺手补一句③：<b>三级不是违规</b>，是提醒你别慌 —— 这是我们跟别家最大的差别。">
     <div class="wrap wide">
-      <div class="mark rv"><b>六</b><span>实机第二屏 · 这一关可以当场试</span></div>
+      <div class="mark rv"><b>六</b><span>实机二 · 这一关可以当场试</span></div>
       <div class="split">
         <div class="side rv">
           <h2>粘一段你的稿子，<br>当场告诉你哪句会出事</h2>
@@ -1027,10 +1095,38 @@
     </div>
   </section>
 
-  <!-- ══════ 实机 3 · 发布中心 ══════ -->
+  <!-- ══════ 实机 3 · 内容工厂 ══════ -->
+  <section class="screen" data-title="实机·内容工厂" data-note="这一屏<strong>把鼠标交给客户</strong>。先指一下左上角「嘉法狮中国」：<strong>「这是另一个客户在用的账号，天天在用。」</strong><br>然后按 ①②③④ 挨个点。①那里故意没有综合分；③强调素材是自己库里的，不是网上扒的。<br>客户问「我没内容怎么办」，就指 ③：资产库里有几万条，不用你现写。">
+    <div class="wrap wide">
+      <div class="mark rv"><b>六</b><span>实机三 · 稿子是怎么出来的</span></div>
+      <div class="split">
+        <div class="side rv">
+          <h2>先挑料，再挑平台，<br>然后生成</h2>
+          <p class="pt"><i>1</i><span>左上角四个数<b>全是人话</b>：还能群发几次、今天生成了几次、几条等你确认、本周发出去几条。没有一个「综合评分」。</span></p>
+          <p class="pt"><i>2</i><span>四步走：<b>选料 → 选平台 → 生成 → 确认</b>。每一步都能停下来改，不是点一下就跑完。</span></p>
+          <p class="pt"><i>3</i><span>左边这些是<b>你自己的家底</b>：57 个原料、54 个药用辅料、99 个配方、245 份技术文档。系统只从这里取材，不会去网上编。</span></p>
+          <p class="pt"><i>4</i><span>每张资产卡下面挂着标签：活性物、眼部护理、身体护理、彩妆。<b>写稿时照着标签挑话</b>，不会把眼霜的用法写到面霜上。</span></p>
+        </div>
+        <div class="shot rv">
+          <div class="bar"><b>内容工厂</b> · 嘉法狮中国（真实账号）<span class="live">实际界面</span></div>
+          <div class="frame">
+            <img src="real/02-content.png" alt="内容工厂 · 选内容源与目标平台">
+            <button class="hot" type="button" style="left:30%;top:22.1%" data-n="1" data-tip="四个数都能对上账：本月群发还剩 <b>11 次</b>、今天生成 <b>3 次</b>、<b>1 条</b>等你点确认、本周已发 <b>9 条</b>。<br>没有合成分、没有百分比。">1</button>
+            <button class="hot" type="button" style="left:23%;top:31.5%" data-n="2" data-tip="四步：<b>选内容源 → 选目标平台 → 生成 → 确认发布</b>。<br>每一步都能停下来改稿，不是一口气跑完。">2</button>
+            <button class="hot" type="button" style="left:26%;top:39.6%" data-n="3" data-tip="这里是<b>你自己的资产库</b>：57 个个人护理原料、54 个药用辅料、99 个配方、245 份技术文档。<br>系统只从这里面取材。库里没有的，它不会替你编。">3</button>
+            <button class="hot" type="button" style="left:50%;top:50%" data-n="4" data-tip="每张卡底下都挂着标签：<b>活性物 / 眼部护理 / 身体护理 / 彩妆</b>。<br>这些标签决定这篇稿子能说什么、不能说什么 —— 不靠 AI 猜。">4</button>
+            <div class="tip"></div>
+          </div>
+          <div class="cap">截取于 2026-10-29 09:14 · <b>点红圈看标注，点图看原图</b></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════ 实机 4 · 发布中心 ══════ -->
   <section class="screen" data-title="实机·发布中心" data-note="这一屏是<strong>全场最值钱的一张图</strong>，因为它有回执号。<br>手指按在 ② 上：<strong>「批次号、平台、回执号都在。你拿这个号去公众号后台，能查到这一篇。」</strong><br>①那四个掉下去的数别跳过 —— <strong>34 篇写出来，只有 26 篇真落地。那 8 篇我们不算成绩。</strong>">
     <div class="wrap wide">
-      <div class="mark rv"><b>六</b><span>实机第三屏 · 发出去才算数</span></div>
+      <div class="mark rv"><b>六</b><span>实机四 · 发出去才算数</span></div>
       <div class="split">
         <div class="side rv">
           <h2>批了不算，落地才算</h2>
@@ -1055,38 +1151,10 @@
     </div>
   </section>
 
-  <!-- ══════ 实机 4 · 情报台 ══════ -->
-  <section class="screen" data-title="实机·情报台" data-note="这一屏<strong>自证你们手上那份手册</strong>。<br>开口就说：<strong>「你们今天拿到的那本手册，就是这台机器跑出来的。输入一个网址，6 到 9 分钟，三样东西一起出。」</strong><br>③那句一定要讲清楚：<b>AI 一路、网页一路，分开写，不合成</b> —— 这是跟「AI 可见度 78%」那类报告的根本区别。">
-    <div class="wrap wide">
-      <div class="mark rv"><b>六</b><span>实机第四屏 · 你们那份手册的来源</span></div>
-      <div class="split">
-        <div class="side rv">
-          <h2>给我一个网址，<br>六分钟出三份东西</h2>
-          <p class="pt"><i>1</i><span>输入一个网址（这个例子是给 <b>Croda</b> 做的），选行业包，点开始。<b>6 个 Credit、6 到 9 分钟</b>。</span></p>
-          <p class="pt"><i>2</i><span>出来三样：<b>情报调研报告 / 销售作战手册 / AI 可见度基线</b>。你们手上这份手册，就是中间那一格。</span></p>
-          <p class="pt"><i>3</i><span>「AI 可见度」<b>两路查</b>：一路问 AI，一路搜网页，两边结论<b>分开写、不合成</b>。</span></p>
-          <p class="pt"><i>4</i><span>「我这方能力」这个框要是空着，报告里就通篇写<b>「待补充」</b>。<b>它不会替你编自己有什么本事。</b></span></p>
-        </div>
-        <div class="shot rv">
-          <div class="bar"><b>情报台</b> · 嘉法狮中国（真实账号）<span class="live">实际界面</span></div>
-          <div class="frame">
-            <img src="real/06-intel.png" alt="情报台 · 输入目标网址与三件套产出">
-            <button class="hot" type="button" style="left:51%;top:25.8%" data-n="1" data-tip="输入网址 → 选行业包 → 开始调研。<br>成本写在旁边：<b>6 个 Credit、6 到 9 分钟</b>，不藏着。">1</button>
-            <button class="hot" type="button" style="left:25.5%;top:54.8%" data-n="2" data-tip="三件套一起出：<b>情报调研报告、销售作战手册、AI 可见度基线</b>。<br>你们今天拿到的那本，就是中间这一格。">2</button>
-            <button class="hot" type="button" style="left:42%;top:36.5%" data-n="3" data-tip="这一格空着，报告里就会写「待补充」。<br><b>它不会替你编自己有什么本事</b> —— 所以第一次用要先填 3 分钟。">3</button>
-            <button class="hot" type="button" style="left:28%;top:85%" data-n="4" data-tip="两路分开查：<b>一路问 AI、一路搜网页</b>，结论各写各的。<br>「搜不搜得到」和「AI 推不推荐你」是两件事，合成一个数就废了。">4</button>
-            <div class="tip"></div>
-          </div>
-          <div class="cap">截取于 2026-10-29 09:20 · 东边野兽这份手册即由同一流程产出</div>
-        </div>
-      </div>
-    </div>
-  </section>
-
   <!-- ══════ 实机 5 · 两个客户 ══════ -->
   <section class="screen" data-title="实机·已有客户" data-note="这一屏回答客户心里那句话：<strong>「是不是拿我当小白鼠？」</strong><br>左栏是嘉法狮，真在跑；右栏是今天给他开的号。<br>核心句：<strong>「后台是同一套，代码是同一份。唯一的区别是绑了哪份行业包。」</strong>—— 这句话把「定制」从「给你一个人写死」变成「给你一份贴合的模板」，报价才站得住。">
     <div class="wrap">
-      <div class="mark rv"><b>六</b><span>实机第五屏 · 你之前已经有人在用</span></div>
+      <div class="mark rv"><b>六</b><span>实机五 · 你之前已经有人在用</span></div>
       <h2 class="rv">不是给你一个人做的孤本</h2>
       <p class="lead sm rv">同一个后台、同一份代码。唯一的区别是绑了哪份「说话手册」。</p>
 
@@ -1124,71 +1192,75 @@
     </div>
   </section>
 
-  <!-- ══════ 6 发射台 ══════ -->
-  <section class="screen" data-title="信道真相" data-note="这是<strong>建立信任</strong>的一屏，不是炫技。主动说：<strong>「抖音发不了，小红书也发不了。能全自动的只有公众号一条。」</strong><br>客户会松一口气 —— 因为之前有人跟他承诺过全平台。这一屏之后，前面所有数字他都会更愿意信。">
+  <!-- ══════ 7 钱紧：只补最漏的 ══════ -->
+  <section class="screen" data-title="只补三个洞" data-note="这一屏<strong>直接回答他们没说出口的那句话</strong>：「我们没钱做大项目。」<br>先承认：<strong>「钱紧的时候，最怕的是买一个要养的东西。」</strong>停一下。<br>然后给三个小时级动作 —— 强调<strong>「加起来不到一天，不需要立项，不需要预算审批」</strong>。这句对预算会被卡的人杀伤力最大，因为他不花钱就能交作业。<br>边界一定要主动划清，划线比承诺更能建立信任：<strong>「我们不代运营、不投流、不承诺排名。」</strong>">
     <div class="wrap">
-      <div class="mark rv"><b>七</b><span>稿子最后落在哪</span></div>
-      <h2 class="rv">8 个平台，只有 1 个能全自动发</h2>
+      <div class="mark rv"><b>七</b><span>钱紧的时候从哪层开始</span></div>
+      <h2 class="rv">钱紧，就先做第一层。三步，不到一天</h2>
+      <p class="lead sm rv">第一层是三层里唯一<b>不需要持续投入</b>的 —— 修完就放在那儿，不用养。这也是钱紧的时候最该先动的地方。</p>
 
-      <div class="flow">
-        <div class="node rv"><div class="n">12</div><div class="t">写稿</div><div class="d">选题 → 成稿</div></div>
-        <div class="node rv"><div class="n">11</div><div class="t">审过</div><div class="d">过了合规这一关</div></div>
-        <div class="node rv"><div class="n">9</div><div class="t">投出去</div><div class="d">一篇可投多个平台</div></div>
-        <div class="node alert rv"><div class="n">6</div><div class="t">真发出去</div><div class="d">有链接，点得开</div></div>
-      </div>
-      <div class="flow-note rv">
-        <span>一个批次跑下来：1 篇被合规拦下、2 篇等人审、3 篇还在排队。<b>「审过了」不等于「发出去了」</b>。</span>
-        <span>演示环境数据；真交付时用你的账号跑</span>
+      <div class="acts">
+        <div class="act rv">
+          <div class="num">01 · 约半天</div>
+          <h4>标题改成一句话</h4>
+          <p>把只有 <code style="font-family:var(--mono)">Herbeast</code> 一个词，改成能读出业务的一句话。改完，搜索和 AI 第一次知道你是干什么的。</p>
+        </div>
+        <div class="act rv">
+          <div class="num">02 · 约半天</div>
+          <h4>补结构化数据</h4>
+          <p>让机器能结构化地读出：你是品牌、有哪些产品、卖什么。这是 AI 愿意引用你的前提。</p>
+        </div>
+        <div class="act rv">
+          <div class="num">03 · 约半小时</div>
+          <h4>补分享主图</h4>
+          <p>链接发出去不是空卡。这一项最便宜，但客户和媒体第一时间看到的就是它。</p>
+        </div>
       </div>
 
-      <table class="chan">
-        <thead>
-          <tr><td class="p" style="font-size:10.5px;letter-spacing:.12em;color:var(--ink-3);font-weight:500">平台</td><td class="g" style="font-size:10.5px;letter-spacing:.12em;color:var(--ink-3);font-weight:500">能做到什么</td><td class="r" style="font-size:10.5px;letter-spacing:.12em;color:var(--ink-3)">为什么是这样</td></tr>
-        </thead>
-        <tbody>
-          <tr class="rv"><td class="p">微信公众号</td><td class="g"><span class="dot a"></span>全自动</td><td class="r">接口已开，能全自动发。群发有次数上限，服务号默认 4 次/月，得人工确认</td></tr>
-          <tr class="rv"><td class="p">B 站</td><td class="g"><span class="dot b"></span>需申请</td><td class="r">只有企业执照能申请；批下来也只能把内容填进客户端，最后还得人手点一下</td></tr>
-          <tr class="rv"><td class="p">微博</td><td class="g"><span class="dot b"></span>试通中</td><td class="r">权限收紧了，先试通，不跟你保证</td></tr>
-          <tr class="rv"><td class="p">抖音</td><td class="g"><span class="dot c"></span>复制粘贴</td><td class="r">官方明确不给企业宣传 / 营销内容开接口，申请一定被驳回</td></tr>
-          <tr class="rv"><td class="p">小红书</td><td class="g"><span class="dot c"></span>复制粘贴</td><td class="r">没有发布接口。我们出的是图文笔记（不是短文案），你复制过去</td></tr>
-          <tr class="rv"><td class="p">知乎</td><td class="g"><span class="dot c"></span>复制粘贴</td><td class="r">没有发布接口</td></tr>
-          <tr class="rv"><td class="p">微信视频号</td><td class="g"><span class="dot c"></span>复制粘贴</td><td class="r">没有发布接口。我们出分镜脚本，你照着拍</td></tr>
-          <tr class="rv"><td class="p">官网</td><td class="g"><span class="dot c"></span>导出上版</td><td class="r">自己的地盘，没接口也没限流。导出的是能直接上版的网页</td></tr>
-        </tbody>
-      </table>
+      <div class="note-box rv">
+        <b>我们把边界说清楚：</b>
+        我们不代运营你的海外社媒，不投流，也不承诺任何排名。<br>
+        我们做的是上游那一层 —— <b>让所有渠道抓到的关于你的信息，是同一份、准确的。</b><br>
+        下游谁去做、花多少钱，那是你和代理商的事，我们不掺和。
+      </div>
+
+      <p class="plain rv">
+        说白了：这行的钱应该花在「别人抓到的是不是真的你」，而不是「你在多少个平台上发过多少条」。
+        前者一天能修，后者是个无底洞。
+      </p>
     </div>
   </section>
 
-  <!-- ══════ 7 收口 ══════ -->
-  <section class="screen" data-title="30 天" data-note="收口<strong>不谈价格、不谈年框</strong>。只提一件事：先用你自己的问题跑一遍基线。<br>最后一句慢慢说：<strong>「30 天后同一组问题再跑一次。数字不涨，你不付。」</strong><br>这句话比任何报价都有用，因为它把风险从他们那边挪到了我们这边。">
+  <!-- ══════ 8 收口 ══════ -->
+  <section class="screen" data-title="收口" data-note="收口<strong>不谈钱、不谈试用、不谈年框</strong>。你们还在研发期，这句话要说出来 —— 说出来反而显得自信。<br>开场一句：<strong>「今天不卖你东西。我们还在研发期。」</strong>对方会松，然后更认真听。<br>三个动作里，第 2 条最关键：<strong>「这三个洞你们自己补也行，我上面写了怎么补。」</strong>—— 敢这么说，反而让人相信你不是来卖方案的。<br>最后一句慢慢讲：<strong>「我们卖的不是稿子数量，是别人问起你的时候，那个答案是准的。」</strong>">
     <div class="wrap">
-      <div class="mark rv"><b>八</b><span>怎么开始</span></div>
-      <h1 class="rv">先不谈年框，<br>跑 30 天。</h1>
+      <div class="mark rv"><b>八</b><span>怎么往下走</span></div>
+      <h1 class="rv">今天不卖你东西。<br>我们还在<span class="hl">研发期</span>。</h1>
 
       <div class="acts">
         <div class="act rv">
           <div class="num">01</div>
-          <h4>你先自己点一遍</h4>
-          <p>演示账号现在就能登。先看那 12 个问题的原始回答 —— 包括前面那四条。</p>
+          <h4>这份体检留给你</h4>
+          <p>三个域名、源码读到什么、怎么核验，全写在里面。你拿去开会，谁问都能对得上。</p>
         </div>
         <div class="act rv">
           <div class="num">02</div>
-          <h4>换成你的问题</h4>
-          <p>把你真正关心的 12 个问题给我：客服记录、搜索词、私信里都行。重跑一次。</p>
+          <h4>这三个洞，你们自己补也行</h4>
+          <p>怎么补、补完怎么验，我上面写了。真要自己动手，我可以把清单发你。</p>
         </div>
         <div class="act rv">
           <div class="num">03</div>
-          <h4>30 天后再跑同一组</h4>
-          <p>同一组问题、同一套判法。涨了多少你自己看，不用听我说。</p>
+          <h4>补完想验，再来找我</h4>
+          <p>那时候再谈钱。现在谈，对你们不公平 —— 我们还拿不出稳定跑完的东西。</p>
         </div>
       </div>
 
       <div class="final rv">
-        <div class="q">我们卖的不是稿子数量，<br>是 AI 回答里<b>那句关于你的话</b>。</div>
+        <div class="q">我们卖的不是稿子数量，<br>是别人问起你的时候，<b>那个答案是准的</b>。</div>
         <div class="sig">
           唯风 · 品牌内容中台<br>
-          本页数据：2026-10-29 凌晨真机实测<br>
-          第 6 页节点为演示环境数据
+          本页数据：2026-10-29 上午实测，均标注核验方式<br>
+          本机出口 IP 在国内，英文检索结果未采，已在页内说明
         </div>
       </div>
     </div>
