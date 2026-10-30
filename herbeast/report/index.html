@@ -1,0 +1,1418 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex,nofollow,noarchive,noimageindex">
+<meta name="referrer" content="no-referrer">
+<meta name="description" content="东边野兽 Herbeast · 全球官网统一基线与整改规划（第 1 版）">
+<title>东边野兽 Herbeast · 全球官网统一基线与整改规划</title>
+<style>
+:root{
+  --ink:#1F1B18; --ink-2:#5C544E; --ink-3:#8A7F76; --ink-4:#A9A099;
+  --paper:#FBF9F6; --card:#FFFFFF;
+  --line:#E6E0D9; --line-2:#F0EBE5;
+  --red:#A8322A; --red-mid:#C0504A; --red-soft:#FBF1EF; --red-line:#E9D5D0;
+  --green:#7E9485; --green-soft:#F3F7F4;
+  --serif:"Noto Serif SC","Songti SC","SimSun","STSong",serif;
+  --sans:-apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+}
+*{box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+@media (prefers-reduced-motion: reduce){ html{scroll-behavior:auto;} }
+body{
+  margin:0; background:var(--paper); color:var(--ink);
+  font-family:var(--sans); font-size:16px; line-height:1.85;
+  -webkit-font-smoothing:antialiased; text-rendering:optimizeLegibility;
+}
+p{margin:0 0 1.1em;}
+a{color:var(--red);text-decoration:none;}
+/* 进度条 */
+.progress{position:fixed;top:0;left:0;height:2px;background:var(--red);width:0;z-index:100;transition:width .1s linear;}
+/* 布局 */
+.layout{display:grid;grid-template-columns:248px minmax(0,1fr);gap:72px;max-width:1240px;margin:0 auto;padding:0 48px 160px;}
+aside{position:sticky;top:0;align-self:start;height:100vh;padding-top:52px;overflow-y:auto;}
+.toc{list-style:none;margin:0;padding:0;font-size:13.5px;}
+.toc-label{font-size:11px;letter-spacing:.14em;color:var(--ink-4);text-transform:uppercase;margin:0 0 16px;font-weight:400;}
+.toc li{margin:0;}
+.toc a{
+  display:block;padding:7px 12px;color:var(--ink-3);border-left:2px solid transparent;
+  line-height:1.5;transition:color .18s,border-color .18s,background .18s;
+}
+.toc a:hover{color:var(--ink);background:#F5F1EC;}
+.toc a.on{color:var(--red);border-left-color:var(--red);background:var(--red-soft);font-weight:500;}
+.toc .num{font-variant-numeric:tabular-nums;margin-right:8px;color:var(--ink-4);font-size:12px;}
+.toc a.on .num{color:var(--red-mid);}
+.toc-sep{height:1px;background:var(--line);margin:18px 12px;}
+main{min-width:0;padding-top:52px;}
+/* 封面 */
+.cover{padding:56px 0 88px;border-bottom:1px solid var(--line);margin-bottom:80px;}
+.cover-mark{font-size:12px;letter-spacing:.18em;color:var(--ink-4);margin-bottom:36px;}
+.cover h1{
+  font-family:var(--serif);font-size:52px;line-height:1.28;font-weight:500;
+  margin:0 0 28px;letter-spacing:.01em;padding-left:26px;border-left:4px solid var(--red);
+}
+.cover-sub{font-size:17px;color:var(--ink-2);padding-left:30px;margin:0 0 44px;line-height:1.8;max-width:620px;}
+.cover-meta{display:flex;gap:32px;font-size:12.5px;color:var(--ink-3);padding-left:30px;flex-wrap:wrap;}
+.cover-note{
+  margin-top:52px;padding:18px 24px;background:var(--red-soft);border-radius:6px;
+  font-size:14px;color:var(--red);line-height:1.75;max-width:660px;
+}
+/* 章节标题 */
+section{margin-bottom:96px;scroll-margin-top:40px;}
+.sec-head{display:flex;align-items:baseline;gap:18px;margin-bottom:12px;}
+.sec-num{
+  font-family:var(--serif);font-size:13px;color:var(--red);letter-spacing:.1em;
+  flex-shrink:0;padding-top:6px;
+}
+.sec-head h2{font-family:var(--serif);font-size:30px;font-weight:500;margin:0;line-height:1.4;}
+.sec-desc{font-size:14.5px;color:var(--ink-3);margin:0 0 40px;padding-left:44px;line-height:1.8;max-width:700px;}
+h3{font-family:var(--serif);font-size:20px;font-weight:500;margin:52px 0 18px;line-height:1.6;}
+h3:first-of-type{margin-top:0;}
+h4{font-size:15px;font-weight:500;margin:32px 0 12px;color:var(--ink);}
+.txt{max-width:720px;}
+.txt p{font-size:16px;color:var(--ink-2);}
+.lead{font-size:18px;line-height:1.9;color:var(--ink);max-width:720px;margin-bottom:32px;}
+strong{font-weight:500;color:var(--ink);}
+mark{background:var(--red-soft);color:var(--red);padding:1px 6px;border-radius:3px;font-weight:500;}
+/* 引用块 */
+.quote{
+  border-left:2px solid var(--red-line);padding:4px 0 4px 24px;margin:32px 0;
+  font-family:var(--serif);font-size:17px;line-height:1.95;color:var(--ink);max-width:700px;
+}
+/* 摘要卡片 */
+.grid-2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px;margin:32px 0;}
+.find{
+  background:var(--card);border:1px solid var(--line);border-radius:10px;padding:26px 26px 22px;
+  display:flex;flex-direction:column;transition:border-color .2s,transform .2s;
+}
+.find:hover{border-color:var(--red-line);transform:translateY(-2px);}
+.find-top{display:flex;align-items:baseline;gap:12px;margin-bottom:14px;}
+.find-idx{font-family:var(--serif);font-size:13px;color:var(--red);letter-spacing:.08em;}
+.find h4{font-size:16px;margin:0;line-height:1.6;font-weight:500;}
+.find p{font-size:14px;color:var(--ink-2);line-height:1.8;margin:0 0 16px;}
+.find-verify{
+  display:flex;gap:10px;font-size:13px;color:var(--ink-3);padding-top:14px;
+  border-top:1px dashed var(--line);margin-top:auto;line-height:1.7;
+}
+.find-verify .k{flex-shrink:0;color:var(--red-mid);}
+/* 状态标签 */
+.tag{
+  display:inline-block;font-size:11.5px;padding:2px 9px;border-radius:4px;line-height:1.7;
+  font-weight:400;white-space:nowrap;
+}
+.tag-done{background:var(--green-soft);color:#4A6B57;}
+.tag-todo{background:var(--red-soft);color:var(--red);}
+.tag-part{background:#F7F3EC;color:#8A6A2F;}
+.tag-wait{background:#F2F0EC;color:var(--ink-3);}
+.tag-p0{background:var(--red);color:#fff;}
+.tag-p1{background:var(--red-soft);color:var(--red);}
+.tag-p2{background:#F2EFEA;color:var(--ink-2);}
+/* 六类事实卡 */
+.facts{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin:28px 0 8px;}
+.fact{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:18px 18px 16px;}
+.fact-n{font-size:11px;color:var(--ink-4);letter-spacing:.1em;margin-bottom:8px;}
+.fact h5{font-size:14.5px;font-weight:500;margin:0 0 8px;line-height:1.5;}
+.fact p{font-size:12.5px;color:var(--ink-3);line-height:1.7;margin:0 0 12px;}
+/* 现状手风琴 */
+.item{
+  background:var(--card);border:1px solid var(--line);border-radius:10px;
+  margin-bottom:12px;overflow:hidden;transition:border-color .2s;
+}
+.item[open]{border-color:var(--red-line);}
+.item summary{
+  display:flex;align-items:center;gap:16px;padding:20px 24px;cursor:pointer;list-style:none;
+  user-select:none;
+}
+.item summary::-webkit-details-marker{display:none;}
+.item summary::after{
+  content:"";width:7px;height:7px;flex-shrink:0;margin-left:auto;
+  border-right:1.5px solid var(--ink-4);border-bottom:1.5px solid var(--ink-4);
+  transform:rotate(45deg);transition:transform .2s;
+}
+.item[open] summary::after{transform:rotate(-135deg);border-color:var(--red);}
+.item-idx{
+  font-family:var(--serif);font-size:12px;color:var(--red);flex-shrink:0;
+  width:22px;letter-spacing:.06em;
+}
+.item-title{font-size:15.5px;font-weight:500;line-height:1.6;flex:1;min-width:0;}
+.item-body{padding:4px 24px 24px 62px;border-top:1px solid var(--line-2);}
+.item-body h5{font-size:12px;font-weight:400;color:var(--ink-4);letter-spacing:.1em;margin:20px 0 8px;}
+.item-body p{font-size:14px;color:var(--ink-2);line-height:1.8;margin:0 0 10px;}
+/* 数据表 */
+.dtable{width:100%;border-collapse:collapse;font-size:13.5px;margin:8px 0 4px;}
+.dtable td{padding:7px 0;border-bottom:1px solid var(--line-2);vertical-align:top;line-height:1.7;}
+.dtable td:first-child{color:var(--ink-3);width:132px;padding-right:16px;font-size:12.5px;}
+.dtable td:last-child{color:var(--ink);font-variant-numeric:tabular-nums;}
+.dtable tr:last-child td{border-bottom:none;}
+code{
+  word-break:break-all;
+  -webkit-box-decoration-break:clone;box-decoration-break:clone;
+  font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:12.5px;
+  background:#F4F0EB;padding:2px 6px;border-radius:3px;color:var(--ink);
+}
+/* 双站对照矩阵 */
+.matrix{background:var(--card);border:1px solid var(--line);border-radius:10px;overflow:hidden;margin:28px 0;}
+.matrix-head{
+  display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:0;padding:14px 24px;
+  border-bottom:1px solid var(--line);font-size:11.5px;color:var(--ink-3);letter-spacing:.06em;
+}
+.matrix-head span:nth-child(2){color:var(--red);}
+.matrix-row{
+  display:grid;grid-template-columns:1.4fr 1fr 1fr;align-items:center;
+  padding:13px 24px;border-bottom:1px solid var(--line-2);font-size:14px;
+}
+.matrix-row:last-child{border-bottom:none;}
+.matrix-row:hover{background:#FCFAF7;}
+.matrix-row .name{color:var(--ink);line-height:1.6;}
+.matrix-row .cell{display:flex;align-items:center;gap:8px;font-size:12.5px;color:var(--ink-3);}
+.dot{width:9px;height:9px;border-radius:50%;flex-shrink:0;}
+.dot-on{background:var(--green);}
+.dot-off{border:1.5px solid var(--red-mid);background:transparent;}
+.dot-part{border:1.5px solid var(--red-mid);background:transparent;position:relative;}
+.dot-part::after{content:"";position:absolute;inset:2.5px;border-radius:50%;background:var(--red-mid);}
+.dot-wait{border:1.5px dashed var(--ink-4);background:transparent;}
+/* 筛选条 */
+.filter{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin:30px 0 6px;}
+.filter button{
+  font-family:inherit;font-size:13px;padding:6px 14px;border-radius:20px;cursor:pointer;
+  border:1px solid var(--line);background:var(--card);color:var(--ink-2);
+  transition:all .18s;line-height:1.5;
+}
+.filter button:hover{border-color:var(--red-line);color:var(--red);}
+.filter button.on{background:var(--red);border-color:var(--red);color:#fff;}
+.filter .count{margin-left:auto;font-size:12px;color:var(--ink-4);font-variant-numeric:tabular-nums;}
+/* 规格卡 */
+.specs{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin:18px 0 0;}
+.spec{
+  background:var(--card);border:1px solid var(--line);border-radius:10px;padding:22px 22px 0;
+  display:flex;flex-direction:column;transition:border-color .2s,transform .2s;
+}
+.spec:hover{border-color:var(--red-line);transform:translateY(-2px);}
+.spec.hide{display:none;}
+.spec-top{display:flex;align-items:center;gap:10px;margin-bottom:12px;}
+.spec-id{font-family:var(--serif);font-size:14px;color:var(--red);letter-spacing:.06em;flex-shrink:0;}
+.spec-layer{font-size:11.5px;color:var(--ink-4);padding-left:10px;border-left:1px solid var(--line);}
+.spec h4{font-size:15px;font-weight:500;margin:0 0 12px;line-height:1.65;}
+.spec-crit{
+  font-size:12.5px;color:var(--ink-3);line-height:1.75;background:#FAF7F3;
+  padding:12px 14px;border-radius:6px;margin-bottom:16px;flex:1;
+}
+.spec-crit b{font-weight:400;color:var(--ink-4);display:block;margin-bottom:4px;font-size:11px;letter-spacing:.08em;}
+.spec-foot{
+  display:flex;align-items:center;justify-content:space-between;gap:12px;
+  padding:12px 0 14px;border-top:1px solid var(--line-2);
+}
+.spec-sites{display:flex;gap:14px;font-size:12px;color:var(--ink-3);}
+.spec-sites span{display:flex;align-items:center;gap:6px;white-space:nowrap;}
+/* 层级说明 */
+.tier-note{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin:28px 0 8px;}
+.tier{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:16px 16px 14px;}
+.tier .tn{font-size:11px;color:var(--red);letter-spacing:.1em;margin-bottom:8px;}
+.tier h5{font-size:14px;font-weight:500;margin:0 0 6px;}
+.tier p{font-size:12px;color:var(--ink-3);margin:0;line-height:1.65;}
+/* 四层结构 */
+.layers{margin:28px 0;}
+.layer-row{
+  display:grid;grid-template-columns:46px minmax(0,1fr) auto;gap:20px;align-items:center;
+  background:var(--card);border:1px solid var(--line);border-radius:10px;
+  padding:20px 24px;margin-bottom:10px;transition:border-color .2s;
+}
+.layer-row:hover{border-color:var(--red-line);}
+.layer-n{
+  width:34px;height:34px;border-radius:50%;background:var(--red);color:#fff;
+  display:flex;align-items:center;justify-content:center;
+  font-family:var(--serif);font-size:14px;
+}
+.layer-row .ln{font-size:15px;font-weight:500;line-height:1.6;}
+.layer-row .ld{font-size:13px;color:var(--ink-3);line-height:1.7;margin-top:2px;}
+.layer-row .lt{font-size:12px;color:var(--ink-3);text-align:right;white-space:nowrap;}
+/* 通用数据表 */
+.ptable{table-layout:auto;max-width:100%;word-break:break-word;width:100%;border-collapse:collapse;font-size:13.5px;background:var(--card);border-radius:10px;overflow:hidden;border:1px solid var(--line);margin:20px 0;}
+.ptable th{
+  text-align:left;font-weight:400;font-size:11.5px;color:var(--ink-3);
+  letter-spacing:.06em;padding:13px 18px;border-bottom:1px solid var(--line);
+  background:#FCFAF7;
+}
+.ptable td{padding:13px 18px;border-bottom:1px solid var(--line-2);vertical-align:top;line-height:1.75;font-size:13.5px;color:var(--ink-2);}
+.ptable tr:last-child td{border-bottom:none;}
+.ptable td:first-child{color:var(--ink);font-weight:500;}
+.ptable tbody tr:hover{background:#FCFAF7;}
+/* 阶段条 */
+.stage-bar{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px;margin:32px 0 22px;}
+.stage-btn{
+  font-family:inherit;text-align:left;padding:16px 16px 14px;border:1px solid var(--line);
+  border-radius:8px;background:var(--card);cursor:pointer;transition:all .2s;
+}
+.stage-btn:hover{border-color:var(--red-line);}
+.stage-btn.on{border-color:var(--red);background:var(--red-soft);}
+.stage-btn .sn{font-family:var(--serif);font-size:11.5px;color:var(--red);letter-spacing:.08em;display:block;margin-bottom:6px;}
+.stage-btn .st{font-size:14px;font-weight:500;display:block;line-height:1.5;color:var(--ink);}
+.stage-btn .sd{font-size:11.5px;color:var(--ink-3);display:block;margin-top:4px;}
+.stage-panel{display:none;}
+.stage-panel.on{display:block;}
+.stage-goal{
+  background:var(--red-soft);border-radius:8px;padding:16px 20px;font-size:14px;
+  color:var(--red);line-height:1.8;margin-bottom:20px;
+}
+.note{
+  font-size:13px;color:var(--ink-3);line-height:1.8;padding:14px 18px;
+  border-left:2px solid var(--line);margin:20px 0;max-width:720px;
+}
+@media (max-width:1080px){
+  .specs{grid-template-columns:1fr;}
+  .tier-note{grid-template-columns:repeat(2,1fr);}
+  .stage-bar{grid-template-columns:repeat(2,1fr);}
+  .layer-row{grid-template-columns:40px minmax(0,1fr);}
+  .layer-row .lt{display:none;}
+  .ptable{font-size:12.5px;}
+  .ptable td:first-child{width:110px;}
+  .ptable th,.ptable td{padding:10px 12px;}
+}
+/* 响应式 */
+@media (max-width:1080px){
+  .layout{grid-template-columns:minmax(0,1fr);padding:0 22px 100px;gap:0;}
+  aside{position:static;height:auto;padding:24px 0 0;overflow:visible;}
+  .toc{display:flex;flex-wrap:wrap;gap:4px;}
+  .toc a{padding:5px 10px;border-left:none;border-radius:4px;font-size:12.5px;}
+  .toc a.on{border-left:none;}
+  .toc-sep{display:none;}
+  main{padding-top:32px;}
+  .cover{padding:32px 0 56px;margin-bottom:56px;}
+  .cover h1{font-size:34px;padding-left:18px;border-left-width:3px;}
+  .cover-sub{font-size:15px;padding-left:20px;}
+  .cover-meta{padding-left:20px;gap:18px;}
+  .grid-2{grid-template-columns:1fr;}
+  .facts{grid-template-columns:1fr;}
+  .sec-head h2{font-size:23px;}
+  .sec-desc{padding-left:0;}
+  .item-body{padding-left:24px;}
+  .matrix-head,.matrix-row{grid-template-columns:1.2fr .9fr .9fr;padding-left:16px;padding-right:16px;}
+}
+/* ===== 打印 / PDF ===== */
+.print-toc{display:none;}
+@media print{
+  @page{size:A4;margin:17mm 15mm 18mm;}
+  .progress,aside{display:none !important;}
+  .layout{display:block;max-width:none;padding:0;gap:0;}
+  main{padding-top:0;min-width:0;}
+  body{background:#fff;font-size:10.4pt;line-height:1.7;color:#1F1B18;}
+  p{margin:0 0 .85em;}
+  .txt p,.lead{font-size:10.4pt;}
+  .lead{font-size:11pt;line-height:1.75;margin-bottom:18px;}
+  section{margin-bottom:0;padding-top:0;page-break-before:always;break-before:page;}
+  section:first-of-type{page-break-before:auto;break-before:auto;}
+  h2{font-size:19pt !important;}
+  h3{font-size:13.5pt;margin:26px 0 12px;page-break-after:avoid;break-after:avoid;}
+  h4{font-size:11pt;margin:20px 0 8px;page-break-after:avoid;break-after:avoid;}
+  .sec-head{margin-bottom:8px;}
+  .sec-desc{font-size:10pt;margin-bottom:22px;padding-left:0;}
+  .cover{page-break-after:always;break-after:page;border-bottom:none;padding:26mm 0 0;margin-bottom:0;}
+  .cover h1{font-size:32pt;line-height:1.3;padding-left:18px;border-left-width:3px;margin-bottom:22px;}
+  .cover-sub{font-size:12pt;padding-left:20px;}
+  .cover-meta{padding-left:20px;}
+  .cover-note{margin-top:34px;font-size:10pt;}
+  .print-toc{display:block;page-break-after:always;break-after:page;padding-top:6mm;}
+  .print-toc .pt-label{font-size:9pt;letter-spacing:.16em;color:#8A7F76;margin-bottom:20px;}
+  .print-toc ol{list-style:none;margin:0;padding:0;counter-reset:pt;}
+  .print-toc li{
+    display:flex;align-items:baseline;gap:14px;padding:11px 0;
+    border-bottom:1px solid #EDE7E0;font-size:11.5pt;
+  }
+  .print-toc li .n{font-size:9.5pt;color:#A8322A;letter-spacing:.08em;flex-shrink:0;width:26px;}
+  .print-toc li .t{color:#1F1B18;}
+  .print-toc li .d{color:#8A7F76;font-size:9.5pt;margin-left:auto;text-align:right;}
+  .item{border:1px solid #E6E0D9;border-radius:6px;page-break-inside:avoid;break-inside:avoid;margin-bottom:9px;}
+  .item summary{padding:11px 16px;}
+  .item-body{display:block !important;padding:0 16px 12px;}
+  .item::details-content{content-visibility:visible !important;display:block !important;}
+  .item summary::after{display:none;}
+  .item-body table.dtable{font-size:9.6pt;}
+  .item-body h5{margin:10px 0 4px;}
+  .stage-panel{display:block !important;page-break-inside:auto;margin-bottom:14px;}
+  .stage-panel .stage-goal{margin-bottom:8px;}
+  .stage-bar{display:none;}
+  .filter{display:none !important;}
+  /* 阶段表四列：动作列给足宽度，避免逐字换行 */
+  .stage-panel .ptable th:nth-child(1){width:44% !important;}
+  .stage-panel .ptable th:nth-child(2){width:9% !important;}
+  .stage-panel .ptable th:nth-child(3){width:24% !important;}
+  .stage-panel .ptable th:nth-child(4){width:23% !important;}
+  .spec.hide{display:block !important;}
+  .specs{grid-template-columns:repeat(2,minmax(0,1fr)) !important;gap:10px !important;}
+  .spec{page-break-inside:avoid;break-inside:avoid;}
+  .grid-2{grid-template-columns:repeat(2,minmax(0,1fr)) !important;gap:10px !important;}
+  .facts{grid-template-columns:repeat(3,minmax(0,1fr)) !important;gap:8px !important;}
+  .find,.fact,.matrix,.layer-row,.note,.quote{page-break-inside:avoid;break-inside:avoid;}
+  .find:hover,.layer-row:hover,.spec:hover{transform:none;}
+  .ptable{font-size:9.6pt;page-break-inside:auto;}
+  .ptable th{padding:6px 9px;}
+  .ptable td{padding:6px 9px;font-size:9.6pt;line-height:1.6;}
+  .ptable tr{page-break-inside:avoid;break-inside:avoid;}
+  .ptable thead{display:table-header-group;}
+  .dtable{font-size:9.6pt;}
+  .dtable td{padding:4px 0;}
+  .quote{font-size:10.6pt;line-height:1.75;margin:18px 0;}
+  .note{font-size:9.4pt;padding:10px 14px;margin:12px 0;}
+  .matrix-head,.matrix-row{padding:10px 14px;}
+  .layer-row{padding:12px 16px;margin-bottom:7px;}
+  .stage-goal{font-size:9.8pt;padding:10px 14px;}
+  a{color:#1F1B18;text-decoration:none;}
+  code{background:#F4F0EB;font-size:9.2pt;padding:1px 4px;}
+  mark{padding:0 4px;}
+  .tag{font-size:8.6pt;}
+}
+</style>
+</head>
+<body>
+
+<div class="progress" id="progress"></div>
+
+<div class="layout">
+
+<aside>
+  <p class="toc-label">目录</p>
+  <ul class="toc" id="toc">
+    <li><a href="#s0"><span class="num">00</span>摘要</a></li>
+    <li><a href="#s1"><span class="num">01</span>调研 · 事实盘点</a></li>
+    <li><a href="#s2"><span class="num">02</span>诊断 · 现状与缺口</a></li>
+    <li><a href="#s3"><span class="num">03</span>统一基线 · 12 条规格</a></li>
+    <li><a href="#s4"><span class="num">04</span>解决方案</a></li>
+    <li><a href="#s5"><span class="num">05</span>分阶段实施</a></li>
+    <li><a href="#s6"><span class="num">06</span>附录</a></li>
+  </ul>
+  <div class="toc-sep"></div>
+  <ul class="toc">
+    <li><a href="#s6" style="color:var(--ink-4);font-size:12.5px;">实测基准日 · 2026-10-30</a></li>
+  </ul>
+</aside>
+
+<main>
+
+<!-- ===== 封面 ===== -->
+<div class="cover">
+  <div class="cover-mark">HERBEAST · 官方网站基线评估</div>
+  <h1>全球官网<br>统一基线与整改规划</h1>
+  <p class="cover-sub">从两个站点的现状对照，到一套可以被反复验证的达标标准，再到五个阶段的落地顺序。</p>
+  <div class="cover-meta">
+    <span>2026 年 10 月</span>
+    <span>第 1 版</span>
+    <span>实测基准日 2026-10-30</span>
+  </div>
+  <div class="cover-note">本报告中的每一条结论，都可以由您当场复验。我们不要求您相信任何一句判断，只请您照着做一遍。</div>
+</div>
+
+<!-- 打印专用目录 -->
+<nav class="print-toc">
+  <p class="pt-label">目录</p>
+  <ol>
+    <li><span class="n">00</span><span class="t">摘要</span><span class="d">四个发现 · 均可当场复验</span></li>
+    <li><span class="n">01</span><span class="t">调研 · 把事实底盘点清</span><span class="d">六类事实 · 二十项检测 · 采集边界</span></li>
+    <li><span class="n">02</span><span class="t">诊断 · 现状与缺口</span><span class="d">七项现状 · 双站对照 · 影响分析</span></li>
+    <li><span class="n">03</span><span class="t">统一基线 · 12 条规格</span><span class="d">四层结构 · 达标判据 · 检验方式</span></li>
+    <li><span class="n">04</span><span class="t">解决方案</span><span class="d">四层依赖 · 两条实现路径 · 分工与承诺</span></li>
+    <li><span class="n">05</span><span class="t">分阶段实施</span><span class="d">五个阶段 · 进入条件 · 风险与应对</span></li>
+    <li><span class="n">06</span><span class="t">附录</span><span class="d">报告边界 · 延伸方向 · 采集说明</span></li>
+  </ol>
+</nav>
+
+<!-- ===== 00 摘要 ===== -->
+<section id="s0">
+  <div class="sec-head">
+    <span class="sec-num">00</span>
+    <h2>摘要</h2>
+  </div>
+  <p class="sec-desc">四个发现，每个都能在九十秒内自己验完。每条后面都跟一句「这一项通常怎么处理」。</p>
+
+  <div class="grid-2">
+    <div class="find">
+      <div class="find-top">
+        <span class="find-idx">01</span>
+        <h4>证书由服务器自行签发，浏览器无法确认站点身份</h4>
+      </div>
+      <p>首页的 HTTPS 证书签发者与主体都是 <code>CN=unknown</code>，证书链校验返回 <code>error 18</code>。同时 80 端口直接返回 200，不跳转 HTTPS，两套地址并存。</p>
+      <div class="find-verify"><span class="k">您可以这样验</span><span>手机浏览器打开 herbeast.cn，看首屏是否出现安全提示。</span></div>
+    </div>
+
+    <div class="find">
+      <div class="find-top">
+        <span class="find-idx">02</span>
+        <h4>提交给搜索引擎的地址清单，与站点现状不一致</h4>
+      </div>
+      <p><code>sitemap.xml</code> 里共 865 条地址，全部为 <code>http://</code> 协议，最后更新时间统一停在 2026-04-14。固定种子随机抽 12 条，11 条返回 404。</p>
+      <div class="find-verify"><span class="k">您可以这样验</span><span>打开 /sitemap.xml，任选三条点开看。</span></div>
+    </div>
+
+    <div class="find">
+      <div class="find-top">
+        <span class="find-idx">03</span>
+        <h4>首页缺少机器可读的基础标签</h4>
+      </div>
+      <p>结构化数据 0 个、页面主标题 0 个、手机适配声明 0 个、正本声明 0 个；13 张图片的文字说明 0 条。视觉层面完整，但机器读不到主题。</p>
+      <div class="find-verify"><span class="k">您可以这样验</span><span>在微信里把官网链接发给同事，看卡片显示什么。</span></div>
+    </div>
+
+    <div class="find">
+      <div class="find-top">
+        <span class="find-idx">04</span>
+        <h4>图片托管在建站平台的服务器上，不在自有域名下</h4>
+      </div>
+      <p>首页 13 张图片全部来自 <code>pro618a6b29b-pic9.websiteonline.cn</code>，<code>herbeast.cn</code> 域名下 0 张。这类模板化建站方案的通用做法如此，行业里很常见，只是会带来资产归属与迁移成本上的顾虑。</p>
+      <div class="find-verify"><span class="k">您可以这样验</span><span>任意图片右键「复制图片地址」，看域名是不是 herbeast.cn。</span></div>
+    </div>
+  </div>
+
+  <div class="quote">
+    上面四项都属于配置与结构层的工作，不涉及重新设计，也不需要推倒重来。<br>
+    把它们单独拎出来，是因为投入最小、见效最快 —— 做完之后，第四章的三个可见度指标就可以开始复测。
+  </div>
+</section>
+
+<!-- ===== 01 调研 ===== -->
+<section id="s1">
+  <div class="sec-head">
+    <span class="sec-num">01</span>
+    <h2>调研 · 把事实底盘点清</h2>
+  </div>
+  <p class="sec-desc">这一段不是收集资料，是把后续所有判断的地基事实固定下来。第二章引用的每一个数字，都能在这里找到出处。</p>
+
+  <p class="lead">要盘清的是六类事实。我们把「已经采到的」和「还没采的」分开列，因为一份敢于说明自己没看什么的报告，比声称全面的报告更可信。</p>
+
+  <div class="facts">
+    <div class="fact">
+      <div class="fact-n">01 / 品牌口径</div>
+      <h5>中英文名、成立年份、所属公司、主打成分</h5>
+      <p>同一事实在不同来源的写法是否一致，是后面做结构化数据的前提。</p>
+      <span class="tag tag-part">部分采集</span>
+    </div>
+    <div class="fact">
+      <div class="fact-n">02 / 站点资产</div>
+      <h5>域名清单、技术栈、页面数、媒体托管位置</h5>
+      <p>域名经四路交叉（搜索结果、LinkedIn、社媒简介、工商登记）确认。</p>
+      <span class="tag tag-done">已实测</span>
+    </div>
+    <div class="fact">
+      <div class="fact-n">03 / 机器可读性</div>
+      <h5>证书、标题、主标题、结构化数据、robots、清单</h5>
+      <p>国内站已完整采集；海外站本次仅覆盖首页。</p>
+      <span class="tag tag-part">国内齐 / 海外首页</span>
+    </div>
+    <div class="fact">
+      <div class="fact-n">04 / 渠道与商品</div>
+      <h5>天猫、抖音、小红书店铺，SKU 与价格带</h5>
+      <p>站内平台数据未采集，本版不对销量与市占做任何表述。</p>
+      <span class="tag tag-wait">未采集</span>
+    </div>
+    <div class="fact">
+      <div class="fact-n">05 / 可见度基线</div>
+      <h5>三组问题各问四次，记录一致性与指向</h5>
+      <p>有 2026-10-29 的一版记录，作为后续对比的起点。</p>
+      <span class="tag tag-part">有一版</span>
+    </div>
+    <div class="fact">
+      <div class="fact-n">06 / 竞品做法</div>
+      <h5>同类草本护肤品牌 5~8 个的官网结构</h5>
+      <p>只做结构与规格比对，不做优劣评判，也不用于本报告的结论。</p>
+      <span class="tag tag-wait">未开始</span>
+    </div>
+  </div>
+
+  <h3>方法、时间与边界</h3>
+  <div class="txt">
+    <p>对象为 <code>https://www.herbeast.cn</code> 首页、四个内页、<code>robots.txt</code> 与 <code>sitemap.xml</code>，同时参考 <code>https://www.herbeast.world</code> 首页。采集时间 2026-10-30 上午 11:25 至 11:33，本机直连实测，未走缓存。</p>
+    <p>手段是读取 HTTP 响应头与原始 HTML、检查 TLS 证书链、对地址清单做固定种子的随机抽样（n=12）。</p>
+    <p><strong>没有覆盖的部分：</strong>海外站除首页以外的页面、天猫与抖音小红书站内数据、服务器内部配置与后端代码、域名备案与归属、以及历史上是否曾经正常。这些在本版中一律不作推断。</p>
+  </div>
+
+  <div class="quote">
+    本报告只对 2026-10-30 采集时刻的公开可访问内容负责。站点若在此之后已有调整，以复验结果为准。
+  </div>
+
+  <h3>三条采集纪律</h3>
+  <div class="txt">
+    <p><strong>一，域名枚举必须四路交叉。</strong>只看常见后缀会漏掉非常规域名 —— 本项目此前就漏过 <code>.world</code>，导致「没有英文站」这一整节作废。这类错误的代价不是补一段话，是整份材料的可信度。</p>
+    <p><strong>二，单日请求不超过 10 次。</strong>国内站有防护机制，短时间高频访问会触发，届时所有请求都返回防护页。此时<strong>不能据此判断「站点屏蔽了抓取」</strong> —— 被限流的是我们自己的出口，客户用手机可以正常打开。</p>
+    <p><strong>三，未实测的项目标「待核」，不用推测填满表格。</strong>一张有空格的表，比一张填满猜测的表更有用。</p>
+  </div>
+
+  <h3>第一类：品牌口径，定的是后面所有事情的标准</h3>
+  <div class="txt">
+    <p>结构化数据（后面第三章的 B4）本质上是把品牌的核心事实，写成机器能直接读取的格式。这件事有一个前提：这些事实本身得先有唯一答案。否则写进去的，只是把不一致固定下来。</p>
+    <p>目前的采集里，有一处已经可以确认的写法差异：国内站首页的标题是「上海万相合一化妆品有限公司官网」，用的是工商登记全称；而页面正文里的品牌主体表述是「东边野兽」。对访客来说这是同一件事，对机器来说不是 —— 它读到的主体名和品牌名对不上，于是无法确定「东边野兽」和这家公司是不是一个主体。</p>
+    <p>海外站以 <code>Herbeast</code> 作为品牌标识。中英文名之间的对应关系需要由品牌方书面确认一次：英文名是否统一为 Herbeast、是否带副标、大小写如何书写。这三项确定之后，双站的结构化数据才能用同一份事实。</p>
+    <p><strong>成立年份、创始团队表述、主打成分的官方写法，本次未逐源比对</strong>（官网、海外站、电商平台、百科、媒体报道之间是否一致）。这三项直接决定结构化数据里「品牌是谁」怎么写，属于阶段 0 必须做完的事，本版不下结论。</p>
+  </div>
+  <div class="note">为什么这件事要排在技术动作前面：同一件事在五个来源里有三种写法时，模型每次抓到的可能是不同版本，回答自然每次都不一样。这不是模型的问题，是源头的写法还没有收敛。</div>
+
+  <h3>第二类：域名，四路交叉确认</h3>
+  <div class="txt">
+    <p>域名清单看起来是最简单的一步，实际是最容易出错的一步。只按常见后缀（<code>.com</code>、<code>.cn</code>、<code>.net</code>）去试，会漏掉使用非常规后缀的站点 —— 而漏掉一个，整节结论就可能反过来。</p>
+    <p>这个项目此前出过一次这样的错：早期判断「品牌没有英文站」，原因是只试了常见后缀；后来在社媒简介里发现 <code>herbeast.world</code>，是一个正常运营的独立站，导致那一整节作废重写。代价不是补一段话，是整份材料的可信度。</p>
+    <p>所以现在固定为四路交叉，四路结果互相验证，缺一路就不下结论：</p>
+  </div>
+  <table class="ptable">
+    <thead><tr><th style="width:150px">来源</th><th>看什么</th><th style="width:200px">本次结果</th></tr></thead>
+    <tbody>
+      <tr><td>品牌词搜索结果</td><td>官方站点通常落在品牌词首位，看落地域名是哪一个</td><td>落到 <code>herbeast.cn</code></td></tr>
+      <tr><td>职业社交平台主页</td><td>公司主页里填写的官网字段，通常由品牌方自己维护</td><td>指向国内站</td></tr>
+      <tr><td>社媒账号简介</td><td>Instagram、小红书的链接位，常单独放海外站或独立站</td><td>发现 <code>herbeast.world</code></td></tr>
+      <tr><td>工商登记信息</td><td>主体全称与备案域名，用于确认域名与公司的归属关系</td><td>与站点标题全称一致</td></tr>
+    </tbody>
+  </table>
+  <div class="quote">四路交叉的产出不是「找到几个域名」，是「确认哪几个属于这个品牌」。归属没有确认的域名，不进本报告的结论。</div>
+
+  <h3>第三类：机器可读性，测的是这二十项</h3>
+  <div class="txt">
+    <p>这一组是整份报告的数据来源。检测项分三组，全部是「打开页面就能看到，或者一条命令就能取到」的客观项 —— 不看观感、不打分、不做主观评价。每项都写明怎么取，是为了让您或任何第三方能自己复核。</p>
+  </div>
+
+  <h4>连通与身份（6 项）</h4>
+  <table class="ptable">
+    <thead><tr><th style="width:150px">检测项</th><th>怎么取</th><th style="width:230px">它决定什么</th></tr></thead>
+    <tbody>
+      <tr><td>证书链</td><td><code>openssl s_client</code> 连 443 端口，看校验返回码</td><td>浏览器是否会弹出安全提示</td></tr>
+      <tr><td>80 端口跳转</td><td><code>curl -I http://域名/</code>，看是否返回 301</td><td>是否存在两套地址并存</td></tr>
+      <tr><td>手机适配声明</td><td>页面源码中是否含 viewport 声明</td><td>手机按设备宽度显示，还是按电脑版缩小</td></tr>
+      <tr><td>抓取说明文件</td><td>取站点根目录的 robots.txt</td><td>哪些爬虫可以进来、哪些被挡在外面</td></tr>
+      <tr><td>地址清单</td><td>取站点根目录的 sitemap.xml</td><td>搜索引擎被通知了哪些页面存在</td></tr>
+      <tr><td>清单与实际一致性</td><td>对清单做固定种子抽样，逐条访问看返回码</td><td>提交的地址里有多少是空门</td></tr>
+    </tbody>
+  </table>
+
+  <h4>页面结构（8 项）</h4>
+  <table class="ptable">
+    <thead><tr><th style="width:150px">检测项</th><th>怎么取</th><th style="width:230px">它决定什么</th></tr></thead>
+    <tbody>
+      <tr><td>页面标题</td><td>读 <code>&lt;title&gt;</code>，逐页比是否重复</td><td>搜索结果里显示的第一行</td></tr>
+      <tr><td>页面描述</td><td>读 meta description</td><td>搜索结果摘要与分享卡片的备用文案</td></tr>
+      <tr><td>页面主标题</td><td>数每页 <code>h1</code> 的数量</td><td>机器判断这一页主题的主要依据</td></tr>
+      <tr><td>标题层级</td><td>数 <code>h2</code> / <code>h3</code> 的结构</td><td>内容组织是否可被分段理解</td></tr>
+      <tr><td>正本声明</td><td>读 canonical 标签</td><td>多个地址指向同一页时，哪个是正本</td></tr>
+      <tr><td>语言版本声明</td><td>读 hreflang，看中英页是否互指</td><td>不同语言版本之间是否能被正确对应</td></tr>
+      <tr><td>结构化数据</td><td>数 <code>ld+json</code> 的块数与类型</td><td>是否有「品牌是谁、做什么」的机器说明书</td></tr>
+      <tr><td>社交分享卡片</td><td>读 og 系列四项与 twitter:card</td><td>链接被转发时显示什么</td></tr>
+    </tbody>
+  </table>
+
+  <h4>资产与度量（6 项）</h4>
+  <table class="ptable">
+    <thead><tr><th style="width:150px">检测项</th><th>怎么取</th><th style="width:230px">它决定什么</th></tr></thead>
+    <tbody>
+      <tr><td>图片域名分布</td><td>提取页面全部图片地址，统计主机名占比</td><td>素材托管在哪里、是否可迁移</td></tr>
+      <tr><td>图片文字说明</td><td>数带 alt 的图片比例</td><td>图片内容能否被检索与转述</td></tr>
+      <tr><td>统计脚本</td><td>源码中搜百度统计与通用统计的标识</td><td>品牌能否看到访问数据</td></tr>
+      <tr><td>地址命名</td><td>看 URL 是否含语义词，还是纯编号</td><td>人和机器能否从地址判断内容</td></tr>
+      <tr><td>导航结构</td><td>数入口数量与类型，看是否有产品与购买入口</td><td>站点是否承担转化，还是只做展示</td></tr>
+      <tr><td>正文体量</td><td>剔除脚本与样式后统计正文字数</td><td>是否有足够内容可供引用</td></tr>
+    </tbody>
+  </table>
+  <div class="note">这二十项里，本版在国内站完整跑过；海外站只跑了首页，站内其余页面需在阶段 0 补齐。凡是没跑过的，表里标「待核」，不用推测填满。</div>
+
+  <h3>第五类：可见度怎么测，为什么不做成一个分数</h3>
+  <div class="txt">
+    <p>前四类是「站点做了什么」，可见度是「结果是什么」。两者不是线性关系 —— 站点补齐之后，可见度不一定立刻变化，中间还有索引更新的时间。所以这一段只讲怎么测，结果留到复测时给。</p>
+    <p>测法是固定的：三组问题，每组连问四次，双轨记录。</p>
+  </div>
+  <table class="ptable">
+    <thead><tr><th style="width:110px">组</th><th>问什么</th><th style="width:250px">记录什么</th></tr></thead>
+    <tbody>
+      <tr><td>品牌识别</td><td>东边野兽是什么品牌 / Herbeast 是什么 / 是哪个公司做的</td><td>说对的要点、说错的要点、有没有给出官网地址</td></tr>
+      <tr><td>品类归属</td><td>中国草本护肤推荐哪几个 / 灵芝成分的护肤品牌有哪些</td><td>是否出现在名单里、同名单里还有谁</td></tr>
+      <tr><td>事实核对</td><td>成立年份 / 主打成分 / 官网是哪个</td><td>模型给出的值，与品牌方口径逐条对照</td></tr>
+    </tbody>
+  </table>
+  <div class="txt">
+    <p>同一组问题连续问四次，四次逐条记录，<strong>不取平均、不合成百分比</strong>。</p>
+    <p>原因很实际：同一个问题连问四次，可能得到三个不同的答案。四次里对两次、错两次，写成「50%」会掩盖一个更重要的事实 —— 答案本身不稳定。对品牌来说，不稳定的伤害比错误更大：错误可以被一次更正消掉，不稳定没有终点。</p>
+    <p>采样条件也必须写清楚：不同地区、不同网络出口、是否登录，都可能影响结果。基线记录不注明条件，前后两次就不具备可比性。</p>
+  </div>
+  <div class="note">本版只固定方法与记录格式。已有的 2026-10-29 记录作为起点，需在阶段 0 用同一套问法重采一次，把基线做实 —— 两次结果一致的项，才可以作为验收对照；不一致的项，先查采样条件。</div>
+
+  <h3>抽样怎么做到可复现</h3>
+  <div class="txt">
+    <p>一份报告的结论如果只有采集者自己能复现，它就只是说法，不是事实。抽样环节做了三件事：</p>
+    <p><strong>一，固定随机种子。</strong>任何人用同一份地址清单、同一个种子，都能抽出同样的十二条。这样别人复核的时候，看的是同一批页面，不是另一批。</p>
+    <p><strong>二，判定规则提前写定。</strong>只有三种结果：可访问、已失效、其他。防护页归入「其他」，不并入失效 —— 因为这个结果由我方请求方式引起，不代表站点状态。</p>
+    <p><strong>三，异常样本单独说明并剔除。</strong>本次抽样中有 1 条返回防护页，剔除后按 11 条计算比例。剔除动作写在附录里，不隐去。</p>
+  </div>
+  <div class="quote">这三件事写出来只有一个目的：让您或者任何第三方能复核。复核不成立的数据，我们不会写进结论。</div>
+</section>
+
+<!-- ===== 02 诊断 ===== -->
+<section id="s2">
+  <div class="sec-head">
+    <span class="sec-num">02</span>
+    <h2>诊断 · 现状与缺口</h2>
+  </div>
+  <p class="sec-desc">七项现状，每项都能自己验。展开后可以看到实测值、核验方式、对应第三章的哪一条规格，以及这一项通常怎么处理。</p>
+
+  <p class="lead">先说一个整体的判断：这个站点的品牌叙事是完整的 —— 首页有主张、有价值观、有创始团队、有草本实验室。<span style="color:var(--red)">缺的把这些内容稳妥送到人和机器面前的那一层。</span>这两件事要分开看。</p>
+
+  <details class="item" open>
+    <summary><span class="item-idx">01</span><span class="item-title">证书身份未被浏览器认可</span><span class="tag tag-todo">对应 A1</span></summary>
+    <div class="item-body">
+      <h5>实测值</h5>
+      <table class="dtable">
+        <tr><td>证书主体</td><td>C=CN, ST=unknown, L=unknown, O=unknown, CN=unknown</td></tr>
+        <tr><td>签发者</td><td>与主体相同（服务器自行签发）</td></tr>
+        <tr><td>校验结果</td><td>verify error:num=18:self-signed certificate</td></tr>
+        <tr><td>80 端口</td><td>返回 200，不跳转 HTTPS，两套地址并存</td></tr>
+      </table>
+      <h5>您可以怎么验</h5>
+      <p>手机浏览器打开 <code>https://www.herbeast.cn</code>，首屏会出现安全提示，需要手动确认才能继续。</p>
+      <h5>这一项通常怎么处理</h5>
+      <p>部署受信任证书，并把 80 端口统一跳转到 443。属于服务器配置层动作，不改页面内容、不动设计，通常一个工作日内可以完成。做完之后，手机与微信环境里不再出现提示。</p>
+    </div></details>
+
+  <details class="item">
+    <summary><span class="item-idx">02</span><span class="item-title">提交给搜索引擎的地址清单与现状不一致</span><span class="tag tag-todo">对应 A3</span></summary>
+    <div class="item-body">
+      <h5>实测值</h5>
+      <table class="dtable">
+        <tr><td>地址总数</td><td>865 条</td></tr>
+        <tr><td>其中文章页</td><td>840 条，占 97.1%</td></tr>
+        <tr><td>协议分布</td><td>865 条全部为 http://，0 条 https://</td></tr>
+        <tr><td>最后更新</td><td>全部为同一个值 2026-04-14</td></tr>
+        <tr><td>随机抽样 n=12</td><td>11 条 404，1 条防护页，0 条 200</td></tr>
+        <tr><td>robots.txt</td><td>13 字节，仅一行 User-agent: *，无规则、无清单声明</td></tr>
+      </table>
+      <h5>您可以怎么验</h5>
+      <p>打开 <code>https://www.herbeast.cn/sitemap.xml</code>，任选三条打开看结果。</p>
+      <h5>这一项通常怎么处理</h5>
+      <p>由站点后台重新生成一份与实际页面一致的清单，清掉已失效条目，协议统一为 https。如果那 840 篇文章仍有保留价值，先恢复再提交；如果已不再维护，从清单中移除即可。两种做法对应的处理方式不同，需要您这边确认批量文章的现状。</p>
+    </div></details>
+
+  <details class="item">
+    <summary><span class="item-idx">03</span><span class="item-title">首页缺少机器可读的基础标签</span><span class="tag tag-todo">对应 A2 / B2 / B4</span></summary>
+    <div class="item-body">
+      <h5>实测值</h5>
+      <table class="dtable">
+        <tr><td>结构化数据</td><td>0 个 —— 相当于没有给机器准备「这个品牌是谁、做什么」的说明书</td></tr>
+        <tr><td>页面主标题</td><td>0 个 —— 机器不知道这一页的主题词是什么</td></tr>
+        <tr><td>次级标题</td><td>0 个 —— 层级只靠视觉样式区分</td></tr>
+        <tr><td>手机适配声明</td><td>0 个 —— 手机按电脑版比例缩小显示</td></tr>
+        <tr><td>正本声明</td><td>0 个</td></tr>
+        <tr><td>中英站对应声明</td><td>0 个</td></tr>
+        <tr><td>图片文字说明</td><td>0 / 13 张</td></tr>
+        <tr><td>页面描述</td><td>有 1 条</td></tr>
+      </table>
+      <h5>您可以怎么验</h5>
+      <p>在微信里把官网链接发给同事，看卡片上显示什么；再在手机上打开，看是否需要双指放大。</p>
+      <h5>这一项通常怎么处理</h5>
+      <p>统一在页面模板层补齐，一次改模板、全站生效。不涉及视觉改版，也不需要新增设计稿。补完之后，转发卡片、搜索结果摘要、AI 引用都有内容可用。</p>
+    </div></details>
+
+  <details class="item">
+    <summary><span class="item-idx">04</span><span class="item-title">页面标题用公司全称，多页共用同一条</span><span class="tag tag-todo">对应 B1</span></summary>
+    <div class="item-body">
+      <h5>实测值</h5>
+      <p>首页标题为「上海万相合一化妆品有限公司官网」；内页 page116（野兽灵芝）的标题与之完全相同。</p>
+      <h5>您可以怎么验</h5>
+      <p>浏览器标签页上显示的那行字，就是。</p>
+      <h5>这一项通常怎么处理</h5>
+      <p>每个页面按「栏目名 + 品牌名」的规则各写一条，通常是模板参数，改完之后可以逐页微调。</p>
+      <p>现在多页共用一条标题，机器不容易区分各页主题，人为搜索时也不太容易落到具体页面。</p>
+    </div></details>
+
+  <details class="item">
+    <summary><span class="item-idx">05</span><span class="item-title">图片托管在建站平台的服务器上</span><span class="tag tag-todo">对应 D1</span></summary>
+    <div class="item-body">
+      <h5>实测值</h5>
+      <p>13 张图片全部来自 <code>pro618a6b29b-pic9.websiteonline.cn</code>，自有域名下 0 张。</p>
+      <h5>您可以怎么验</h5>
+      <p>首页任意图片右键「复制图片地址」，看域名是不是 <code>herbeast.cn</code>。</p>
+      <h5>这一项通常怎么处理</h5>
+      <p>把图片迁到自有域名或对象存储，页面引用同步替换，旧地址保留跳转。</p>
+      <p>这类模板化建站方案的通用做法就是把素材托管在平台侧，行业里很常见；只是它会带来两个顾虑：换服务商时素材需要重新搬一遍，资产归属也不够清晰。首次沟通中提到的数字资产管理系统，要解决的正是这件事 —— 迁回自有域名是它的前置条件。</p>
+    </div></details>
+
+  <details class="item">
+    <summary><span class="item-idx">06</span><span class="item-title">站点没有接入访问统计</span><span class="tag tag-todo">对应 D2</span></summary>
+    <div class="item-body">
+      <h5>实测值</h5>
+      <p>百度统计 0 处，通用统计脚本 0 处。</p>
+      <h5>您可以怎么验</h5>
+      <p>页面源代码里搜 baidu 与 gtag，均为 0。</p>
+      <h5>这一项通常怎么处理</h5>
+      <p>接入统计代码，通常半天内可完成。它是后续所有判断的前提 —— 没有它，「官网到底有没有用」只能凭感觉。</p>
+    </div></details>
+
+  <details class="item">
+    <summary><span class="item-idx">07</span><span class="item-title">地址命名不含语义，导航里没有产品与购买入口</span><span class="tag tag-todo">对应 C1</span></summary>
+    <div class="item-body">
+      <h5>实测值</h5>
+      <p>导航 10 个入口全部是 <code>page1</code> / <code>page69</code> / <code>page114~121</code>；曾经存在的 840 篇文章目前无法访问；导航中没有产品页、没有购买入口。</p>
+      <h5>您可以怎么验</h5>
+      <p>打开导航任意栏目，看地址栏；再打开地址清单随机三条。</p>
+      <h5>这一项通常怎么处理</h5>
+      <p>新页面按语义命名（如 /brand-story、/products/lingzhi），旧地址保留跳转，不必一次性全改。产品页与交易入口可以按阶段上线，不必与结构调整同期。</p>
+    </div></details>
+
+  <h3>这七项为什么会同时出现</h3>
+  <div class="txt">
+    <p>七项分开看像七个问题，放在一起看是一个：这套站点从建立起，没有以「机器能读到」为目标配置过。</p>
+    <p>一部分来自平台形态。模板化建站平台的默认状态就是这样 —— 平台保证的是页面能打开、版式能看；页面标题、手机适配声明、结构化数据这些不显示在屏幕上的东西，需要另外开启或逐项填写。没有开启，站点照常运行、访客照常浏览，只是在搜索引擎和 AI 那里读不出内容。这是这类平台的通用形态，行业里很常见，不是操作失误。</p>
+    <p>另一部分来自演进。站点上线在前，而手机端适配、结构化数据、AI 抓取策略这几项，是最近几年才逐渐成为默认要求的。早期建站时它们还不存在，也就没有人回头补。</p>
+    <p><strong>这七项里没有一项涉及设计或内容质量。</strong>视觉层与叙事层是完整的，第四章的整改也全部落在配置与结构层 —— 不改版式、不重写文案、不动已经做出来的东西。</p>
+  </div>
+
+  <div class="quote">
+    把七项归到一处，是为了说明一件对决策有用的事：它们可以一次做掉，也可以分次做掉，但顺序有依赖 —— 证书和清单不通，后面补的结构与内容不容易被抓到。这是第四章要讲的四层结构的由来。
+  </div>
+
+  <h3>两个站点，对同一套规格的达标情况</h3>
+  <p class="txt">第三章会给出完整的 12 条规格。先取其中六条，看一下两站各自的状态 —— 这不是比较名次，是列一张待办清单。</p>
+
+  <div class="matrix">
+    <div class="matrix-head">
+      <span>规格</span><span>herbeast.cn</span><span>herbeast.world</span>
+    </div>
+    <div class="matrix-row">
+      <span class="name">受信任的 HTTPS 证书</span>
+      <span class="cell"><span class="dot dot-off"></span>待补齐</span>
+      <span class="cell"><span class="dot dot-on"></span>已具备</span>
+    </div>
+    <div class="matrix-row">
+      <span class="name">手机适配声明</span>
+      <span class="cell"><span class="dot dot-off"></span>待补齐</span>
+      <span class="cell"><span class="dot dot-on"></span>已具备</span>
+    </div>
+    <div class="matrix-row">
+      <span class="name">页面主标题</span>
+      <span class="cell"><span class="dot dot-off"></span>待补齐</span>
+      <span class="cell"><span class="dot dot-on"></span>已具备</span>
+    </div>
+    <div class="matrix-row">
+      <span class="name" style="color:var(--red)">结构化数据</span>
+      <span class="cell"><span class="dot dot-off"></span>待补齐</span>
+      <span class="cell"><span class="dot dot-off"></span>待补齐</span>
+    </div>
+    <div class="matrix-row">
+      <span class="name">社交分享卡片</span>
+      <span class="cell"><span class="dot dot-part"></span>部分具备</span>
+      <span class="cell"><span class="dot dot-off"></span>待补齐</span>
+    </div>
+    <div class="matrix-row">
+      <span class="name">访问统计接入</span>
+      <span class="cell"><span class="dot dot-off"></span>待补齐</span>
+      <span class="cell"><span class="dot dot-wait"></span>待核</span>
+    </div>
+  </div>
+
+  <div class="quote">
+    六条里，海外站已具备三条，国内站三条待补齐。这是事实层面的差异，也是可以被逐条消掉的事实 —— 每消掉一条，第五章就划掉一行。<br><br>
+    更值得注意的是两站共同的缺口：结构化数据、社交分享卡片，两边都没有做完整。这意味着这件事不是「一个站补课」，而是「全球统一做一次」—— 同一份规格，一次投入，两边受益。
+  </div>
+
+  <h3>这些现状分别在影响什么</h3>
+  <div class="txt">
+    <p>影响要按对象分开讲，因为同一个现象对不同对象的作用方式并不相同。下面四段都从一个「本来」开始 —— 先说本来可以得到什么，再说现在实际发生什么，最后说这个影响会不会自己好转。</p>
+  </div>
+
+  <h4>对 AI 助手</h4>
+  <div class="txt">
+    <p><strong>本来：</strong>被问到「东边野兽是什么品牌」时，模型抓取官网，读到一套完整的官方表述 —— 做什么、用什么成分、什么定位、官网在哪里。这些内容首页上都有，写得也清楚。</p>
+    <p><strong>现在：</strong>证书不被信任，抓取在第一步就会停下；即便抓到首页，页面没有主标题、没有结构化数据、十三张图片没有一条文字说明，模型能提取的只剩正文散文。它仍然能读懂一部分，但读不出「品牌名、品类、核心成分、所属公司」这类可以被结构化引用的事实。</p>
+    <p><strong>结果：</strong>模型转向第三方信源 —— 电商详情页、媒体报道、用户笔记。这些来源的表述彼此不一致，最终答案也就每次不同。品牌在 AI 那里呈现的样子，实际上是由转述者决定的。</p>
+    <p>这一项的特点是<strong>不会自己好转</strong>。官网不提供结构化事实，模型就一直依赖转述；转述越多，说法越分散。</p>
+  </div>
+
+  <h4>对搜索引擎</h4>
+  <div class="txt">
+    <p><strong>本来：</strong>品牌词搜索时，官网是第一个落点；搜具体栏目时，能落到对应页面。</p>
+    <p><strong>现在：</strong>地址清单里有 840 条已失效地址仍在持续提交，多页共用同一条标题，正本声明缺失，<code>http</code> 与 <code>https</code> 两套地址并存。这几个信号叠加起来，指向的是同一件事：这个站点的内容没有人在维护。</p>
+    <p><strong>结果：</strong>整站的质量评估被拉低，收录速度变慢，新页面进入索引的周期变长。访客从搜索结果点进来，落到的可能是一个 404 页面 —— 而这条路径原本是最有价值的入口。</p>
+    <p>这一项<strong>会随时间加重</strong>。失效地址不清，搜索引擎每次来都会重复遇到；重复遇到，信任就更低。</p>
+  </div>
+
+  <h4>对访客，尤其是手机上的访客</h4>
+  <div class="txt">
+    <p><strong>本来：</strong>点开即读，图文按屏幕宽度正常铺开，想转发给朋友时卡片带标题和配图。</p>
+    <p><strong>现在：</strong>首屏先遇到一道安全提示，需要手动确认才能继续；进站后页面按电脑版比例缩小显示，需要双指放大；想找产品，导航里没有产品入口；想转发，卡片上没有标题。</p>
+    <p><strong>结果：</strong>大部分人在第一步就离开了。剩下的访客读完了品牌故事，却没有下一步可去 —— 这个站点目前承担的，是「让已经认识品牌的人再看一眼」，还不是「让不认识的人认识品牌」。</p>
+    <p>这一项<strong>影响的是所有渠道的转化</strong>。社媒投放、达人内容、线下物料的流量最终都会落到官网上，落点的体验决定了前面所有投入的折损率。</p>
+  </div>
+
+  <h4>对品牌自己</h4>
+  <div class="txt">
+    <p><strong>本来：</strong>官网的每一分投入都沉淀成资产 —— 内容在自有域名下、素材可迁移、访问数据可查、每次改版都在既有基础上累加。</p>
+    <p><strong>现在：</strong>没有接入访问统计，看不到任何访问数据；图片托管在建站平台的服务器上，自有域名下 0 张；批量文章当前无法访问。三项加在一起，资产的边界变得模糊。</p>
+    <p><strong>结果：</strong>做决策时缺少依据 —— 官网到底有没有用、哪一页有人看、投放带来的流量落在哪里，都只能凭感觉判断。首次沟通中提到的数字资产管理系统，要解决的正是这件事；而把素材迁回自有域名，是它成立的前置条件。</p>
+    <p>这一项<strong>是可以一次理顺的</strong>。它不需要重做站点，只需要把归属关系和度量口径定下来。</p>
+  </div>
+
+  <div class="note">四条影响其实是同一件事的四个切面：<strong>站点做出来了，但没有配置成「能被读到、能被找到、能被带走」的状态。</strong>所以第四章的整改不分成四个项目，是同一个动作在不同对象上的效果。</div>
+
+  <div class="quote">
+    一位在微信里听朋友提到「东边野兽」的人，搜到官网点进去，先看到一个安全提示；继续访问后，页面是按电脑版缩小的，需要双指放大；想找产品，导航里没有；想转发给朋友，卡片上没有标题也没有配图。<br><br>
+    整个过程里，他一直没有得到「这个品牌在做什么」的答案。但这不是设计的问题 —— 首页的品牌叙事做得相当完整。缺的，是把这些内容稳妥送到人和机器面前的最后一层。
+  </div>
+</section>
+
+<!-- ===== 03 统一基线 ===== -->
+<section id="s3">
+  <div class="sec-head">
+    <span class="sec-num">03</span>
+    <h2>统一基线 · 12 条规格</h2>
+  </div>
+  <p class="sec-desc">这一章是整份报告的重心。先有尺子，第四章的方案和第五章的阶段才有依据；没有尺子，方案就变成「我们觉得该这么做」。</p>
+
+  <h3>为什么先立标准</h3>
+  <p class="lead">四个理由，都落在品牌方自己的利益上 —— 不是为了证明哪个站做得好。</p>
+
+  <table class="ptable">
+    <thead><tr><th>理由</th><th>具体说明</th></tr></thead>
+    <tbody>
+      <tr><td>集团层面统一</td><td>现在两个市场是两套做法，将来进第三个市场大概率会是第三套。规格先定，新站照抄，边际成本递减。</td></tr>
+      <tr><td>换服务商有依据</td><td>这 12 条每一条都能机器检测。以后无论换谁做，验收看这张表，不看口头承诺。</td></tr>
+      <tr><td>资产归属可界定</td><td>规格里明确要求媒体托管在品牌可控存储、数据归品牌账号。这是把「资产主权」写成了可检查的条款。</td></tr>
+      <tr><td>可被外部验证</td><td>只依赖公开可访问的技术特征，任何第三方 —— 包括品牌自己的技术人员 —— 都能复核。</td></tr>
+    </tbody>
+  </table>
+
+  <div class="quote">
+    这套规格不是我们发明的，它来自搜索引擎与 AI 抓取方的公开要求。我们做的只是把它整理成一张能逐条打勾的表，并说明每一条在两个站上分别落到什么状态。<br><br>
+    定了这张表，后面所有讨论都变成「这一条什么时候做、谁来做」，而不是「要不要重做网站」。
+  </div>
+
+  <h3>四条设计原则</h3>
+  <div class="txt">
+    <p><strong>每条只依赖公开可访问的技术特征</strong> —— 不看后台、不看代码、不要求客户提供权限。</p>
+    <p><strong>每条都有可执行的判据</strong> —— 能被脚本检测，不靠主观打分，也不留「基本达标」这类模糊地带。</p>
+    <p><strong>每条都对应明确的整改动作</strong> —— 不做无法落地的原则性要求。写进表里的每一条，都能说出「改什么、改哪里」。</p>
+    <p><strong>不引入任何厂商私有技术</strong> —— 换任何服务商、任何平台都成立。这一条是这套规格能长期使用的前提。</p>
+  </div>
+
+  <h3>12 条规格</h3>
+  <p class="txt">按四种状态标注两站情况：<span class="tag tag-done">已具备</span> <span class="tag tag-part">部分具备</span> <span class="tag tag-todo">待补齐</span> <span class="tag tag-wait">待核</span>。标「待核」表示该项尚未采集，不做推断。</p>
+
+  <div class="filter" id="filter">
+    <button class="on" data-f="all">全部 12 条</button>
+    <button data-f="P0">P0 先做</button>
+    <button data-f="P1">P1 其次</button>
+    <button data-f="P2">P2 长期</button>
+    <button data-f="both">两站共同缺口</button>
+    <span class="count" id="count">显示 12 / 12</span>
+  </div>
+
+  <div class="specs" id="specs">
+
+    <div class="spec" data-priority="P0" data-gap="cn">
+      <div class="spec-top"><span class="spec-id">A1</span><span class="spec-layer">连通层</span><span class="tag tag-p0">P0</span></div>
+      <h4>全站 HTTPS：证书由受信任机构签发，80 端口全量跳转</h4>
+      <div class="spec-crit"><b>达标判据</b>证书链校验返回 Verify return code: 0，浏览器无安全提示；访问 http:// 返回 301 且指向 https 地址。证书需同时覆盖 www 与裸域。</div>
+      <div class="spec-foot">
+        <div class="spec-sites">
+          <span><span class="dot dot-off"></span>国内 待补齐</span>
+          <span><span class="dot dot-on"></span>海外 已具备</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="spec" data-priority="P0" data-gap="cn">
+      <div class="spec-top"><span class="spec-id">A2</span><span class="spec-layer">连通层</span><span class="tag tag-p0">P0</span></div>
+      <h4>全站声明手机适配，移动端按设备宽度渲染</h4>
+      <div class="spec-crit"><b>达标判据</b>每个 HTML 页面的头部含 width=device-width 的手机适配声明，且覆盖全部模板，不只首页。</div>
+      <div class="spec-foot">
+        <div class="spec-sites">
+          <span><span class="dot dot-off"></span>国内 待补齐</span>
+          <span><span class="dot dot-on"></span>海外 已具备</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="spec" data-priority="P0" data-gap="cn">
+      <div class="spec-top"><span class="spec-id">A3</span><span class="spec-layer">连通层</span><span class="tag tag-p0">P0</span></div>
+      <h4>地址清单与实际可访问页一致，协议统一，更新时间真实</h4>
+      <div class="spec-crit"><b>达标判据</b>随机抽样 20 条，返回 200 的比例不低于 95%；0 条 http:// 协议；更新日期不是全站同一个值。</div>
+      <div class="spec-foot">
+        <div class="spec-sites">
+          <span><span class="dot dot-off"></span>国内 待补齐</span>
+          <span><span class="dot dot-wait"></span>海外 待核</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="spec" data-priority="P1" data-gap="cn">
+      <div class="spec-top"><span class="spec-id">A4</span><span class="spec-layer">连通层</span><span class="tag tag-p1">P1</span></div>
+      <h4>抓取说明文件明确策略，对主流 AI 爬虫给出明确态度</h4>
+      <div class="spec-crit"><b>达标判据</b>含地址清单声明行；对主流 AI 爬虫有显式的允许或限制，不留空规则。允许与限制都是有效选择，但必须是主动决定的结果。</div>
+      <div class="spec-foot">
+        <div class="spec-sites">
+          <span><span class="dot dot-off"></span>国内 待补齐</span>
+          <span><span class="dot dot-part"></span>海外 待调整</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="spec" data-priority="P1" data-gap="cn">
+      <div class="spec-top"><span class="spec-id">B1</span><span class="spec-layer">结构层</span><span class="tag tag-p1">P1</span></div>
+      <h4>每页唯一标题与描述，命名规则全站统一</h4>
+      <div class="spec-crit"><b>达标判据</b>全站标题去重率 100%，均含品牌名，长度 15~30 汉字；每页有描述且去重率不低于 95%，长度 60~160 字。</div>
+      <div class="spec-foot">
+        <div class="spec-sites">
+          <span><span class="dot dot-off"></span>国内 待补齐</span>
+          <span><span class="dot dot-wait"></span>海外 待核</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="spec" data-priority="P1" data-gap="cn">
+      <div class="spec-top"><span class="spec-id">B2</span><span class="spec-layer">结构层</span><span class="tag tag-p1">P1</span></div>
+      <h4>每页有且仅有一个页面主标题，与标题主题一致</h4>
+      <div class="spec-crit"><b>达标判据</b>每页的主标题标签计数等于 1，且文字与页面标题主题一致。零个或多个都不算达标。</div>
+      <div class="spec-foot">
+        <div class="spec-sites">
+          <span><span class="dot dot-off"></span>国内 待补齐</span>
+          <span><span class="dot dot-on"></span>海外 已具备</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="spec" data-priority="P1" data-gap="cn">
+      <div class="spec-top"><span class="spec-id">B3</span><span class="spec-layer">结构层</span><span class="tag tag-p1">P1</span></div>
+      <h4>每页声明正本地址；中英对应页互相声明语言版本</h4>
+      <div class="spec-crit"><b>达标判据</b>每页有正本声明且指向自身 https 地址；中英对应页双向互指，并含默认语言版本声明。指错比不指更糟，所以这一条必须双向核对。</div>
+      <div class="spec-foot">
+        <div class="spec-sites">
+          <span><span class="dot dot-off"></span>国内 待补齐</span>
+          <span><span class="dot dot-part"></span>海外 部分具备</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="spec" data-priority="P1" data-gap="both">
+      <div class="spec-top"><span class="spec-id">B4</span><span class="spec-layer">结构层</span><span class="tag tag-p1">P1</span></div>
+      <h4>部署四类结构化数据；社交分享卡片四要素完整</h4>
+      <div class="spec-crit"><b>达标判据</b>首页含组织与品牌两类；产品页含产品类；文章页含文章类 —— 用官方校验工具验证通过。分享卡片需备齐标题、描述、图片（1200×630）、卡片类型四项。</div>
+      <div class="spec-foot">
+        <div class="spec-sites">
+          <span><span class="dot dot-off"></span>国内 待补齐</span>
+          <span><span class="dot dot-off"></span>海外 待补齐</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="spec" data-priority="P1" data-gap="cn">
+      <div class="spec-top"><span class="spec-id">C1</span><span class="spec-layer">内容层</span><span class="tag tag-p1">P1</span></div>
+      <h4>每个在售单品有独立产品页，含成分、用法、依据与购买入口</h4>
+      <div class="spec-crit"><b>达标判据</b>产品页数量不少于在售单品数；每页含成分、用法、依据、购买或询价入口四类信息。</div>
+      <div class="spec-foot">
+        <div class="spec-sites">
+          <span><span class="dot dot-off"></span>国内 待补齐</span>
+          <span><span class="dot dot-part"></span>海外 部分具备</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="spec" data-priority="P2" data-gap="cn">
+      <div class="spec-top"><span class="spec-id">C2</span><span class="spec-layer">内容层</span><span class="tag tag-p2">P2</span></div>
+      <h4>内容资产有统一信息架构，可被机器引用</h4>
+      <div class="spec-crit"><b>达标判据</b>文章页含作者、日期、来源三要素；有文章类结构化数据；栏目结构在两次改版之间保持稳定。</div>
+      <div class="spec-foot">
+        <div class="spec-sites">
+          <span><span class="dot dot-off"></span>国内 待补齐</span>
+          <span><span class="dot dot-part"></span>海外 部分具备</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="spec" data-priority="P1" data-gap="cn">
+      <div class="spec-top"><span class="spec-id">D1</span><span class="spec-layer">资产层</span><span class="tag tag-p1">P1</span></div>
+      <h4>媒体资源托管在品牌自有或可迁移存储，地址归品牌域名</h4>
+      <div class="spec-crit"><b>达标判据</b>页面引用的图片、字体、视频，地址域名属品牌可控范围的比例为 100%。迁移后旧地址需保留跳转。</div>
+      <div class="spec-foot">
+        <div class="spec-sites">
+          <span><span class="dot dot-off"></span>国内 待补齐</span>
+          <span><span class="dot dot-on"></span>海外 已具备</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="spec" data-priority="P1" data-gap="cn">
+      <div class="spec-top"><span class="spec-id">D2</span><span class="spec-layer">资产层</span><span class="tag tag-p1">P1</span></div>
+      <h4>接入访问统计与转化追踪，数据归品牌账号</h4>
+      <div class="spec-crit"><b>达标判据</b>每页可检测到统计脚本；品牌后台能按页面查看访问数据；两站数据进入同一个账号，便于横向对比。</div>
+      <div class="spec-foot">
+        <div class="spec-sites">
+          <span><span class="dot dot-off"></span>国内 待补齐</span>
+          <span><span class="dot dot-wait"></span>海外 待核</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="note">
+    优先级说明 —— <strong>P0</strong>：不做这一条，其它条目的投入基本无效，第一阶段必须完成。<strong>P1</strong>：直接影响能否被读到、被引用，第二阶段完成。<strong>P2</strong>：影响长期资产累积效率，第三阶段及以后。
+  </div>
+
+  <h3>关于 A4：这不是缺陷，是一个需要品牌方决定的策略</h3>
+  <div class="txt">
+    <p>海外站目前的抓取说明里，主动限制了若干主流 AI 爬虫的访问，并声明不用于模型训练。这不是配置遗漏，是一个明确的选择。</p>
+    <p>所以这一条在两个站上的状态不同：国内站是<strong>空规则</strong>（等于没给任何指引），海外站是<strong>主动限制</strong>（给了指引，方向是关闭）。前者需要补，后者需要重新决策。</p>
+    <p>要不要让 AI 引用品牌内容 —— 这涉及内容授权、品牌调性与商业策略，超出技术判断的范围。报告能提供的是选项和后果说明，决定权在品牌方。</p>
+  </div>
+
+  <h3>怎么检验这套标准真的做到了</h3>
+  <table class="ptable">
+    <thead><tr><th>方式</th><th>具体做法</th><th>谁可以执行</th></tr></thead>
+    <tbody>
+      <tr><td>逐条打勾</td><td>12 条规格做成一张检查卡，逐项标注状态并双方签字确认。</td><td>我方 + 品牌方技术团队</td></tr>
+      <tr><td>脚本复测</td><td>一份检测脚本，输入域名即输出 12 条结果。前后各跑一次，两次的差异就是成效。</td><td>任何第三方</td></tr>
+      <tr><td>可见度复测</td><td>三组问题各问四次，固定模型与提问时间，双轨记录。</td><td>我方执行，品牌方可旁听</td></tr>
+      <tr><td>人工抽检</td><td>每阶段结束抽 5 个页面，人工核对内容型规格（尤其 B1）。</td><td>品牌市场团队</td></tr>
+    </tbody>
+  </table>
+
+  <div class="quote">
+    这四个方式里，前三个都不需要相信我们 —— 脚本谁跑结果都一样，问题谁问结果都一样。<br>
+    把这个设计成「可以被不信的人验证」，是因为这套标准将来要管的，不只是这一次整改。
+  </div>
+</section>
+
+<!-- ===== 04 解决方案 ===== -->
+<section id="s4">
+  <div class="sec-head">
+    <span class="sec-num">04</span>
+    <h2>解决方案</h2>
+  </div>
+  <p class="sec-desc">四层不是四件事，是四道依赖。另外，统一的是规格，不是实现方式 —— 两个站的技术栈不同，达标路径也不同，这一章把两条路径都写清楚。</p>
+
+  <h3>四层结构与规格的对应</h3>
+  <div class="layers">
+    <div class="layer-row">
+      <div class="layer-n">1</div>
+      <div>
+        <div class="ln">基础连通 · A1 ~ A4</div>
+        <div class="ld">证书与跳转、手机适配声明、地址清单、抓取说明。全部是配置级动作，不改页面内容。</div>
+      </div>
+      <div class="lt">3~5 个工作日</div>
+    </div>
+    <div class="layer-row">
+      <div class="layer-n">2</div>
+      <div>
+        <div class="ln">结构层 · B1 ~ B4</div>
+        <div class="ld">标题与描述、页面主标题、正本与语言声明、结构化数据与分享卡片。模板层一次改，全站生效。</div>
+      </div>
+      <div class="lt">2~3 周</div>
+    </div>
+    <div class="layer-row">
+      <div class="layer-n">3</div>
+      <div>
+        <div class="ln">内容层 · C1 ~ C2</div>
+        <div class="ld">产品页、内容信息架构。这一层的变量不在技术，在内容与合规审核周期。</div>
+      </div>
+      <div class="lt">4~8 周</div>
+    </div>
+    <div class="layer-row">
+      <div class="layer-n">4</div>
+      <div>
+        <div class="ln">资产与度量 · D1 ~ D2</div>
+        <div class="ld">媒体托管迁移、统计接入。它是前三层成效能被证明的前提。</div>
+      </div>
+      <div class="lt">与前三层并行</div>
+    </div>
+  </div>
+
+  <div class="quote">
+    常见做法是先补内容 —— 因为内容看得见，也更容易说服内部。但第一层没解决，抓取本身就不稳，内容补完仍拿不到曝光，这笔投入往往要再花一遍。<br>
+    反过来先做前两层，成本很低，却能让第三层的每一分投入都落在能被读到的地方。
+  </div>
+
+  <h3>这份方案不含视觉改版，是有意的</h3>
+  <div class="txt">
+    <p>方案里的所有动作都不改变页面看起来的样子（手机端显示比例除外）。理由有三条，都落在实际效果上：</p>
+    <p><strong>一，问题不在视觉层。</strong>七项现状里没有一项来自设计或文案。改版解决不了证书、标题、结构化数据的问题，只会增加变量 —— 改完之后仍然不知道变化是哪一件事带来的。</p>
+    <p><strong>二，配置层动作是「改完即生效」。</strong>改版要排设计、排开发、排审核。同样是三个月，前者能做完并复测出一版前后对比，后者可能还没上线。先把能立刻验证的部分做完，判断会更有依据。</p>
+    <p><strong>三，先做配置层，将来改版时不必再做一遍。</strong>规格落到模板层之后，会跟着模板走。反过来先改版、后补配置，等于把同一件事做两次。</p>
+  </div>
+  <div class="note">如果品牌方已有改版计划，建议的顺序是：先按本方案补齐配置层，改版时把这 12 条规格作为验收条件写进改版需求。这样改版本身不会把已经达标的部分改回原状 —— 这是改版项目里最常见的一类返工。</div>
+
+  <h3>同一规格，两条实现路径</h3>
+  <p class="txt">两个站点的技术栈完全不同：一个是模板化建站平台，一个是托管电商平台。同样的规格，落到两边要做的动作并不一样。这一节把两条路径分开写，避免用一套手法硬套两个平台。</p>
+
+  <table class="ptable">
+    <thead><tr><th style="width:130px">规格</th><th>国内站路径（模板建站平台）</th><th>海外站路径（托管电商）</th></tr></thead>
+    <tbody>
+      <tr><td>A1 证书</td><td>在服务器或 CDN 侧部署受信任证书；平台若支持上传自有证书则直接部署</td><td>平台自带证书，确认未过期且同时覆盖 www 与裸域</td></tr>
+      <tr><td>A1 跳转</td><td>平台后台或服务器配置 301 规则</td><td>后台设置主域名，确认裸域与 www 统一指向同一正本</td></tr>
+      <tr><td>A2 手机适配</td><td>模板 head 注入声明（多数平台提供全局 head 设置）</td><td>主题模板的 head 段注入</td></tr>
+      <tr><td>A3 地址清单</td><td>清理失效页后由平台重新生成</td><td>平台自动生成，核对商品与集合是否齐全</td></tr>
+      <tr><td>A4 抓取说明</td><td>平台后台文本编辑</td><td>通过主题内的说明文件模板修改</td></tr>
+      <tr><td>B1 标题描述</td><td>模板参数 + 逐页填写</td><td>后台字段批量填写</td></tr>
+      <tr><td>B2 页面主标题</td><td>模板层调整，把视觉标题改为语义标题标签</td><td>主题模板调整</td></tr>
+      <tr><td>B3 正本/语言声明</td><td>模板 head 注入</td><td>主题模板 head 注入</td></tr>
+      <tr><td>B4 结构化数据</td><td>模板 head 注入静态结构化数据</td><td>主题模板注入或通过应用实现</td></tr>
+      <tr><td>C1 产品页</td><td>需新建（目前没有产品页结构）</td><td>已有商品页，补成分与依据信息</td></tr>
+      <tr><td>D1 媒体托管</td><td>图片需迁出平台侧存储</td><td>平台 CDN 可迁移，确认导出方案</td></tr>
+      <tr><td>D2 统计</td><td>模板 head 注入统计代码</td><td>主题注入或通过应用实现</td></tr>
+    </tbody>
+  </table>
+
+  <div class="note">
+    关于平台能力边界：模板化建站平台与托管电商平台的开放程度不同，个别动作可能需要更高的方案（例如证书无法上传时，改由 CDN 层终结加密连接）。凡涉及这类情况，都会在阶段开始的第一周内确认，不会拖到实施中途才提出。
+  </div>
+
+  <h3>分工</h3>
+  <table class="ptable">
+    <thead><tr><th style="width:150px">层</th><th>我方承担</th><th>需要品牌方配合</th></tr></thead>
+    <tbody>
+      <tr><td>① 连通</td><td>证书部署、跳转规则、清单重建、手机适配声明补齐。可按单项交付，不必打包</td><td>服务器或建站后台的运维权限，或由现服务商配合操作</td></tr>
+      <tr><td>② 结构</td><td>全站命名规范、四类结构化数据编写、正本与语言声明、分享卡片</td><td>确认品牌口径（品牌名、成立年份、主打成分的官方表述）</td></tr>
+      <tr><td>③ 内容</td><td>产品页信息架构、内容模板、可被机器引用的品牌事实库</td><td>产品资料、成分与功效依据、合规审核</td></tr>
+      <tr><td>④ 度量</td><td>12 条检测脚本、基线建立、季度复测与前后对比报告</td><td>内部对指标口径达成一致</td></tr>
+    </tbody>
+  </table>
+
+  <h3>三条会写进合同的承诺</h3>
+  <div class="txt">
+    <p><strong>每一层可以单独开始、单独验收。</strong>不打包绑定，做几条算几条。第一层做完可以停，不影响已交付部分的完整性。</p>
+    <p><strong>交付时资产全部归品牌方。</strong>站点文件、图片、结构化数据、内容源文件，全部存放于品牌方自己的账号下。</p>
+    <p><strong>检测脚本一并交付。</strong>12 条规格的检测脚本由品牌方持有 —— 我们不会成为唯一能跑这个检测的人。</p>
+  </div>
+
+  <h3>我们不做哪些事</h3>
+  <div class="txt">
+    <p>主动说清不做的部分，比强调能做的更容易建立信任：</p>
+    <p><strong>不承接 AI 视频批量生成。</strong>首次沟通中提到过这项需求，它不在我们的能力范围内，如需要可以协助对接合适的方向。</p>
+    <p><strong>不承接长期英文内容创作。</strong>可以提供模板与写作规范，执行由品牌方或本地团队完成。</p>
+    <p><strong>不介入站内平台日常运营。</strong>天猫、抖音、小红书的店铺运营不在本报告范围内，相关数据也未纳入本次采集。</p>
+  </div>
+</section>
+
+<!-- ===== 05 分阶段 ===== -->
+<section id="s5">
+  <div class="sec-head">
+    <span class="sec-num">05</span>
+    <h2>分阶段实施</h2>
+  </div>
+  <p class="sec-desc">五个阶段，每个阶段独立成单、独立验收。每张表四列固定：做什么、在哪个站做、交什么、怎么算做完。</p>
+
+  <p class="lead">阶段之间设有明确的进入条件 —— 上一阶段没收尾，不往下推。这不是流程上的讲究，是因为订单化推进时，前一层没做完就开始下一层，前面的投入很容易白花。</p>
+
+  <div class="stage-bar" id="stageBar">
+    <button class="stage-btn on" data-stage="0"><span class="sn">阶段 0</span><span class="st">基线冻结</span><span class="sd">第 1 周</span></button>
+    <button class="stage-btn" data-stage="1"><span class="sn">阶段 1</span><span class="st">基础连通</span><span class="sd">第 2~3 周</span></button>
+    <button class="stage-btn" data-stage="2"><span class="sn">阶段 2</span><span class="st">结构层</span><span class="sd">第 4~7 周</span></button>
+    <button class="stage-btn" data-stage="3"><span class="sn">阶段 3</span><span class="st">内容层</span><span class="sd">第 8~15 周</span></button>
+    <button class="stage-btn" data-stage="4"><span class="sn">阶段 4</span><span class="st">资产与度量</span><span class="sd">第 16 周起</span></button>
+  </div>
+
+  <div class="stage-panel on" data-panel="0">
+    <div class="stage-goal">目标：把现状固定成一份双方签字的基线表。这一步不能跳 —— 基线不冻结，后面所有「有没有变好」都无从判断。</div>
+    <table class="ptable">
+      <thead><tr><th>动作</th><th style="width:80px">站点</th><th style="width:180px">交付物</th><th style="width:170px">怎么算做完</th></tr></thead>
+      <tbody>
+        <tr><td>补采海外站内页 5~8 个代表页</td><td>海外</td><td>补充实测数据</td><td>数据进入附录事实清单</td></tr>
+        <tr><td>12 条规格逐条对表，形成基线快照</td><td>双站</td><td>基线表（含待核项）</td><td>双方签字确认</td></tr>
+        <tr><td>确认品牌口径：中英名、成立年份、主打成分</td><td>—</td><td>品牌事实库 v1</td><td>品牌方书面确认</td></tr>
+        <tr><td>确认批量文章现状：主动下线、已迁移、还是意外失效</td><td>国内</td><td>处理方案（恢复或移除）</td><td>品牌方确认</td></tr>
+        <tr><td>明确 AI 抓取策略：允许还是限制</td><td>双站</td><td>策略说明</td><td>品牌方签字</td></tr>
+        <tr><td>确定 12 条检测脚本的检测口径</td><td>—</td><td>脚本 v1</td><td>双方各跑一次，结果一致</td></tr>
+      </tbody>
+    </table>
+    <div class="note">这一阶段有两件事必须由品牌方拍板：批量文章的处理方式，以及 AI 抓取策略。这两项涉及内容资产与授权判断，我们只提供选项与后果说明，不代客户决定。</div>
+  </div>
+
+  <div class="stage-panel" data-panel="1">
+    <div class="stage-goal">目标：A1 ~ A3 达标。做完这一步，手机能正常打开、转发有卡片、搜索引擎不再持续扣分。</div>
+    <table class="ptable">
+      <thead><tr><th>动作</th><th style="width:80px">站点</th><th style="width:180px">交付物</th><th style="width:170px">怎么算做完</th></tr></thead>
+      <tbody>
+        <tr><td>部署受信任证书，覆盖 www 与裸域</td><td>国内</td><td>证书安装完成</td><td>校验返回 Verify code 0</td></tr>
+        <tr><td>配置 80 到 443 的全量跳转</td><td>国内</td><td>跳转规则</td><td>http 访问返回 301</td></tr>
+        <tr><td>全站模板注入手机适配声明</td><td>国内</td><td>模板改动</td><td>抽查 5 页均含声明</td></tr>
+        <tr><td>清理地址清单中的失效条目</td><td>国内</td><td>新清单</td><td>抽 20 条，200 比例不低于 95%</td></tr>
+        <tr><td>清单协议统一为 https，更新日期改为真实值</td><td>国内</td><td>新清单</td><td>0 条 http://</td></tr>
+        <tr><td>补齐抓取说明与清单声明</td><td>国内</td><td>说明文件</td><td>含清单声明行，有明确 AI 策略</td></tr>
+        <tr><td>按阶段 0 决策调整抓取说明</td><td>海外</td><td>模板改动</td><td>与国内站策略一致</td></tr>
+        <tr><td>海外站 A1 ~ A3 逐条复核</td><td>海外</td><td>复核记录</td><td>三条均达标或记录待办</td></tr>
+      </tbody>
+    </table>
+    <div class="note"><strong>周期</strong>：3~5 个工作日。若涉及恢复批量文章内容，延长至 8~10 日，需内容团队介入。<br><strong>风险</strong>：证书若因平台限制无法上传，需改由 CDN 层终结加密连接。这会改变原方案，必须在第一周内确认，不能拖到最后。</div>
+  </div>
+
+  <div class="stage-panel" data-panel="2">
+    <div class="stage-goal">目标：A4、B1 ~ B4、D1、D2 达标。这一层做完，机器读得到的主题信息才算完整。</div>
+    <table class="ptable">
+      <thead><tr><th>动作</th><th style="width:80px">站点</th><th style="width:180px">交付物</th><th style="width:170px">怎么算做完</th></tr></thead>
+      <tbody>
+        <tr><td>制定全站命名规则（标题、描述、地址三套）</td><td>双站</td><td>规范文档</td><td>双方确认</td></tr>
+        <tr><td>按规则批量填写标题与描述</td><td>国内</td><td>页面改动</td><td>标题去重率 100%</td></tr>
+        <tr><td>按同一规则填写海外站标题与描述</td><td>海外</td><td>后台字段</td><td>同上</td></tr>
+        <tr><td>模板层把视觉标题改为语义主标题，确保每页唯一</td><td>国内</td><td>模板改动</td><td>每页主标题计数等于 1</td></tr>
+        <tr><td>部署正本声明，指向自身 https 地址</td><td>双站</td><td>模板注入</td><td>每页均有且指向正确</td></tr>
+        <tr><td>中英对应页互指，并声明默认语言版本</td><td>双站</td><td>模板注入</td><td>双向互指，含默认版本</td></tr>
+        <tr><td>编写组织与品牌两类结构化数据（首页）</td><td>双站</td><td>结构化数据代码</td><td>官方校验工具验证通过</td></tr>
+        <tr><td>编写产品与文章两类结构化数据</td><td>双站</td><td>结构化数据代码</td><td>同上</td></tr>
+        <tr><td>补齐分享卡片四要素</td><td>双站</td><td>模板注入</td><td>实际转发一次看效果</td></tr>
+        <tr><td>媒体资源迁移，同步替换页面引用</td><td>国内</td><td>迁移清单</td><td>媒体地址 100% 属品牌可控范围</td></tr>
+        <tr><td>旧图片地址保留跳转</td><td>国内</td><td>跳转规则</td><td>抽样旧地址返回 301</td></tr>
+        <tr><td>接入统计与转化追踪，两站进同一账号</td><td>双站</td><td>统计后台数据</td><td>后台能按页查看</td></tr>
+      </tbody>
+    </table>
+    <div class="note"><strong>周期</strong>：2~3 周。媒体迁移是其中最长的一项，图片量大时需单独排期。<br><strong>风险</strong>：改页面主标题可能影响现有视觉样式（尤其依赖样式类的布局），需先在测试环境验证一个页面再批量推。</div>
+  </div>
+
+  <div class="stage-panel" data-panel="3">
+    <div class="stage-goal">目标：C1、C2 达标，品类出现率达到约定值。这一阶段的最大变量不在技术，在内容准备与合规审核周期。</div>
+    <table class="ptable">
+      <thead><tr><th>动作</th><th style="width:80px">站点</th><th style="width:180px">交付物</th><th style="width:170px">怎么算做完</th></tr></thead>
+      <tbody>
+        <tr><td>确定产品页信息架构：一页承载哪些信息</td><td>双站</td><td>信息架构文档</td><td>品牌方确认</td></tr>
+        <tr><td>建立产品页模板</td><td>双站</td><td>模板</td><td>用 1 个单品试做通过</td></tr>
+        <tr><td>国内站按单品逐一建产品页</td><td>国内</td><td>页面</td><td>产品页数不少于在售单品数</td></tr>
+        <tr><td>海外站补全商品成分与依据信息</td><td>海外</td><td>页面更新</td><td>每个单品均含四类信息</td></tr>
+        <tr><td>两站同一单品表述互相校对</td><td>双站</td><td>校对记录</td><td>同一单品表述一致</td></tr>
+        <tr><td>制定内容信息架构与文章模板（作者、日期、来源）</td><td>双站</td><td>模板</td><td>品牌方确认</td></tr>
+        <tr><td>按阶段 0 结论恢复或重写核心内容</td><td>国内</td><td>内容上线</td><td>页面可访问且含三要素</td></tr>
+        <tr><td>可见度复测，形成前后对比</td><td>—</td><td>对比报告</td><td>三个指标有明确前后值</td></tr>
+      </tbody>
+    </table>
+    <div class="note"><strong>风险</strong>：产品成分与功效表述涉及广告合规，必须由品牌方合规审核后再上线，不要在无审核的情况下批量发布。这一条会直接影响阶段工期，建议在阶段 2 就开始准备资料。</div>
+  </div>
+
+  <div class="stage-panel" data-panel="4">
+    <div class="stage-goal">目标：让前三层的成果可被持续验证，也防止做完之后慢慢退化。</div>
+    <table class="ptable">
+      <thead><tr><th>动作</th><th style="width:100px">频率</th><th style="width:180px">交付物</th><th style="width:170px">怎么算做完</th></tr></thead>
+      <tbody>
+        <tr><td>跑 12 条规格检测脚本</td><td>每季度</td><td>检测报告</td><td>与前一期逐条对比</td></tr>
+        <tr><td>三个可见度指标复测</td><td>每季度</td><td>对比报告</td><td>与基线对比</td></tr>
+        <tr><td>回归检查：新上线页面是否仍符合规格</td><td>每次改版后</td><td>检查记录</td><td>12 条逐项过</td></tr>
+        <tr><td>规格版本迭代（外部要求变化时）</td><td>每年</td><td>规格 v2</td><td>双方评审确认</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3>为什么是这个顺序</h3>
+  <div class="txt">
+    <p>五个阶段之间是依赖关系，不是重要性排序。每一阶段都在为下一阶段消掉一个不确定性：</p>
+    <p><strong>阶段 0 消掉的是「不知道起点」。</strong>没有基线，后面所有变化都无法归因 —— 变好了不知道是不是自己做的，没变好也不知道该改哪里。这一步成本最低，却决定了后面全部工作能不能被验收。</p>
+    <p><strong>阶段 1 消掉的是「抓取不稳」。</strong>证书与地址清单是抓取的前置条件。这一层没通，后面补的内容再多，也可能根本没有被抓到 —— 内容白做，钱花了两次。</p>
+    <p><strong>阶段 2 消掉的是「读不出主题」。</strong>抓取通了，但页面没有唯一标题和结构化数据，机器仍然不知道这一页在讲什么。这一步做完，「这个品牌是谁」才第一次有确定的机器答案。</p>
+    <p><strong>阶段 3 消掉的是「没有可引用的实体」。</strong>前两层解决「能不能读到」，这一层解决「有没有值得读的东西」—— 产品页、成分、依据。它是唯一需要品牌方投入大量内部资源的一层。</p>
+    <p><strong>阶段 4 消掉的是「做完之后会不会退化」。</strong>没有定期复测，站点会在下一次改版或换服务商时慢慢回到原来的状态，前面的投入被时间摊薄。</p>
+  </div>
+
+  <div class="note"><strong>如果预算只够做一个阶段：</strong>做阶段 0 加阶段 1。这两段合计四周以内，涉及的都是配置层动作，且能立刻看到三件具体变化 —— 手机上不再有安全提示、链接转发有卡片配图、搜索引擎不再持续扣质量分。剩下的阶段可以按年度预算再排，不影响已交付部分的完整性。</div>
+</section>
+
+<!-- ===== 06 附录 ===== -->
+<section id="s6">
+  <div class="sec-head">
+    <span class="sec-num">06</span>
+    <h2>附录</h2>
+  </div>
+
+  <h3>本报告的边界</h3>
+  <div class="txt">
+    <p>主动划清范围，是为了让报告里说到的部分更可被信任。以下五项不在本报告范围内：</p>
+    <p><strong>一，服务器与后端代码。</strong>只覆盖公开可访问层，机房配置、数据库结构、后端代码未涉及。</p>
+    <p><strong>二，海外站全站。</strong>本次只实测首页，站内其他页面与商品数据结构需在阶段 0 补齐。</p>
+    <p><strong>三，站内平台数据。</strong>天猫、抖音、小红书的销量、评价、笔记数据均未采集，本报告不对任何经营指标作表述。</p>
+    <p><strong>四，竞品横评。</strong>本报告只讲这套站点现在什么样，不对同行作优劣比较。</p>
+    <p><strong>五，投入规模与计价方式。</strong>本册只说明做什么、按什么顺序做、怎么验收。计价属于另一份文件，不与技术判断混在一起讨论 —— 否则技术结论容易被认为受报价影响。</p>
+  </div>
+
+  <h3>可以继续往下做的方向</h3>
+  <div class="txt">
+    <p>以下是目前没覆盖、但和这份报告直接相关的三件事。写成「如果您需要」，是因为这些应该由品牌方判断优先级，不该由我们替客户决定。</p>
+    <p><strong>品牌事实一致性治理。</strong>中英文名、成立年份、主打成分在官网、海外站、电商平台、百科、媒体报道之间的写法是否一致。这是「AI 每次说法都不一样」最常见的成因，也是做好结构化数据之前必须先定的事。</p>
+    <p><strong>竞品与价格带梳理。</strong>了解同类品牌在官网结构、内容栏目、商品组织上的做法，作为自家取舍的参考。</p>
+    <p><strong>社媒内容与 AI 引用之间的关系。</strong>哪些平台、哪类内容更容易被模型引用，用于指导内容投放的重心。</p>
+  </div>
+
+  <h3>采集与实测说明</h3>
+  <div class="txt">
+    <p>本报告所引用数据采集于 2026-10-30 上午 11:25 至 11:33，本机直连，未使用缓存。采集对象为国内站首页、四个内页、抓取说明文件与地址清单，以及海外站首页。</p>
+    <p>随机抽样使用固定种子（n=12），结果可复现。抽样过程中，站点在 11:34 前后对高频访问返回了防护页 —— 这是<strong>我方连续请求触发的限流</strong>，不是站点拦截搜索引擎。相关条目的判定已剔除该影响因素，不影响本报告结论。</p>
+    <p>凡未实测项目，均标注「待核」，不作推断。</p>
+  </div>
+
+  <div class="quote">
+    本报告只对 2026-10-30 采集时刻的公开可访问内容负责。站点若在此之后已有调整，以复验结果为准。
+  </div>
+</section>
+
+</main>
+</div>
+
+<script>
+(function(){
+  var links = Array.prototype.slice.call(document.querySelectorAll('#toc a'));
+  var sections = links.map(function(a){ return document.querySelector(a.getAttribute('href')); }).filter(Boolean);
+
+  function onScroll(){
+    var bar = document.getElementById('progress');
+    var h = document.documentElement;
+    var max = h.scrollHeight - h.clientHeight;
+    bar.style.width = (max > 0 ? (h.scrollTop / max) * 100 : 0) + '%';
+
+    var y = h.scrollTop + 140;
+    var idx = 0;
+    sections.forEach(function(s, i){ if (s.offsetTop <= y) idx = i; });
+    links.forEach(function(a, i){ a.classList.toggle('on', i === idx); });
+  }
+  window.addEventListener('scroll', onScroll, {passive:true});
+  window.addEventListener('resize', onScroll);
+  onScroll();
+
+  var fbtns = Array.prototype.slice.call(document.querySelectorAll('#filter button'));
+  var specs = Array.prototype.slice.call(document.querySelectorAll('#specs .spec'));
+  var countEl = document.getElementById('count');
+  fbtns.forEach(function(b){
+    b.addEventListener('click', function(){
+      fbtns.forEach(function(x){ x.classList.remove('on'); });
+      b.classList.add('on');
+      var f = b.getAttribute('data-f');
+      var shown = 0;
+      specs.forEach(function(s){
+        var ok = f === 'all' || (f === 'both' ? s.getAttribute('data-gap') === 'both' : s.getAttribute('data-priority') === f);
+        s.classList.toggle('hide', !ok);
+        if (ok) shown++;
+      });
+      if (countEl) countEl.textContent = '显示 ' + shown + ' / 12';
+    });
+  });
+
+  var sbtns = Array.prototype.slice.call(document.querySelectorAll('#stageBar .stage-btn'));
+  var panels = Array.prototype.slice.call(document.querySelectorAll('.stage-panel'));
+  sbtns.forEach(function(b){
+    b.addEventListener('click', function(){
+      sbtns.forEach(function(x){ x.classList.remove('on'); });
+      b.classList.add('on');
+      var k = b.getAttribute('data-stage');
+      panels.forEach(function(p){ p.classList.toggle('on', p.getAttribute('data-panel') === k); });
+    });
+  });
+
+  /* 窄屏默认收起；打印时视口宽度同样小于阈值，故限定为 screen，避免 PDF 中内容被折叠 */
+  if (window.matchMedia('screen and (max-width:1080px)').matches) {
+    document.querySelectorAll('.item').forEach(function(d){ d.removeAttribute('open'); });
+  }
+
+  window.addEventListener('beforeprint', function(){
+    document.querySelectorAll('.item').forEach(function(d){ d.setAttribute('open',''); });
+  });
+})();
+</script>
+<style>
+.pdf-dl{
+  position:fixed;right:24px;bottom:24px;z-index:90;display:inline-flex;align-items:center;gap:9px;
+  padding:12px 18px;border-radius:999px;background:var(--red);color:#fff;
+  font-size:13.5px;letter-spacing:.02em;text-decoration:none;
+  box-shadow:0 6px 22px rgba(168,50,42,.28);transition:transform .2s,box-shadow .2s;
+}
+.pdf-dl:hover{transform:translateY(-2px);box-shadow:0 10px 26px rgba(168,50,42,.34);}
+.pdf-dl svg{width:15px;height:15px;flex-shrink:0;}
+@media print{ .pdf-dl{display:none !important;} }
+@media (max-width:640px){ .pdf-dl{right:14px;bottom:14px;padding:10px 15px;font-size:12.5px;} }
+</style>
+<a class="pdf-dl" href="herbeast-report-2026-10.pdf" download>
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+  下载 PDF · 26 页
+</a>
+</body>
+</html>
